@@ -1,0 +1,54 @@
+package response
+
+
+import (
+	{{- if ( eq .ProjectInfo.Framework "gin") }}"github.com/gin-gonic/gin"{{ end }}
+	{{- if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
+	"{{.ProjectInfo.Name}}/settings"
+	"fmt"
+)
+
+const (
+    ParamIsNotIntMessage = "Only integers as URL params!"
+    FailedDbConnMessage = "Could not connect to the database!"
+	FailedJsonValidation = "Invalid JSON Object!"
+	FailedPayloadValidation = "Payload validation failed!"
+)
+
+// return the full error message only during debug
+func DbConnErrorMessage(err_msg string) string {
+	if !(settings.DEBUG) {
+		return fmt.Sprintln("Could not connect to the database!")
+	}
+	return fmt.Sprintln("Could not connect to the database: ", err_msg)
+}
+
+
+
+
+
+// all of the correct status codes can be found here -> https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+func Response(c *gin.Context, status int, data interface{}, message string) {
+	c.JSON(status, gin.H{
+		"status":  status,
+		"message": message,
+		"data":    data,
+	})
+}
+{{- end }}
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
+func Response(c *fiber.Ctx, status int,data interface{}, message string) error {
+	return c.Status(status).JSON(fiber.Map{
+		"status":  status,
+		"message": message,
+		"data":    data,
+	})
+}
+{{- end }}

@@ -1,0 +1,27 @@
+{{ $go_version      := .ProjectInfo.GoVersion -}}
+{{ $project_name    := .ProjectInfo.Name -}}
+
+module {{$project_name}}
+
+go {{ $go_version }}
+
+
+require (
+	github.com/go-playground/validator/v10 v10.10.1
+	github.com/joho/godotenv v1.3.0
+
+	{{ if ( eq .ProjectInfo.DbType "postgres")}}github.com/lib/pq v1.10.2 	{{ end }}
+	{{ if ( eq .ProjectInfo.DbType "sqlite")}}github.com/mattn/go-sqlite3 v1.14.12{{ end }}
+	{{ if ( eq .ProjectInfo.DbType "mysql")}}github.com/go-sql-driver/mysql v1.6.0{{ end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "gin") }}
+	github.com/gin-gonic/gin v1.7.7
+	{{- end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "fiber") }}
+	github.com/gofiber/fiber/v2 v2.18.0
+	github.com/gofiber/helmet/v2 v2.2.1
+	{{- end }}
+)

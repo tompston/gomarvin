@@ -1,0 +1,102 @@
+{{ $project_name    := .ProjectInfo.Name -}}
+
+package database
+
+import (
+	"database/sql"
+
+	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
+	_ "github.com/mattn/go-sqlite3"
+	{{ end }}
+
+
+	{{ if ( eq .ProjectInfo.DbType "postgres")}}
+	"{{$project_name}}/settings"
+	 _ "github.com/lib/pq" 	
+	"fmt"
+	"os"
+	{{ end }}
+
+
+	{{ if ( eq .ProjectInfo.DbType "mysql")}}
+	"{{$project_name}}/settings"
+	"fmt"
+	"os"
+	_ "github.com/go-sql-driver/mysql"
+	{{ end }}
+	
+)
+
+
+
+
+{{- if ( eq .ProjectInfo.DbType "mysql") }}
+// create the dsn string from variables that are specified in the .env file
+func DsnString() string {
+	
+	settings.LoadEnvFile() // load all the env variables
+	USER := os.Getenv("DB_USER")
+	PASSW := os.Getenv("DB_PASSWORD")
+	DBNAME := os.Getenv("DB_NAME")
+	dsn := fmt.Sprintf("%s:%s@/%s", USER, PASSW, DBNAME)
+	return dsn
+	
+}
+{{ end }}
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.DbType "postgres") }}
+// create the dsn string from variables that are specified in the .env file
+func DsnString() string {
+
+	settings.LoadEnvFile() // load all the env variables
+	HOST := os.Getenv("HOST")
+	USER := os.Getenv("DB_USER")
+	PASSW := os.Getenv("DB_PASSWORD")
+	DBNAME := os.Getenv("DB_NAME")
+	PORT := os.Getenv("HOST_PORT")
+	SSLMODE := os.Getenv("SSLMODE")
+	TZ := os.Getenv("TZ")
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s", HOST, USER, PASSW, DBNAME, PORT, SSLMODE, TZ)
+	return dsn
+}
+{{ end }}
+
+
+
+
+
+func GetDbConn() (*sql.DB, error) {
+
+
+	{{ if ( eq .ProjectInfo.DbType "postgres")}}
+	db, err := sql.Open("postgres", DsnString())
+	if err != nil {
+		panic(err)
+	}
+	return db, err
+	{{ end }}
+
+
+	{{ if ( eq .ProjectInfo.DbType "sqlite")}}
+	db, err := sql.Open("sqlite3", "test.db")
+	if err != nil {
+		panic(err)
+	}
+	return db, err
+	{{ end }}
+
+
+	{{ if ( eq .ProjectInfo.DbType "mysql")}}
+	db, err := sql.Open("mysql", DsnString())
+	if err != nil {
+		panic(err)
+	}
+	return db, err
+	{{ end }}
+
+}

@@ -1,0 +1,73 @@
+{{ $project_name := .ProjectInfo.Name -}}
+
+package router
+
+
+import (
+	res "{{$project_name}}/utils/response"
+
+	{{ if ( eq .ProjectInfo.Framework "gin") 	}}"github.com/gin-gonic/gin"{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
+
+	{{/* if modules exist, import them */ -}}
+	{{ if .Modules -}} 
+	{{ range $module := .Modules -}}
+	{{/* if modules have endpoints, import module */ -}}
+	{{ if $module.Endpoints }} "{{$project_name}}/modules/{{ ConvertToLowercase $module.Name}}_module"
+	{{ end -}}
+	{{ end -}}
+	{{ end -}}
+)
+
+
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+
+func Endpoints(app *gin.Engine) {
+
+	app.GET("/", func(c *gin.Context) {
+		res.Response(c, 200, "", "Hello There!")
+	})
+
+	api := app.Group("{{.ProjectInfo.APIPrefix}}") // prefix for routes
+	_ = api
+	{
+	{{/* if modules exist, import them */ -}}
+	{{ if .Modules -}} 
+	{{- range $module := .Modules }}
+	{{ if $module.Endpoints }} {{ ConvertToLowercase $module.Name }}_module.Router__(api){{ end -}}
+	{{ end -}}
+	{{ end -}}
+	}
+
+}
+{{- end }}
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
+
+
+func Endpoints(app *fiber.App) {
+
+	// home_view
+	app.Get("/", func (c *fiber.Ctx) error {
+		return res.Response(c, 200, "", "Hello There!")
+	})
+
+	// add a prefix for the routes
+	api := app.Group("{{.ProjectInfo.APIPrefix}}")
+	_ = api
+
+	{{/* if modules exist, import them */ -}}
+	{{ if .Modules -}} 
+	{{- range $module := .Modules }}
+	{{ if $module.Endpoints }}{{ ConvertToLowercase $module.Name }}_module.Router__(app, api){{ end -}}
+	{{ end -}}
+	{{ end -}}
+}
+
+{{- end }}

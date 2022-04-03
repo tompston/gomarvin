@@ -1,0 +1,15 @@
+version: 1
+packages:
+  - path: "sqlc"          # name of the dir / package that holds the generated code
+    schema: "./sql/"      # path to the the dir that holds all of the tables
+    queries: "./sql/"     # path to the the dir that holds all of the queries 
+    engine: "postgresql"  # db type that will be used
+    emit_json_tags: true
+
+
+# Notes
+# - Link to SQLC Documentation -> https://docs.sqlc.dev/en/stable/
+# - If running on windows and need postgres support, install wsl and dowload sqlc binary to generate code
+# - The generated tables come with 3 predefined columns that would be used by most of the tables
+# - All of the "column_name" values are placeholders.  
+# - "-- name:" is followed by the name of the controller

@@ -1,0 +1,31 @@
+package validate
+
+
+import (
+	"github.com/go-playground/validator/v10"
+)
+
+
+// all credits go to this --> https://docs.gofiber.io/guide/validation
+type ErrorResponse struct {
+	FailedField string
+	Tag         string
+	Value       string
+}
+
+var NewValidator = validator.New()
+
+func ValidateStruct(i interface{}) []*ErrorResponse {
+	var errors []*ErrorResponse
+	err := NewValidator.Struct(i)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			var element ErrorResponse
+			element.FailedField = err.StructNamespace()
+			element.Tag = err.Tag()
+			element.Value = err.Param()
+			errors = append(errors, &element)
+		}
+	}
+	return errors
+}

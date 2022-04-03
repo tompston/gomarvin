@@ -1,0 +1,6 @@
+.DS_Store
+
+# ignore test builds and the build binary
+test/build/*/
+test/build/gomarvin
+gomarvin

@@ -1,0 +1,33 @@
+{{ $GOLANG_PORT     := .ProjectInfo.Port -}}
+{{ $PROJECT_NAME    := .ProjectInfo.Name -}}
+
+# {{$PROJECT_NAME}}
+
+### Init project structure
+
+```bash
+├── main.go             # holds the server
+├── router              # import and use module routes
+├── settings            # holds util functions for loading .env vars
+│   └── database        # holds a function that creates db connection with .env vars
+└── utils
+    ├── response        # predefined response function and messages
+    └── validate        # holds functions for validating payload structs
+```
+
+### Docker commands
+
+```bash
+# NOTE. Dockerfile can be improved
+# build the image
+docker build -t {{$PROJECT_NAME}} .
+
+# run and publish with the name of {{$PROJECT_NAME}}
+docker run --publish {{$GOLANG_PORT}}:{{$GOLANG_PORT}} --name {{$PROJECT_NAME}} {{$PROJECT_NAME}}
+
+# stop
+docker stop {{$PROJECT_NAME}}
+
+# remove 
+docker image rm {{$PROJECT_NAME}}
+```
