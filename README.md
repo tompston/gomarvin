@@ -70,4 +70,8 @@ git push
 
 GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
+git add .
+git commit -m "gomarvin: init release v0.1.0"
+git tag v0.1.0
+
  -->
