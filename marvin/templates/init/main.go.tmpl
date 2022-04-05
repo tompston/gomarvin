@@ -17,6 +17,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/helmet/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	{{ end }}
 )
 
@@ -41,6 +42,7 @@ func main() {
 func main() {
 	app := fiber.New()    	// create the server
 	app.Use(logger.New()) 	// logs the requests
+	app.Use(cors.New())		// allow fetch from frontend
 	app.Use(helmet.New()) 	// security headers
 	router.Endpoints(app) 	// use the routes that are defiend by the Url function
 	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) // import the .env int

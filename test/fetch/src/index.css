@@ -1,0 +1,36 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: "Helvetica Neue", arial, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+* {
+  box-sizing: border-box;
+}
+#app {
+  height: 100%;
+  text-align: center;
+  background-color: #202020;
+  color: #fff;
+  font-size: 1.5em;
+  padding-top: 100px;
+}
+.link {
+  color: #fff;
+}
+
+.test-btn {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 3px 20px;
+  cursor: pointer;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

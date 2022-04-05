@@ -35,6 +35,7 @@ reflex -r '\.go' -s -- sh -c "go run main.go"
 - [ ] Expand postman tests
 - [ ] figure out the next framework to add once this is done
 - [ ] gomarvin version in ts file
+- [ ] cors enabled at first
 
 ### Frontend
 
@@ -51,6 +52,7 @@ reflex -r '\.go' -s -- sh -c "go run main.go"
 - [x] refactor delete functions
 - [x] make things look nicer
 - [x] Create a new example with user module (registration, etc)
+- [x] darkmode
 - [ ] adjust styles for mobile
 - [ ] add more TS support
 
