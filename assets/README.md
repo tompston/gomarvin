@@ -32,9 +32,9 @@ reflex -r '\.go' -s -- sh -c "go run main.go"
 - [x] add mysql + sqlite support (functions.sql, sqlc.yaml, database.go, go.mod)
 - [ ] finish the TS functions that fetch the endpoints
 - [ ] refactor functions that generate templates with one module at a time
-- [ ] Ts endpoints key is interface
 - [ ] Expand postman tests
 - [ ] figure out the next framework to add once this is done
+- [ ] gomarvin version in ts file
 
 ### Frontend
 

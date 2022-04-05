@@ -38,7 +38,7 @@ for example in "${EXAMPLES[@]}"; do
     cd ${example}       # cd into the generated dir
     go mod tidy         # tidy things
     go mod download     # download dependencies at first
-    gofmt -s -w .       # format project
+    # gofmt -s -w .       # format project
     code .              # open in vscdoe
     cd ..               # go back to build dir to run the binary again
 

@@ -56,5 +56,3 @@ func RenameFileIfExists(original_path string, new_path string) {
 		}
 	}
 }
-
-

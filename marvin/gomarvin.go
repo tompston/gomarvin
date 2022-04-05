@@ -1,6 +1,9 @@
 package marvin
 
-import "fmt"
+import (
+	"fmt"
+	"os/exec"
+)
 
 func Run(cmd *CmdArgs) {
 
@@ -16,14 +19,19 @@ func Run(cmd *CmdArgs) {
 		GenerateModules(conf, *cmd)  // geenerate module dirs and controller files if exist
 		GenerateOptional(conf, *cmd) // generate things that are optional
 
+		FormatAfterGen() // run gofmt to format the project in the dir
+
 	} else {
-		fmt.Println("ERROR :: Could not find the config file!")
+		fmt.Println("* ERROR :: Could not find the config file!")
 	}
 
 	// go run main.go -config="./previous/gomarvin.json"
 }
 
-var CREATED_COL = "\033[32m"
+// run gofmt after codegen to format the generated code correctly / remove whitespace stuff
+func FormatAfterGen() {
+	cmd := exec.Command("gofmt", "-s", "-w", ".")
+	cmd.Run()
+}
 
-// var CREATED_MSG = fmt.Sprintf(string(CREATED_COL), "CREATED")
 var CREATED_MSG = "* CREATED"
