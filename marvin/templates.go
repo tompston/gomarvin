@@ -75,6 +75,7 @@ var template_functions = template.FuncMap{
 	// name the template function the same as the imported convert function for predictability
 	"ConvertToTitle":           conv.ConvertToTitle,
 	"ConvertToLowercase":       conv.ConvertToLowercase,
+	"ConvertToUppercase":       conv.ConvertToUppercase,
 	"ConvertToLowercaseTitle":  conv.ConvertToLowercaseTitle,
 	"ConvertToCamelCase":       conv.ConvertToCamelCase,
 	"ConvertToPlural":          conv.ConvertToPlural,

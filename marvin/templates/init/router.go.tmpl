@@ -8,6 +8,7 @@ import (
 
 	{{ if ( eq .ProjectInfo.Framework "gin") 	}}"github.com/gin-gonic/gin"{{ end }}
 	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "echo") }}"github.com/labstack/echo/v4"{{ end }}
 
 	{{/* if modules exist, import them */ -}}
 	{{ if .Modules -}} 
@@ -50,7 +51,6 @@ func Endpoints(app *gin.Engine) {
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 
-
 func Endpoints(app *fiber.App) {
 
 	// home_view
@@ -71,3 +71,32 @@ func Endpoints(app *fiber.App) {
 }
 
 {{- end }}
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "echo") }}
+
+func Endpoints(app *echo.Echo) {
+
+	// home_view
+	app.GET("/", func (c echo.Context) error {
+		return res.Response(c, 200, "", "Hello There!")
+	})
+
+	// add a prefix for the routes
+	api := app.Group("{{.ProjectInfo.APIPrefix}}")
+	_ = api
+
+	{{/* if modules exist, import them */ -}}
+	{{ if .Modules -}} 
+	{{- range $module := .Modules }}
+	{{ if $module.Endpoints }}{{ ConvertToLowercase $module.Name }}_module.Router__(api){{ end -}}
+	{{ end -}}
+	{{ end -}}
+}
+
+{{- end }}
+

@@ -2,9 +2,18 @@
 
 - Include faker?
 - Add form / xml fields for go structs?
+- [Go frameworks by stars](https://github.com/mingrammer/go-web-framework-stars)
 
 ```bash
+# update on save
 reflex -r '\.go' -s -- sh -c "go run main.go"
+
+# check ports
+sudo lsof -P -i TCP -s TCP:LISTEN
+
+# stop server on port 4444
+kill $(lsof -t -i:4444)
+
 ```
 
 ### codegen

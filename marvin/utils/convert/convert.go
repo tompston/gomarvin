@@ -10,6 +10,9 @@ func ConvertToTitle(i string) string {
 func ConvertToLowercase(i string) string {
 	return strings.ToLower(i)
 }
+func ConvertToUppercase(i string) string {
+	return strings.ToUpper(i)
+}
 func ConvertToLowercaseTitle(i string) string {
 	return strings.Title(strings.ToLower(i))
 }

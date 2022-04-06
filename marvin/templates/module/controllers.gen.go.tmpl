@@ -16,6 +16,7 @@ import (
 
 	{{ if ( eq .ProjectInfo.Framework "gin") }}"github.com/gin-gonic/gin"{{ end }}
 	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "echo") }}"github.com/labstack/echo/v4"{{ end }}
 )
 
 var data = ""
@@ -169,6 +170,78 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	{{ $URL_PARAM.Field }} := c.Params("{{ $URL_PARAM.Field}}")
 	_ = {{ $URL_PARAM.Field }}
 	{{ end }}
+
+	{{end}}
+	{{end -}}
+	
+	// get db connection
+	db, err := database.GetDbConn()
+	if err != nil {
+		return res.Response(c, 500, nil, res.DbConnErrorMessage(err.Error()))
+	}
+	defer db.Close()
+	_ = db
+
+	// query goes here
+
+	return res.Response(c, 200, data, "")
+}
+{{end}}
+{{- end }}
+
+
+
+
+
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "echo") }}
+
+func Router__(app *echo.Group) {
+	{{- range $endpoint := $endpoints }}
+	app.{{ ConvertToUppercase $endpoint.Method }}( __{{ $endpoint.ControllerName }}Url , __{{ $endpoint.ControllerName }}){{end}}
+}
+
+{{range $endpoint := $endpoints }}
+func __{{ $endpoint.ControllerName }}(c echo.Context) error {
+
+	{{/* if the Body array is not empty, validate it by calling the generated struct */ -}}
+	{{ if $endpoint.Body -}} 
+	// validate the sent json object
+	payload := new(__{{$endpoint.ControllerName}}Body)
+	if err := c.Bind(payload); err != nil {
+		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
+	}
+	if err := validate.ValidateStruct(payload); err != nil {
+		return res.Response(c, 400, err, res.FailedPayloadValidation)
+	}
+	_ = payload
+	
+	{{ end -}}
+
+	{{/* if the URLParams array is not empty, validate them  */ -}}
+	{{ if $endpoint.URLParams -}} 
+	{{- range $URL_PARAM := $endpoint.URLParams -}}
+
+	{{/* if the URLParams is string  */ -}}
+	{{- if ( eq $URL_PARAM.Type "string") }}
+	{{ $URL_PARAM.Field }}, err := strconv.Atoi(c.Param("{{ $URL_PARAM.Field}}"))
+	if err != nil {
+		return res.Response(c, 400, nil, res.ParamIsNotIntMessage)
+	}
+	_ = {{ $URL_PARAM.Field }}	
+	{{ end }}
+
+	{{/* if the URLParams is string  */ -}}
+	{{- if ( eq $URL_PARAM.Type "int") }}
+	{{ $URL_PARAM.Field }} := c.Param("{{ $URL_PARAM.Field}}")
+	_ = {{ $URL_PARAM.Field }}	
+	{{ end }}
+	
 
 	{{end}}
 	{{end -}}

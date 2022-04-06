@@ -4,6 +4,7 @@ package response
 import (
 	{{- if ( eq .ProjectInfo.Framework "gin") }}"github.com/gin-gonic/gin"{{ end }}
 	{{- if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
+	{{- if ( eq .ProjectInfo.Framework "echo") }}"github.com/labstack/echo/v4"{{ end }}
 	"{{.ProjectInfo.Name}}/settings"
 	"fmt"
 )
@@ -27,6 +28,7 @@ func DbConnErrorMessage(err_msg string) string {
 
 
 
+
 // all of the correct status codes can be found here -> https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 func Response(c *gin.Context, status int, data interface{}, message string) {
@@ -43,12 +45,35 @@ func Response(c *gin.Context, status int, data interface{}, message string) {
 
 
 
+
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 func Response(c *fiber.Ctx, status int,data interface{}, message string) error {
 	return c.Status(status).JSON(fiber.Map{
 		"status":  status,
 		"message": message,
 		"data":    data,
+	})
+}
+{{- end }}
+
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "echo") }}
+type Res struct {
+	Status  int         `json:"status" xml:"status"`
+	Message string      `json:"message" xml:"message"`
+	Data    interface{} `json:"data" xml:"data"`
+}
+
+func Response(c echo.Context, status int, data interface{}, message string) error {
+	return c.JSON(status, &Res{
+		Status:  status,
+		Message: message,
+		Data:    data,
 	})
 }
 {{- end }}

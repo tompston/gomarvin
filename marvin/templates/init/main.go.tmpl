@@ -19,7 +19,14 @@ import (
 	"github.com/gofiber/helmet/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	{{ end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "echo") }}
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	{{ end }}
 )
+
 
 
 
@@ -37,6 +44,7 @@ func main() {
 
 
 
+
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 
 func main() {
@@ -47,5 +55,23 @@ func main() {
 	router.Endpoints(app) 	// use the routes that are defiend by the Url function
 	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) // import the .env int
 	app.Listen(fmt.Sprintf("localhost:%d", port))			// run the server
+}
+{{- end }}
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "echo") }}
+
+func main() {
+	app := echo.New()				// create the server
+	app.Use(middleware.Logger())	// logs the requests
+	app.Use(middleware.Recover())
+	app.Use(middleware.CORS())		// allow fetch from frontend
+	router.Endpoints(app)			// use the routes that are defiend by the Url function
+
+	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) // import the .env int
+	app.Logger.Fatal(app.Start(fmt.Sprintf("localhost:%d", port)))
 }
 {{- end }}
