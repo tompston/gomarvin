@@ -1,14 +1,17 @@
-<!-- # [gomarvin -- links to documentation]() -->
-
 <h4 align="center">
-<img src="./assets/gomarvin.svg" width="84">
+<img src="./assets/gomarvin.svg" height="50">
 
-<!-- <h1 align="center">
-gomarvin -->
 
 <h3 align="center">
 
-Generate controllers for Gin / Fiber REST servers.
+Generate boilerplate for Gin / Fiber REST servers.
+
+<h4 align="left">
+
+- Init server + controllers for endpoints
+- Typescript fetch functions for generated endpoints
+- SQL schema tables for modules
+
 
 ## [Documentation](https://gomarvin.pages.dev/docs)
 
@@ -64,12 +67,24 @@ gomarvin -h
 ```
 
 <!--
+
+# gen 
+go run main.go -dangerous_regen="true" -config="./previous/gomarvin-v0.1.0.json"
+cd server_with_gin_next
+go mod tidy
+go mod download
+gofmt -s -w .
+code . 
+cd ..
+
+# 
 git add .
 git commit -m "next"
 git push
 
 GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
+# release stuff
 git add .
 git commit -m "gomarvin: init release v0.1.0"
 git tag v0.1.0

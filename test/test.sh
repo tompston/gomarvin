@@ -43,12 +43,3 @@ for example in "${EXAMPLES[@]}"; do
     cd ..               # go back to build dir to run the binary again
 
 done
-
-
-# go run main.go -dangerous_regen="true" -config="./previous/gomarvin-v0.1.0.json"
-# cd server_with_gin_next
-# go mod tidy
-# go mod download
-# gofmt -s -w .
-# code . 
-# cd ..

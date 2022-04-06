@@ -30,12 +30,13 @@ reflex -r '\.go' -s -- sh -c "go run main.go"
 - [x] explain init project structure in README.md
 - [x] add the new body types to TS interfaces
 - [x] add mysql + sqlite support (functions.sql, sqlc.yaml, database.go, go.mod)
-- [ ] finish the TS functions that fetch the endpoints
+- [x] finish the TS functions that fetch the endpoints
+- [x] cors enabled at first (Fiber only, currently)
+- [x] gomarvin version in ts file
+- [x] Expand postman tests
 - [ ] refactor functions that generate templates with one module at a time
-- [ ] Expand postman tests
 - [ ] figure out the next framework to add once this is done
-- [ ] gomarvin version in ts file
-- [ ] cors enabled at first
+
 
 ### Frontend
 
@@ -65,7 +66,6 @@ reflex -r '\.go' -s -- sh -c "go run main.go"
 - [Go types](https://golangbyexample.com/all-basic-data-types-golang/)
 - [fiber bodyparser thing]( https://docs.gofiber.io/api/ctx#bodyparser )
 - [software versioning]( https://stackoverflow.com/questions/2864448/best-practice-software-versioning )
-
 - [ ] gitignore .gen files
 
  -->
