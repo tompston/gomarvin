@@ -9,7 +9,7 @@
 			"name": "comment-crud",
 			"item": [
 				{
-					"name": "/comment/",
+					"name": "/comment",
 					"event": [
 						{
 							"listen": "test",
@@ -176,7 +176,7 @@
 					"response": []
 				},
 				{
-					"name": "/comment/",
+					"name": "/comment",
 					"event": [
 						{
 							"listen": "test",
@@ -228,7 +228,7 @@
 					"response": []
 				},
 				{
-					"name": "/comment/",
+					"name": "/comment",
 					"event": [
 						{
 							"listen": "test",
@@ -280,7 +280,7 @@
 					"response": []
 				},
 				{
-					"name": "/comment/",
+					"name": "/comment",
 					"event": [
 						{
 							"listen": "test",
@@ -373,7 +373,7 @@
 							"raw": "{}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:4444/api/v1/user/",
+							"raw": "http://127.0.0.1:4444/api/v1/user",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -385,8 +385,7 @@
 							"path": [
 								"api",
 								"v1",
-								"user",
-								""
+								"user"
 							]
 						}
 					},
@@ -399,15 +398,50 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"400, Invalid JSON Object! message\", function () {",
-									"    pm.expect(pm.response.json()).to.deep.equal(",
+									"let res1 = {",
+									"    \"data\": \"Unprocessable Entity\",",
+									"    \"message\": \"Invalid JSON Object!\",",
+									"    \"status\": 400",
+									"}",
+									"",
+									"let res2 = {",
+									"    \"status\": 400,",
+									"    \"message\": \"Payload validation failed!\",",
+									"    \"data\": [",
 									"        {",
-									"            \"data\": \"Unprocessable Entity\",",
-									"            \"message\": \"Invalid JSON Object!\",",
-									"            \"status\": 400",
+									"            \"FailedField\": \"__CreateUserBody.Username\",",
+									"            \"Tag\": \"required\",",
+									"            \"Value\": \"\"",
+									"        },",
+									"        {",
+									"            \"FailedField\": \"__CreateUserBody.Email\",",
+									"            \"Tag\": \"required\",",
+									"            \"Value\": \"\"",
+									"        },",
+									"        {",
+									"            \"FailedField\": \"__CreateUserBody.Age\",",
+									"            \"Tag\": \"required\",",
+									"            \"Value\": \"\"",
+									"        },",
+									"        {",
+									"            \"FailedField\": \"__CreateUserBody.Password\",",
+									"            \"Tag\": \"required\",",
+									"            \"Value\": \"\"",
 									"        }",
-									"    )",
-									"});"
+									"    ]",
+									"}",
+									"",
+									"pm.test(\"400, Invalid JSON Object! message\", function () {",
+									"    pm.expect(pm.response.json()).to.deep.equal(res1)",
+									"});",
+									"",
+									"pm.test(\"400, Validator message\", function () {",
+									"    pm.expect(pm.response.json()).to.deep.equal(res2)",
+									"});",
+									"",
+									"",
+									"",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -454,7 +488,6 @@
 								"exec": [
 									"pm.test(\"Payload validation failed! message in response\", function () {",
 									"    const res = pm.response.json();",
-									"    // pm.expect(res.message).to.eql(' validation fail!');",
 									"    pm.expect(res.message).to.eql('Payload validation failed!');",
 									"});",
 									""

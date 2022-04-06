@@ -57,7 +57,7 @@ export async function {{$endpoint.ControllerName}}(
 {{- end -}}
 {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}}
 ): Promise<Response> {
-  const url = `${API.url}{{$endpoint.URL}}/{{- range $url_param := $endpoint.URLParams }}${ {{$url_param.Field}}}/{{- end }}`;
+  const url = `${API.url}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${ {{$url_param.Field}}}{{- end }}`;
   return await fetch(url, {
     method: "{{$endpoint.Method}}",
     headers: API.init_headers,

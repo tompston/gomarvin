@@ -46,7 +46,6 @@ kill $(lsof -t -i:4444)
 - [ ] refactor functions that generate templates with one module at a time
 - [ ] figure out the next framework to add once this is done
 
-
 ### Frontend
 
 - [x] Saving whole object to localstorage on change
@@ -66,15 +65,10 @@ kill $(lsof -t -i:4444)
 - [ ] adjust styles for mobile
 - [ ] add more TS support
 
-
-<!--
-
 ## References
 
 - [sqlite example](https://github.com/bopbi/simple-todo/blob/master/simple-todo.go)
 - [Go types](https://golangbyexample.com/all-basic-data-types-golang/)
-- [fiber bodyparser thing]( https://docs.gofiber.io/api/ctx#bodyparser )
-- [software versioning]( https://stackoverflow.com/questions/2864448/best-practice-software-versioning )
-- [ ] gitignore .gen files
-
- -->
+- [fiber bodyparser thing](https://docs.gofiber.io/api/ctx#bodyparser)
+- [software versioning](https://stackoverflow.com/questions/2864448/best-practice-software-versioning)
+- [detecting last item inside for loop](https://stackoverflow.com/questions/50085038/detect-last-item-inside-an-array-using-range-inside-go-templates)
