@@ -68,7 +68,7 @@
           "controller_name": "GetUserPost",
           "url_params": [
             {
-              "field": "username",
+              "field": "user_id",
               "type": "int"
             },
             {

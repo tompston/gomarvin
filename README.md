@@ -3,9 +3,13 @@
 
 <h2 align="center">Generate boilerplate for Gin / Fiber REST servers.</h2>
 
+Generate:
+
 - Init server + controllers for endpoints
-- Typescript fetch functions for generated endpoints
-- SQL schema tables for modules
+- Typescript fetch functions with type-checked payloads for generated endpoints
+- SQL files with tables and queries for controllers
+
+from one config file
 
 ## [Documentation](https://gomarvin.pages.dev/docs)
 

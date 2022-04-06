@@ -85,7 +85,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
 
 	{{/* if the URLParams is string  */ -}}
-	{{- if ( eq $URL_PARAM.Type "string") }}
+	{{- if ( eq $URL_PARAM.Type "int") }}
 	{{ $URL_PARAM.Field }}, err := strconv.Atoi(c.Param("{{ $URL_PARAM.Field}}"))
 	if err != nil {
 		res.Response(c, 400, nil, res.ParamIsNotIntMessage)
@@ -95,7 +95,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 	{{ end }}
 
 	{{/* if the URLParams is string  */ -}}
-	{{- if ( eq $URL_PARAM.Type "int") }}
+	{{- if ( eq $URL_PARAM.Type "string") }}
 	{{ $URL_PARAM.Field }} := c.Param("{{ $URL_PARAM.Field}}")
 	_ = {{ $URL_PARAM.Field }}	
 	{{ end }}
@@ -228,7 +228,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
 
 	{{/* if the URLParams is string  */ -}}
-	{{- if ( eq $URL_PARAM.Type "string") }}
+	{{- if ( eq $URL_PARAM.Type "int") }}
 	{{ $URL_PARAM.Field }}, err := strconv.Atoi(c.Param("{{ $URL_PARAM.Field}}"))
 	if err != nil {
 		return res.Response(c, 400, nil, res.ParamIsNotIntMessage)
@@ -237,7 +237,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	{{ end }}
 
 	{{/* if the URLParams is string  */ -}}
-	{{- if ( eq $URL_PARAM.Type "int") }}
+	{{- if ( eq $URL_PARAM.Type "string") }}
 	{{ $URL_PARAM.Field }} := c.Param("{{ $URL_PARAM.Field}}")
 	_ = {{ $URL_PARAM.Field }}	
 	{{ end }}

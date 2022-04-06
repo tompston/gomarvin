@@ -7,21 +7,23 @@
 # ./test/test.sh
 
 CURRENT_DIR=$PWD
-GOMARVIN_V='v0.1.0'
-GOMARVIN_CONFIG_BASE="gomarvin-${GOMARVIN_V}-"
-GOMARVIN_CONFIG_DIR=${CURRENT_DIR}/examples/
+GOMARVIN_V='v0.2.0'
+GOMARVIN_CONFIG_BASE="gomarvin-"
+GOMARVIN_CONFIG_DIR=${CURRENT_DIR}/examples/${GOMARVIN_V}/
 BUILD_DIR=./test/build/
 DANGEROUS_REGEN="true"
 
 # Variable used in the config file name + the name of the
 # generated dir ( "project_info": "name": "gin_ecommerce" )
 EXAMPLES=(
-  # 'gin'
-  # 'gin_ecommerce'
-  # 'fiber'
-  'fiber_ecommerce'
-  'echo_ecommerce'
+  'gin'
+  'gin_with_modules'
+  'fiber'
+  'fiber_with_modules'
+  'echo'
+  'echo_with_modules'
 )
+
 
 # build binary to ./test/build/ and cd into the dir
 GOOS=darwin GOARCH=arm64 go build -o ${BUILD_DIR}gomarvin main.go 
@@ -44,3 +46,10 @@ for example in "${EXAMPLES[@]}"; do
     cd ..               # go back to build dir to run the binary again
 
 done
+
+#   'gin'
+#   'gin_ecommerce'
+#   'fiber'
+#   'fiber_ecommerce'
+#   'echo_ecommerce'
+# )

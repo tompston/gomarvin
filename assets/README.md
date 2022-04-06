@@ -1,8 +1,11 @@
 ### Ideas
 
 - Include faker?
+- `-config` can also fetch urls that hold the configs (easier setup)
 - Add form / xml fields for go structs?
 - [Go frameworks by stars](https://github.com/mingrammer/go-web-framework-stars)
+
+### Commands
 
 ```bash
 # update on save
@@ -45,6 +48,7 @@ kill $(lsof -t -i:4444)
 - [x] Expand postman tests
 - [ ] refactor functions that generate templates with one module at a time
 - [ ] figure out the next framework to add once this is done
+- [ ] 
 
 ### Frontend
 
@@ -64,6 +68,7 @@ kill $(lsof -t -i:4444)
 - [x] darkmode
 - [ ] adjust styles for mobile
 - [ ] add more TS support
+- [ ] mention possible bugs if older go versions are picked
 
 ## References
 
