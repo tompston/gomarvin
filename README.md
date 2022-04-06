@@ -1,18 +1,11 @@
 <h4 align="center">
 <img src="./assets/gomarvin.svg" height="50">
 
-<h2 align="center">
-
-Generate boilerplate for Gin / Fiber REST servers.
-
-<h4 align="left">
-
-<div style="text-align: left;">
+<h2 align="center">Generate boilerplate for Gin / Fiber REST servers.</h2>
 
 - Init server + controllers for endpoints
 - Typescript fetch functions for generated endpoints
 - SQL schema tables for modules
-</div>
 
 ## [Documentation](https://gomarvin.pages.dev/docs)
 
