@@ -15,7 +15,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"GetComments\", function () {",
+									"pm.test(\"/comments\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(",
 									"        {",
 									"            \"data\": \"\",",
@@ -70,7 +70,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"GetComments\", function () {",
+									"pm.test(\"/comments/{id} correct param response\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(",
 									"        {",
 									"            \"data\": \"\",",
@@ -126,7 +126,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"GetComments\", function () {",
+									"pm.test(\"/comments/{id} incorrect param - string\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(",
 									"        {",
 									"            \"data\": null,",
@@ -176,13 +176,69 @@
 					"response": []
 				},
 				{
+					"name": "/comment/{id} false-param (string) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"/comments/{id} incorrect param - float\", function () {",
+									"    pm.expect(pm.response.json()).to.deep.equal(",
+									"        {",
+									"            \"data\": null,",
+									"            \"message\": \"Only integers as URL params!\",",
+									"            \"status\": 400",
+									"        }",
+									"    )",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:4444/api/v1/comment/3.14",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4444",
+							"path": [
+								"api",
+								"v1",
+								"comment",
+								"3.14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/comment",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"GetComments\", function () {",
+									"pm.test(\"/comment post response\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(",
 									"        {",
 									"            \"data\": \"\",",
@@ -234,7 +290,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"GetComments\", function () {",
+									"pm.test(\"/comment put response\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(",
 									"        {",
 									"            \"data\": \"\",",
@@ -286,7 +342,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"GetComments\", function () {",
+									"pm.test(\"/comment delete response\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(",
 									"        {",
 									"            \"data\": \"\",",
@@ -343,11 +399,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"// pm.test(\"Res 200\", function () {",
-									"//     pm.response.to.have.status(200);",
-									"// });",
-									"",
-									"pm.test(\"200, Res is valid\", function () {",
+									"pm.test(\"/user, empty body\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(",
 									"        {",
 									"            \"data\": \"\",",
@@ -386,6 +438,110 @@
 								"api",
 								"v1",
 								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/{id} param valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"/user/:id Valid url\", function () {",
+									"    pm.expect(pm.response.json()).to.deep.equal(",
+									"        {",
+									"            \"data\": \"\",",
+									"            \"message\": \"\",",
+									"            \"status\": 200",
+									"        }",
+									"    )",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:4444/api/v1/user/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4444",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/{id} param invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"/user/{id} - string passed when int expected\", function () {",
+									"    pm.expect(pm.response.json()).to.deep.equal(",
+									"        {",
+									"            \"status\": 400,",
+									"            \"message\": \"Only integers as URL params!\",",
+									"            \"data\": null",
+									"        }",
+									"    )",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:4444/api/v1/user/qwe1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4444",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"qwe1"
 							]
 						}
 					},
@@ -431,15 +587,13 @@
 									"    ]",
 									"}",
 									"",
-									"pm.test(\"400, Invalid JSON Object! message\", function () {",
+									"pm.test(\"/user/register Empty body returns Invalid JSON Object! msg\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(res1)",
 									"});",
 									"",
-									"pm.test(\"400, Validator message\", function () {",
+									"pm.test(\"/user/register Empty body returns Validator msg\", function () {",
 									"    pm.expect(pm.response.json()).to.deep.equal(res2)",
 									"});",
-									"",
-									"",
 									"",
 									""
 								],
@@ -486,7 +640,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Payload validation failed! message in response\", function () {",
+									"pm.test(\"/user/register Payload validation failed! message present in response\", function () {",
 									"    const res = pm.response.json();",
 									"    pm.expect(res.message).to.eql('Payload validation failed!');",
 									"});",
@@ -582,58 +736,6 @@
 								"v1",
 								"user",
 								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/user/register valid payload",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"GetComments\", function () {",
-									"    pm.expect(pm.response.json()).to.deep.equal(",
-									"        {",
-									"            \"data\": \"\",",
-									"            \"message\": \"\",",
-									"            \"status\": 200",
-									"        }",
-									"    )",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:4444/api/v1/comment",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "4444",
-							"path": [
-								"api",
-								"v1",
-								"comment"
 							]
 						}
 					},
