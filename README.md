@@ -1,17 +1,18 @@
 <h4 align="center">
 <img src="./assets/gomarvin.svg" height="50">
 
-
-<h3 align="center">
+<h2 align="center">
 
 Generate boilerplate for Gin / Fiber REST servers.
 
 <h4 align="left">
 
+<div style="text-align: left;">
+
 - Init server + controllers for endpoints
 - Typescript fetch functions for generated endpoints
 - SQL schema tables for modules
-
+</div>
 
 ## [Documentation](https://gomarvin.pages.dev/docs)
 
@@ -68,16 +69,16 @@ gomarvin -h
 
 <!--
 
-# gen 
+# gen
 go run main.go -dangerous_regen="true" -config="./previous/gomarvin-v0.1.0.json"
 cd server_with_gin_next
 go mod tidy
 go mod download
 gofmt -s -w .
-code . 
+code .
 cd ..
 
-# 
+#
 git add .
 git commit -m "next"
 git push
