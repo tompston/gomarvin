@@ -1,11 +1,11 @@
-import * as F from "../../build/fiber_ecommerce/main.gen";
+import * as F from "../../build/fiber_with_modules/main.gen";
 
 export function App() {
   async function Test() {
     
     /** -- user test */
     console.log("GetUsers()", await (await F.GetUsers()).json());
-    console.log("GetUser(1)", await (await F.GetUser(1)).json());
+    console.log("GetUser(1)", await (await F.GetUserById(1)).json());
     console.log(
       "CreateUser (INVALID)",
       await (

@@ -1,5 +1,5 @@
 <h4 align="center">
-<img src="./assets/gomarvin.svg" height="50">
+<img src="./assets/gomarvin.svg" height="59">
 
 <h2 align="center">Generate boilerplate for Gin / Fiber REST servers.</h2>
 
@@ -7,7 +7,7 @@ Generate:
 
 - Init server + controllers for endpoints
 - Typescript fetch functions with type-checked payloads for generated endpoints
-- SQL files with tables and queries for controllers
+- SQL files with tables and queries for controllers ( Postgres )
 
 from one config file
 
@@ -38,9 +38,6 @@ gomarvin
 
 # run this if custom config file name or path
 gomarvin -config="PATH_TO_CONFIG"
-
-# to format the project after each codegen, also run this
-gofmt -s -w .
 ```
 
 4. run lower commands
@@ -49,7 +46,6 @@ gofmt -s -w .
 cd GENERATED_SERVER
 go mod tidy
 go mod download
-gofmt -s -w .
 go run main.go
 ```
 
@@ -62,6 +58,14 @@ gomarvin -h
       Specify path to the gomarvin config file (default "gomarvin.json")
 -dangerous_regen
       Regenerate everything. If set to true, init server will be regenerated and  all previous changes will be lost (default "false")
+```
+
+### Notes
+
+If formatting does not work, run this
+
+```
+gofmt -s -w .
 ```
 
 <!--
@@ -84,9 +88,9 @@ GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
 # release stuff
 git add .
-git commit -m "gomarvin: init release v0.1.0"
-git tag v0.1.0
-git push origin v0.1.0
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.1.0
+git commit -m "gomarvin: release v0.2.0"
+git tag v0.2.0
+git push origin v0.2.0
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.2.0
 
  -->
