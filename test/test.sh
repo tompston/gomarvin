@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
+# newman run ./test/postman/gomarvin-tests.postman_collection.json
 
 # from the root
 # chmod u+x ./test/test.sh
@@ -16,19 +17,17 @@ DANGEROUS_REGEN="true"
 # Variable used in the config file name + the name of the
 # generated dir ( "project_info": "name": "gin_ecommerce" )
 EXAMPLES=(
-  'gin'
-  'gin_with_modules'
+  # 'gin'
+  # 'gin_with_modules'
   'fiber'
   'fiber_with_modules'
   'echo'
   'echo_with_modules'
 )
 
-
 # build binary to ./test/build/ and cd into the dir
 GOOS=darwin GOARCH=arm64 go build -o ${BUILD_DIR}gomarvin main.go 
 cd ${BUILD_DIR}
-
 
 for example in "${EXAMPLES[@]}"; do
 
@@ -38,18 +37,27 @@ for example in "${EXAMPLES[@]}"; do
     # generate the project
     ./gomarvin -dangerous_regen=${DANGEROUS_REGEN} -config=${CONFIG_PATH}
 
-    cd ${example}       # cd into the generated dir
-    go mod tidy         # tidy things
-    go mod download     # download dependencies at first
-    # gofmt -s -w .       # format project
-    code .              # open in vscdoe
+    cd ${example}           # cd into the generated dir
+    go mod tidy             # tidy things
+    go mod download         # download dependencies at first
+    # gofmt -s -w .         # format project
+    code .                  # open in vscdoe
+
+    # run postman tests on servers that hold the testable endpoints
+    # TODO : figure out how to echo only summary
+    if [[ ${example} == *"with_modules"* ]]; then
+
+        echo "------------- Running postman tests for ${example} !"
+
+        # run the generated server in the background on port 4444
+        nohup go run main.go &  
+        # npm install -g newman to run the tests from shell
+        newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
+        # stop server after tests  # kill $(lsof -t -i:4444)
+        kill -9 $(lsof -t -i:4444)
+    
+    fi
+    
     cd ..               # go back to build dir to run the binary again
 
 done
-
-#   'gin'
-#   'gin_ecommerce'
-#   'fiber'
-#   'fiber_ecommerce'
-#   'echo_ecommerce'
-# )
