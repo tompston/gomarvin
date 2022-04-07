@@ -79,7 +79,7 @@ gofmt -s -w .
 code .
 cd ..
 
-#
+
 git add .
 git commit -m "next"
 git push
