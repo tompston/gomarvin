@@ -60,6 +60,31 @@ gomarvin -h
       Regenerate everything. If set to true, init server will be regenerated and  all previous changes will be lost (default "false")
 ```
 
+### Generated Typescript fetch functions usage example
+
+```js
+// import the generated file
+import * as F from "../../build/fiber_with_modules/main.gen";
+
+async function FetchGetUserByIdEndpoint() {
+  let res = await F.GetUserById(1);
+  let users = await res.json();
+  console.log(users);
+}
+
+async function FetchCreateUserEndpoint() {
+  let res = await F.CreateUser({
+    username: "qweqwe",
+    email: "qwe@qwe.com",
+    age: 20,
+    password: "very-long-and-good-password",
+  });
+
+  let users = await res.json();
+  console.log(users);
+}
+```
+
 ### Notes
 
 If formatting does not work, run this
