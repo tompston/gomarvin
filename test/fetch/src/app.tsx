@@ -2,7 +2,6 @@ import * as F from "../../build/fiber_with_modules/main.gen";
 
 export function App() {
   async function Test() {
-    
     /** -- user test */
     console.log("GetUsers()", await (await F.GetUsers()).json());
     console.log("GetUser(1)", await (await F.GetUserById(1)).json());
@@ -29,12 +28,30 @@ export function App() {
       ).json()
     );
 
-   /** -- comment test */
+    /** -- comment test */
     console.log("GetComment(1)", await (await F.GetComment(1)).json());
     console.log("GetComments()", await (await F.GetComments()).json());
     console.log("CreateComment()", await (await F.CreateComment()).json());
     console.log("DeleteComment()", await (await F.DeleteComment()).json());
     console.log("UpdateComment()", await (await F.UpdateComment()).json());
+  }
+
+  async function FetchGetUsersEndpoint() {
+    let res = await F.GetUserById(1);
+    let users = await res.json();
+    console.log(users);
+  }
+
+  async function FetchCreateUserEndpoint() {
+    let res = await F.CreateUser({
+      username: "qweqwe",
+      email: "qwe@qwe.com",
+      age: 20,
+      password: "very-long-and-good-password",
+    });
+
+    let users = await res.json();
+    console.log(users);
   }
 
   return (
@@ -44,6 +61,12 @@ export function App() {
           Test
         </div>
       </div>
+
+      {/*  */}
+              <div class="flex-center--">
+          <div onClick={FetchGetUsersEndpoint} class="test-btn">FetchGetUsersEndpoint</div>
+          <div onClick={FetchCreateUserEndpoint} class="test-btn">FetchCreateUserEndpoint</div>
+        </div>
     </>
   );
 }
