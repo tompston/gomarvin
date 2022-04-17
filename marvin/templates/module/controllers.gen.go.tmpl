@@ -41,7 +41,6 @@ const (
 )
 
 {{ range $endpoint := $endpoints }}
-{{/* if the endpoint Body is not empty, generate a struct with it*/ -}}
 {{ if $endpoint.Body -}} 
 type __{{$endpoint.ControllerName}}Body struct {
 	{{- range $body_field := $endpoint.Body }}
@@ -67,7 +66,6 @@ func Router__(app *gin.RouterGroup) {
 {{range $endpoint := $endpoints }}
 func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
-	{{/* if the Body array is not empty, validate it by calling the generated struct */ -}}
 	{{ if $endpoint.Body -}} 
 	// validate the sent json object
 	payload := new(__{{$endpoint.ControllerName}}Body)
@@ -82,7 +80,6 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 	
 	{{ end -}}
 
-	{{/* if the URLParams array is not empty, validate them  */ -}}
 	{{ if $endpoint.URLParams -}} 
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
 
@@ -96,7 +93,6 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 	_ = {{ $URL_PARAM.Field }}	
 	{{ end }}
 
-	{{/* if the URLParams is string  */ -}}
 	{{- if ( eq $URL_PARAM.Type "string") }}
 	{{ $URL_PARAM.Field }} := c.Param("{{ $URL_PARAM.Field}}")
 	_ = {{ $URL_PARAM.Field }}	
@@ -132,7 +128,6 @@ func Router__(app *fiber.App, api fiber.Router) {
 {{range $endpoint := $endpoints }}
 func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 
-	{{/* if the Body array is not empty, validate it by calling the generated struct */ -}}
 	{{ if $endpoint.Body -}} 
 	// validate the sent json object
 	payload := new(__{{$endpoint.ControllerName}}Body)
@@ -145,11 +140,9 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	
 	{{ end -}}
 
-	{{/* if the URLParams array is not empty, validate them  */ -}}
 	{{ if $endpoint.URLParams -}} 
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
 
-	{{/* if the URLParams is string  */ -}}
 	{{- if ( eq $URL_PARAM.Type "int") }}
 	{{ $URL_PARAM.Field }}, err := strconv.Atoi(c.Params("{{ $URL_PARAM.Field}}"))
 	if err != nil {
@@ -158,7 +151,6 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	_ = {{ $URL_PARAM.Field }}
 	{{ end }}
 
-	{{/* if the URLParams is string  */ -}}
 	{{- if ( eq $URL_PARAM.Type "string") }}
 	{{ $URL_PARAM.Field }} := c.Params("{{ $URL_PARAM.Field}}")
 	_ = {{ $URL_PARAM.Field }}
@@ -171,7 +163,7 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 
 	return res.Response(c, 200, data, "")
 }
-{{end}}
+{{ end }}
 {{- end }}
 
 
@@ -194,7 +186,6 @@ func Router__(app *echo.Group) {
 {{range $endpoint := $endpoints }}
 func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 
-	{{/* if the Body array is not empty, validate it by calling the generated struct */ -}}
 	{{ if $endpoint.Body -}} 
 	// validate the sent json object
 	payload := new(__{{$endpoint.ControllerName}}Body)
@@ -224,7 +215,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	{{ end }}
 	
 
-	{{end}}
+	{{ end }}
 	{{end -}}
 	
 	// query goes here

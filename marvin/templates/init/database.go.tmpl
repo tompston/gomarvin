@@ -53,13 +53,15 @@ func DsnString() string {
 func DsnString() string {
 
 	settings.LoadEnvFile() // load all the env variables
-	HOST := os.Getenv("HOST")
+	
+	HOST := os.Getenv("DB_HOST")
 	USER := os.Getenv("DB_USER")
 	PASSW := os.Getenv("DB_PASSWORD")
 	DBNAME := os.Getenv("DB_NAME")
-	PORT := os.Getenv("HOST_PORT")
-	SSLMODE := os.Getenv("SSLMODE")
-	TZ := os.Getenv("TZ")
+	PORT := os.Getenv("DB_PORT")
+	SSLMODE := os.Getenv("DB_SSLMODE")
+	TZ := os.Getenv("DB_TZ")
+
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s", 
 				HOST, USER, PASSW, DBNAME, PORT, SSLMODE, TZ)
 	return dsn

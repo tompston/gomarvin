@@ -5,6 +5,7 @@
 
 - controllers.gen.go added to gitignore
 - controllers don't call the  `database.GetDbConn()` function anymore. Instead, use the settings.DB 
+- renamed .env db variables
 
  -->
 
