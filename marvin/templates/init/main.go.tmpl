@@ -6,6 +6,7 @@ package main
 import (
 	"{{$project_name}}/router"
 	"{{$project_name}}/settings"
+	"{{$project_name}}/settings/database"
 	"fmt"
 	"strconv"
 
@@ -34,6 +35,9 @@ import (
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 
 func main() {
+
+	database.Connect()		// get db connection
+
 	app := gin.Default() 	// create the server
 	router.Endpoints(app) 	// use endpoints
 	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) 	// import the .env int
@@ -48,6 +52,9 @@ func main() {
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 
 func main() {
+
+	database.Connect()		// get db connection
+
 	app := fiber.New()    	// create the server
 	app.Use(logger.New()) 	// logs the requests
 	app.Use(cors.New())		// allow fetch from frontend
@@ -65,6 +72,9 @@ func main() {
 {{- if ( eq .ProjectInfo.Framework "echo") }}
 
 func main() {
+
+	database.Connect()		// get db connection
+
 	app := echo.New()				// create the server
 	app.Use(middleware.Logger())	// logs the requests
 	app.Use(middleware.Recover())

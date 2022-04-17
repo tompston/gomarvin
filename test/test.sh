@@ -41,7 +41,7 @@ for example in "${EXAMPLES[@]}"; do
     go mod tidy             # tidy things
     go mod download         # download dependencies at first
     # gofmt -s -w .         # format project
-    code .                  # open in vscdoe
+    
 
     # run postman tests on servers that hold the testable endpoints
     # TODO : figure out how to echo only summary
@@ -51,10 +51,11 @@ for example in "${EXAMPLES[@]}"; do
 
         # run the generated server in the background on port 4444
         nohup go run main.go &  
-        # npm install -g newman to run the tests from shell
         newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
         # stop server after tests  # kill $(lsof -t -i:4444)
         kill -9 $(lsof -t -i:4444)
+
+        code .                  # open in vscdoe
     
     fi
     

@@ -28,7 +28,7 @@ import (
 )
 
 
-
+var DB *sql.DB
 
 {{- if ( eq .ProjectInfo.DbType "mysql") }}
 // create the dsn string from variables that are specified in the .env file
@@ -48,7 +48,6 @@ func DsnString() string {
 
 
 
-
 {{- if ( eq .ProjectInfo.DbType "postgres") }}
 // create the dsn string from variables that are specified in the .env file
 func DsnString() string {
@@ -61,7 +60,8 @@ func DsnString() string {
 	PORT := os.Getenv("HOST_PORT")
 	SSLMODE := os.Getenv("SSLMODE")
 	TZ := os.Getenv("TZ")
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s", HOST, USER, PASSW, DBNAME, PORT, SSLMODE, TZ)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s", 
+				HOST, USER, PASSW, DBNAME, PORT, SSLMODE, TZ)
 	return dsn
 }
 {{ end }}
@@ -69,34 +69,30 @@ func DsnString() string {
 
 
 
-
+// call a db connection without using the global db variable
 func GetDbConn() (*sql.DB, error) {
 
+	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()) {{ end }}
+	{{ if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db") {{ end }}
+	{{ if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", DsnString()){{ end }}
 
-	{{ if ( eq .ProjectInfo.DbType "postgres")}}
-	db, err := sql.Open("postgres", DsnString())
 	if err != nil {
 		panic(err)
 	}
 	return db, err
-	{{ end }}
+
+}
 
 
-	{{ if ( eq .ProjectInfo.DbType "sqlite")}}
-	db, err := sql.Open("sqlite3", "test.db")
+func Connect() {
+
+	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()){{ end }}
+	{{ if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db"){{ end }}
+	{{ if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", DsnString()){{ end }}
+
 	if err != nil {
 		panic(err)
 	}
-	return db, err
-	{{ end }}
-
-
-	{{ if ( eq .ProjectInfo.DbType "mysql")}}
-	db, err := sql.Open("mysql", DsnString())
-	if err != nil {
-		panic(err)
-	}
-	return db, err
-	{{ end }}
+	DB = db
 
 }

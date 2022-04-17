@@ -93,6 +93,11 @@ If formatting does not work, run this
 gofmt -s -w .
 ```
 
+
+#### Credits to used packages
+- [go-pluralize](https://github.com/gertd/go-pluralize)
+- [strcase](https://github.com/iancoleman/strcase)
+
 <!--
 
 # gen

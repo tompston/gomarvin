@@ -26,7 +26,11 @@ var _ = func() {
 	var _ = strconv.IntSize
 	var _ = validate.NewValidator
 	var _ = time.August
+	var _ = database.DB
 }
+
+// uncomment lower line to call generated sqlc functions with db connection
+// var Queries = sqlc.New(database.DB)
 
 const (
 {{ range $endpoint := $endpoints }}
@@ -46,7 +50,6 @@ type __{{$endpoint.ControllerName}}Body struct {
 }
 {{ end -}}
 {{ end }}
-
 
 
 
@@ -76,7 +79,6 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 		res.Response(c, 400, err, res.FailedPayloadValidation)
 		return
 	}
-	_ = payload
 	
 	{{ end -}}
 
@@ -104,15 +106,6 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 	{{end}}
 	{{end -}}
-	
-	// get db connection
-	db, err := database.GetDbConn()
-	if err != nil {
-		res.Response(c, 500, nil, res.DbConnErrorMessage(err.Error()))
-		return
-	}
-	defer db.Close()
-	_ = db
 
 	// query goes here
 
@@ -174,14 +167,6 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	{{end}}
 	{{end -}}
 	
-	// get db connection
-	db, err := database.GetDbConn()
-	if err != nil {
-		return res.Response(c, 500, nil, res.DbConnErrorMessage(err.Error()))
-	}
-	defer db.Close()
-	_ = db
-
 	// query goes here
 
 	return res.Response(c, 200, data, "")
@@ -219,15 +204,12 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	if err := validate.ValidateStruct(payload); err != nil {
 		return res.Response(c, 400, err, res.FailedPayloadValidation)
 	}
-	_ = payload
 	
 	{{ end -}}
 
-	{{/* if the URLParams array is not empty, validate them  */ -}}
 	{{ if $endpoint.URLParams -}} 
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
 
-	{{/* if the URLParams is string  */ -}}
 	{{- if ( eq $URL_PARAM.Type "int") }}
 	{{ $URL_PARAM.Field }}, err := strconv.Atoi(c.Param("{{ $URL_PARAM.Field}}"))
 	if err != nil {
@@ -236,7 +218,6 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	_ = {{ $URL_PARAM.Field }}	
 	{{ end }}
 
-	{{/* if the URLParams is string  */ -}}
 	{{- if ( eq $URL_PARAM.Type "string") }}
 	{{ $URL_PARAM.Field }} := c.Param("{{ $URL_PARAM.Field}}")
 	_ = {{ $URL_PARAM.Field }}	
@@ -246,14 +227,6 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	{{end}}
 	{{end -}}
 	
-	// get db connection
-	db, err := database.GetDbConn()
-	if err != nil {
-		return res.Response(c, 500, nil, res.DbConnErrorMessage(err.Error()))
-	}
-	defer db.Close()
-	_ = db
-
 	// query goes here
 
 	return res.Response(c, 200, data, "")
