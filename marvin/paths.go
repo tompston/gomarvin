@@ -6,6 +6,7 @@ var init_project_dirs = [...]string{
 	"/utils/response/",
 	"/utils/validate/",
 	"/router/",
+	"/public/",
 }
 
 var init_project_templates = []Template{

@@ -29,21 +29,16 @@ import (
 )
 
 
-
-
-
-
-
 func main() {
 
 	database.Connect()		// get db connection
 	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) 	// import the .env int
+	address := fmt.Sprintf("localhost:%d", port)
 
 
 	{{- if ( eq .ProjectInfo.Framework "gin") }}
 	app := gin.Default() 	// create the server
-	router.Endpoints(app) 	// use endpoints
-	app.Run(fmt.Sprintf("localhost:%d", port))               	// run the server
+	app.Run(address)               	// run the server
 	{{- end }}
 
 
@@ -52,8 +47,7 @@ func main() {
 	app.Use(logger.New()) 	// logs the requests
 	app.Use(cors.New())		// allow fetch from frontend
 	app.Use(helmet.New()) 	// security headers
-	router.Endpoints(app) 	// use the routes that are defiend by the Url function
-	app.Listen(fmt.Sprintf("localhost:%d", port))			// run the server
+	app.Listen(address)			// run the server
 	{{- end }}
 
 
@@ -62,7 +56,8 @@ func main() {
 	app.Use(middleware.Logger())	// logs the requests
 	app.Use(middleware.Recover())
 	app.Use(middleware.CORS())		// allow fetch from frontend
-	router.Endpoints(app)			// use the routes that are defiend by the Url function
-	app.Logger.Fatal(app.Start(fmt.Sprintf("localhost:%d", port)))
+	app.Logger.Fatal(app.Start(address))
 	{{- end }}
+
+	router.Endpoints(app) 	// use endpoints
 }
