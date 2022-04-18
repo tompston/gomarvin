@@ -95,6 +95,8 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
+
+	// assign *sql.DB to the global variable
 	DB = db
 
 }

@@ -32,56 +32,37 @@ import (
 
 
 
-{{- if ( eq .ProjectInfo.Framework "gin") }}
+
 
 func main() {
 
 	database.Connect()		// get db connection
+	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) 	// import the .env int
 
+
+	{{- if ( eq .ProjectInfo.Framework "gin") }}
 	app := gin.Default() 	// create the server
 	router.Endpoints(app) 	// use endpoints
-	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) 	// import the .env int
 	app.Run(fmt.Sprintf("localhost:%d", port))               	// run the server
-}
-{{- end }}
+	{{- end }}
 
 
-
-
-
-{{- if ( eq .ProjectInfo.Framework "fiber") }}
-
-func main() {
-
-	database.Connect()		// get db connection
-
+	{{- if ( eq .ProjectInfo.Framework "fiber") }}
 	app := fiber.New()    	// create the server
 	app.Use(logger.New()) 	// logs the requests
 	app.Use(cors.New())		// allow fetch from frontend
 	app.Use(helmet.New()) 	// security headers
 	router.Endpoints(app) 	// use the routes that are defiend by the Url function
-	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) // import the .env int
 	app.Listen(fmt.Sprintf("localhost:%d", port))			// run the server
-}
-{{- end }}
+	{{- end }}
 
 
-
-
-
-{{- if ( eq .ProjectInfo.Framework "echo") }}
-
-func main() {
-
-	database.Connect()		// get db connection
-
+	{{- if ( eq .ProjectInfo.Framework "echo") }}
 	app := echo.New()				// create the server
 	app.Use(middleware.Logger())	// logs the requests
 	app.Use(middleware.Recover())
 	app.Use(middleware.CORS())		// allow fetch from frontend
 	router.Endpoints(app)			// use the routes that are defiend by the Url function
-
-	port, _ := strconv.Atoi(settings.Config("GOLANG_PORT")) // import the .env int
 	app.Logger.Fatal(app.Start(fmt.Sprintf("localhost:%d", port)))
+	{{- end }}
 }
-{{- end }}
