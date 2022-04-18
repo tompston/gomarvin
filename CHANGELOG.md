@@ -1,14 +1,15 @@
 # Gomarvin changelog
 
-<!--
+<!-- ### v0.2.1.
 
-- controllers.gen.go added to gitignore
-- controllers don't call the  `database.GetDbConn()` function anymore. Instead, use the settings.DB
-- renamed .env db variables
-- moved typescript fetch functions to a public dir, so that i  could be hosted and shared by frontend easier.
-- 
-
- -->
+- `controllers.gen.go` added to gitignore, as it is meant to be a placeholder file
+- controllers don't call the `database.GetDbConn()` function anymore. Instead, use settings.DB variable. refactored to shorten the lenght of controllers
+- renamed `.env` db variables
+- added a bash command that can rename generated sql files in the `/db/sql/` dir
+- creating `/public/` dir on initial run so that it could
+  - hold generated typescript fetch file so that it could be shared by frontend easier.
+  - hold the gomarvin config 
+  - optionally host config files ( implemented manually ) -->
 
 ### v0.2.0
 

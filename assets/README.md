@@ -17,6 +17,9 @@ sudo lsof -P -i TCP -s TCP:LISTEN
 # stop server on port 4444
 kill $(lsof -t -i:4444)
 
+# rename placeholder sql files from the root of the generated server
+for i in ./db/sql/*.sql.gen.txt;  do mv "$i" "${i/.sql.gen.txt}.sql"; done
+
 ```
 
 ### codegen
@@ -48,7 +51,7 @@ kill $(lsof -t -i:4444)
 - [x] Expand postman tests
 - [ ] refactor functions that generate templates with one module at a time
 - [ ] figure out the next framework to add once this is done
-- [ ] 
+- [ ]
 
 ### Frontend
 
@@ -80,3 +83,4 @@ kill $(lsof -t -i:4444)
 - [db conn thing](https://www.alexedwards.net/blog/organising-database-access)
 - [db conn example](https://github.com/teten-nugraha/go-dev-productify/blob/60b53e9e7f985b9e349889e8ffdb37a11ab1bd7f/config/dbConnect.go)
 - [new orm thing](https://bun.uptrace.dev/)
+- [bash command to rename file extensions](https://osxdaily.com/2017/05/12/change-all-file-extensions-command-line/)
