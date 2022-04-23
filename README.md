@@ -1,7 +1,7 @@
 <h4 align="center">
 <img src="./assets/gomarvin.svg" height="59">
 
-<h2 align="center">Generate boilerplate for Gin / Fiber / Echo REST servers.</h2>
+<h2 align="center">Generate boilerplate for Gin / Fiber / Echo / Chi REST servers.</h2>
 
 Generate:
 
