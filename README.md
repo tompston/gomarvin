@@ -120,15 +120,15 @@ git push
 
 GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
-# release stuff
+# release
 git add .
-git commit -m "gomarvin: release v0.2.0"
-git tag v0.2.0
-git push origin v0.2.0
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.2.0
+git commit -m "gomarvin: release v0.3.0"
+git tag v0.3.0
+git push origin v0.3.0
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.3.0
 
 
 
 
 
- -->
+-->

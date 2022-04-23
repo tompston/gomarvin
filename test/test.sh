@@ -43,12 +43,15 @@ for example in "${EXAMPLES[@]}"; do
     go mod tidy             # tidy things
     go mod download         # download dependencies at first
     code .
+    
 
     # run postman tests on servers that hold the testable endpoints
     # TODO : figure out how to echo only summary
     if [[ ${example} == *"with_modules"* ]]; then
 
         echo "------- Running postman tests for ${example} !"
+
+        
         # nohup go run main.go &  
         # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
         # kill -9 $(lsof -t -i:4444)
