@@ -17,12 +17,14 @@ DANGEROUS_REGEN="true"
 # Variable used in the config file name + the name of the
 # generated dir ( "project_info": "name": "gin_ecommerce" )
 EXAMPLES=(
-  'gin'
-  'gin_with_modules'
-  'fiber'
-  'fiber_with_modules'
-  'echo'
-  'echo_with_modules'
+  # 'gin'
+  # 'gin_with_modules'
+  # 'fiber'
+  # 'fiber_with_modules'
+  # 'echo'
+  # 'echo_with_modules'
+  'chi'
+  'chi_with_modules'
 )
 
 # build binary to ./test/build/ and cd into the dir

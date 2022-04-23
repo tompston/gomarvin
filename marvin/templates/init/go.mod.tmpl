@@ -28,4 +28,10 @@ require (
 	{{- if ( eq .ProjectInfo.Framework "echo") }}
 	github.com/labstack/echo/v4 v4.7.2
 	{{- end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "chi") }}
+	github.com/go-chi/chi/v5 v5.0.7
+	github.com/go-chi/cors v1.2.1
+	{{- end }}
 )

@@ -26,6 +26,14 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	{{ end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "chi") }}
+	"net/http"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
+	{{ end }}
 )
 
 
@@ -57,6 +65,24 @@ func main() {
 	app.Use(middleware.Recover())
 	app.Use(middleware.CORS())		// allow fetch from frontend
 	app.Logger.Fatal(app.Start(address))
+	{{- end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "chi") }}
+	app := chi.NewRouter()
+	app.Use(middleware.Logger)
+	app.Use(middleware.Recoverer)
+	app.Use(middleware.AllowContentType("application/json", "text/xml"))
+	allowedCharsets := []string{"UTF-8", "Latin-1", ""}
+	app.Use(middleware.ContentCharset(allowedCharsets...))
+	app.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		AllowCredentials: false,
+		MaxAge:           300,
+	}))
+	http.ListenAndServe(address, app)
 	{{- end }}
 
 	router.Endpoints(app) 	// use endpoints
