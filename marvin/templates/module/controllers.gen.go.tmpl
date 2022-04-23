@@ -42,7 +42,7 @@ var _ = func() {
 	{{ range $endpoint := $endpoints }}
 	__{{ $endpoint.ControllerName}}Url =  "{{ $endpoint.URL }}
 		{{- if $endpoint.URLParams -}}
-				{{- range $URL_PARAM := $endpoint.URLParams }}/{ {{$URL_PARAM.Field}} }{{- end -}}
+				{{- range $URL_PARAM := $endpoint.URLParams }}/{{ WrapInCurlyBraces $URL_PARAM.Field }}{{- end -}}
 		{{- end -}}"
 	{{- end }}
 	)

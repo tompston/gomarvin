@@ -20,9 +20,9 @@ EXAMPLES=(
   # 'gin'
   # 'gin_with_modules'
   # 'fiber'
-  'fiber_with_modules'
+  # 'fiber_with_modules'
   # 'echo'
-  'echo_with_modules'
+  # 'echo_with_modules'
   # 'chi'
   'chi_with_modules'
 )

@@ -71,6 +71,10 @@ func GenerateSingleTemplate(conf Config, template_path string, output_dir string
 func GenerateTemplatesFromModules(conf Config, template_path string, output_dir string) {
 }
 
+func WrapInCurlyBraces(x string) string {
+	return fmt.Sprintf("{" + x + "}")
+}
+
 var template_functions = template.FuncMap{
 	// name the template function the same as the imported convert function for predictability
 	"ConvertToTitle":           conv.ConvertToTitle,
@@ -80,6 +84,7 @@ var template_functions = template.FuncMap{
 	"ConvertToCamelCase":       conv.ConvertToCamelCase,
 	"ConvertToPlural":          conv.ConvertToPlural,
 	"ConvertToLowercasePlural": conv.ConvertToLowercasePlural,
+	"WrapInCurlyBraces":        WrapInCurlyBraces,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"
