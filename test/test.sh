@@ -8,7 +8,7 @@
 # ./test/test.sh
 
 CURRENT_DIR=$PWD
-GOMARVIN_V='v0.2.0'
+GOMARVIN_V='v0.3.0'
 GOMARVIN_CONFIG_BASE="gomarvin-"
 GOMARVIN_CONFIG_DIR=${CURRENT_DIR}/examples/${GOMARVIN_V}/
 BUILD_DIR=./test/build/

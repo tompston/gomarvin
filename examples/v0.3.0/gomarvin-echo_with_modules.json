@@ -1,15 +1,15 @@
 {
   "project_info": {
     "go_version": 1.17,
-    "name": "chi_with_modules",
-    "framework": "chi",
+    "name": "echo_with_modules",
+    "framework": "echo",
     "port": 4444,
     "api_prefix": "/api/v1",
     "config_version": 0.1,
-    "db_type": "postgres",
+    "db_type": "sqlite",
     "include_sql": true,
     "include_ts_fetch": true,
-    "gomarvin_version": "v0.2.0"
+    "gomarvin_version": "v0.3.0"
   },
   "modules": [
     {

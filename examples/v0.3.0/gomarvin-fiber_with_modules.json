@@ -1,0 +1,237 @@
+{
+  "project_info": {
+    "go_version": 1.17,
+    "name": "fiber_with_modules",
+    "framework": "fiber",
+    "port": 4444,
+    "api_prefix": "/api/v1",
+    "config_version": 0.1,
+    "db_type": "postgres",
+    "include_sql": true,
+    "include_ts_fetch": true,
+    "gomarvin_version": "v0.3.0"
+  },
+  "modules": [
+    {
+      "name": "User",
+      "endpoints": [
+        {
+          "url": "/user",
+          "method": "GET",
+          "controller_name": "GetUsers",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/user/register",
+          "method": "POST",
+          "controller_name": "CreateUser",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required,min=2,max=140",
+              "field": "username",
+              "type": "string"
+            },
+            {
+              "validate": "required,email",
+              "field": "email",
+              "type": "string"
+            },
+            {
+              "validate": "required",
+              "field": "age",
+              "type": "int"
+            },
+            {
+              "validate": "required,min=10,max=300",
+              "field": "password",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "url": "/user",
+          "method": "GET",
+          "controller_name": "GetUserById",
+          "url_params": [
+            {
+              "field": "user_id",
+              "type": "int"
+            }
+          ],
+          "body": []
+        },
+        {
+          "url": "/user",
+          "method": "GET",
+          "controller_name": "GetUserByName",
+          "url_params": [
+            {
+              "field": "username",
+              "type": "string"
+            },
+            {
+              "field": "post_slug",
+              "type": "string"
+            }
+          ],
+          "body": []
+        },
+        {
+          "url": "/user",
+          "method": "GET",
+          "controller_name": "GetUserPost",
+          "url_params": [
+            {
+              "field": "username",
+              "type": "string"
+            },
+            {
+              "field": "post_id",
+              "type": "int"
+            }
+          ],
+          "body": []
+        }
+      ]
+    },
+    {
+      "name": "Test",
+      "endpoints": [
+        {
+          "url": "/test",
+          "method": "GET",
+          "controller_name": "TestBodyTypes",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "",
+              "field": "string",
+              "type": "string"
+            },
+            {
+              "validate": "required",
+              "field": "int",
+              "type": "int"
+            },
+            {
+              "validate": "required",
+              "field": "int_sixtyfour",
+              "type": "int64"
+            },
+            {
+              "validate": "required",
+              "field": "int_thirtytwo",
+              "type": "int32"
+            },
+            {
+              "validate": "required",
+              "field": "int_sixteen",
+              "type": "int16"
+            },
+            {
+              "validate": "required",
+              "field": "int_eight",
+              "type": "int8"
+            },
+            {
+              "validate": "required",
+              "field": "float_sixtyfour",
+              "type": "float64"
+            },
+            {
+              "validate": "required",
+              "field": "float_thirtytwo",
+              "type": "float32"
+            },
+            {
+              "validate": "required",
+              "field": "time_time",
+              "type": "time.Time"
+            },
+            {
+              "validate": "required",
+              "field": "bool",
+              "type": "bool"
+            },
+            {
+              "validate": "required",
+              "field": "uint",
+              "type": "uint"
+            },
+            {
+              "validate": "required",
+              "field": "uint_sixtyfour",
+              "type": "uint64"
+            },
+            {
+              "validate": "required",
+              "field": "uint_thirtytwo",
+              "type": "uint32"
+            },
+            {
+              "validate": "required",
+              "field": "uint_sixteen",
+              "type": "uint16"
+            },
+            {
+              "validate": "required",
+              "field": "uint_eight",
+              "type": "uint8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "endpoints": []
+    },
+    {
+      "name": "Comment",
+      "endpoints": [
+        {
+          "url": "/comment",
+          "method": "GET",
+          "controller_name": "GetComments",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "GET",
+          "controller_name": "GetComment",
+          "url_params": [
+            {
+              "field": "id",
+              "type": "int"
+            }
+          ],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "POST",
+          "controller_name": "CreateComment",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "DELETE",
+          "controller_name": "DeleteComment",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "PUT",
+          "controller_name": "UpdateComment",
+          "url_params": [],
+          "body": []
+        }
+      ]
+    }
+  ]
+}
