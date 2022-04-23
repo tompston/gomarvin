@@ -44,10 +44,13 @@ func main() {
 	address := fmt.Sprintf("localhost:%d", port)
 
 
+
 	{{- if ( eq .ProjectInfo.Framework "gin") }}
 	app := gin.Default() 	// create the server
+	router.Endpoints(app) 	// use endpoints
 	app.Run(address)               	// run the server
 	{{- end }}
+
 
 
 	{{- if ( eq .ProjectInfo.Framework "fiber") }}
@@ -55,8 +58,10 @@ func main() {
 	app.Use(logger.New()) 	// logs the requests
 	app.Use(cors.New())		// allow fetch from frontend
 	app.Use(helmet.New()) 	// security headers
+	router.Endpoints(app) 	// use endpoints
 	app.Listen(address)			// run the server
 	{{- end }}
+
 
 
 	{{- if ( eq .ProjectInfo.Framework "echo") }}
@@ -64,8 +69,10 @@ func main() {
 	app.Use(middleware.Logger())	// logs the requests
 	app.Use(middleware.Recover())
 	app.Use(middleware.CORS())		// allow fetch from frontend
+	router.Endpoints(app) 	// use endpoints
 	app.Logger.Fatal(app.Start(address))
 	{{- end }}
+
 
 
 	{{- if ( eq .ProjectInfo.Framework "chi") }}
@@ -82,8 +89,8 @@ func main() {
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
+	router.Endpoints(app) 	// use endpoints
 	http.ListenAndServe(address, app)
 	{{- end }}
-
-	router.Endpoints(app) 	// use endpoints
+	
 }

@@ -37,13 +37,34 @@ var _ = func() {
 // uncomment lower line to call generated sqlc functions with db connection
 // var Queries = sqlc.New(database.DB)
 
-const (
-{{ range $endpoint := $endpoints }}
- __{{ $endpoint.ControllerName}}Url =  "{{ $endpoint.URL }}
-{{- if $endpoint.URLParams -}}
-{{- range $URL_PARAM := $endpoint.URLParams }}/:{{$URL_PARAM.Field}}{{- end }}
-{{- end -}}"{{- end }}
-)
+{{- if ( eq .ProjectInfo.Framework "chi") }}
+	const (
+	{{ range $endpoint := $endpoints }}
+	__{{ $endpoint.ControllerName}}Url =  "{{ $endpoint.URL }}
+		{{- if $endpoint.URLParams -}}
+				{{- range $URL_PARAM := $endpoint.URLParams }}/{ {{$URL_PARAM.Field}} }{{- end -}}
+		{{- end -}}"
+	{{- end }}
+	)
+{{- end -}}
+
+
+{{- if or 
+	( eq .ProjectInfo.Framework "gin")
+	( eq .ProjectInfo.Framework "fiber")
+	( eq .ProjectInfo.Framework "echo")
+}}
+	const (
+	{{ range $endpoint := $endpoints }}
+	__{{ $endpoint.ControllerName}}Url =  "{{ $endpoint.URL }}
+		{{- if $endpoint.URLParams -}}
+				{{- range $URL_PARAM := $endpoint.URLParams }}/:{{$URL_PARAM.Field}}{{- end -}}
+		{{- end -}}"
+	{{- end }}
+	)
+{{- end -}}
+
+
 
 {{ range $endpoint := $endpoints }}
 {{ if $endpoint.Body -}} 
@@ -255,9 +276,11 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	payload := new(__{{$endpoint.ControllerName}}Body)
 	if err := json.NewDecoder(r.Body).Decode(payload); err != nil {
 		res.Response(w, 400, err.Error(), res.FailedJsonValidation)
+		return
 	}
 	if err := validate.ValidateStruct(payload); err != nil {
 		res.Response(w, 400, err, res.FailedPayloadValidation)
+		return
 	}
 	
 	{{ end -}}
@@ -269,6 +292,7 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	{{ $URL_PARAM.Field }}, err := strconv.Atoi(chi.URLParam(r, "{{ $URL_PARAM.Field}}"))
 	if err != nil {
 		res.Response(w, 400, nil, res.ParamIsNotIntMessage)
+		return
 	}
 	_ = {{ $URL_PARAM.Field }}	
 	{{ end }}

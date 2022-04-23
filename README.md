@@ -123,4 +123,25 @@ git tag v0.2.0
 git push origin v0.2.0
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.2.0
 
+
+
+
+
+
+const (
+{{ range $endpoint := $endpoints }}
+ __{{ $endpoint.ControllerName}}Url =  "{{ $endpoint.URL }}
+	
+	{{- if $endpoint.URLParams -}}
+		{{- if ( eq .ProjectInfo.Framework "chi") -}}
+			{{- range $URL_PARAM := $endpoint.URLParams }}/:{{$URL_PARAM.Field}}{{- end -}}
+		{{- else -}}
+			{{- range $URL_PARAM := $endpoint.URLParams }}/:{{$URL_PARAM.Field}}{{- end -}}
+		{{- end -}}"	
+	{{- end -}}
+{{- end }}
+)
+
+
+{{- if ( eq .ProjectInfo.Framework "chi") -}}{{- end -}}
  -->
