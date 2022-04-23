@@ -93,8 +93,8 @@ If formatting does not work, run this
 gofmt -s -w .
 ```
 
-
 #### Credits to used packages
+
 - [go-pluralize](https://github.com/gertd/go-pluralize)
 - [strcase](https://github.com/iancoleman/strcase)
 
@@ -108,6 +108,10 @@ go mod download
 gofmt -s -w .
 code .
 cd ..
+
+
+// uncomment lower line to call generated sqlc functions with db connection
+// var Queries = sqlc.New(database.DB)
 
 
 git add .
@@ -127,21 +131,4 @@ GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.2.0
 
 
 
-
-const (
-{{ range $endpoint := $endpoints }}
- __{{ $endpoint.ControllerName}}Url =  "{{ $endpoint.URL }}
-	
-	{{- if $endpoint.URLParams -}}
-		{{- if ( eq .ProjectInfo.Framework "chi") -}}
-			{{- range $URL_PARAM := $endpoint.URLParams }}/:{{$URL_PARAM.Field}}{{- end -}}
-		{{- else -}}
-			{{- range $URL_PARAM := $endpoint.URLParams }}/:{{$URL_PARAM.Field}}{{- end -}}
-		{{- end -}}"	
-	{{- end -}}
-{{- end }}
-)
-
-
-{{- if ( eq .ProjectInfo.Framework "chi") -}}{{- end -}}
  -->

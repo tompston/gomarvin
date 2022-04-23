@@ -115,8 +115,8 @@ func Endpoints(app *chi.Mux) {
 
 	{{ if .Modules -}} 
 		{{- range $module := .Modules }}
-			{{ if $module.Endpoints }}{{ ConvertToLowercase $module.Name }}_module.Router__(api){{ end -}}
-		{{ end -}}
+			{{ if $module.Endpoints -}}{{ ConvertToLowercase $module.Name }}_module.Router__(api){{ end -}}
+		{{- end }}
 	{{ end -}}
 }
 

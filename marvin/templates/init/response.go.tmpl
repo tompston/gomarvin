@@ -18,7 +18,7 @@ import (
 const (
     ParamIsNotIntMessage = "Only integers as URL params!"
     FailedDbConnMessage = "Could not connect to the database!"
-	FailedJsonValidation = "Invalid JSON Object!"
+	FailedJsonValidation = "Invalid JSON sent!"
 	FailedPayloadValidation = "Payload validation failed!"
 )
 
@@ -31,9 +31,9 @@ type Res struct {
 // return the full error message only during debug
 func DbConnErrorMessage(err_msg string) string {
 	if !(settings.DEBUG) {
-		return fmt.Sprintln("Could not connect to the database!")
+		return fmt.Sprintln(FailedDbConnMessage)
 	}
-	return fmt.Sprintln("Could not connect to the database: ", err_msg)
+	return fmt.Sprintln(FailedDbConnMessage, err_msg)
 }
 
 

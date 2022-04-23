@@ -23,7 +23,7 @@ import (
 	{{ end }}
 )
 
-var data = ""
+// var data = ""
 
 // remove import errors
 var _ = func() {
@@ -34,8 +34,6 @@ var _ = func() {
 	var _ = json.RawMessage("")
 }
 
-// uncomment lower line to call generated sqlc functions with db connection
-// var Queries = sqlc.New(database.DB)
 
 {{- if ( eq .ProjectInfo.Framework "chi") }}
 	const (
@@ -131,7 +129,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 	// query goes here
 
-	res.Response(c, 200, data, "")
+	res.Response(c, 200, nil, "")
 }
 {{end}}
 {{- end }}
@@ -187,7 +185,7 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	
 	// query goes here
 
-	return res.Response(c, 200, data, "")
+	return res.Response(c, 200, nil, "")
 }
 {{ end }}
 {{- end }}
@@ -246,7 +244,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	
 	// query goes here
 
-	return res.Response(c, 200, data, "")
+	return res.Response(c, 200, nil, "")
 }
 {{end}}
 {{- end }}
@@ -308,7 +306,7 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	
 	// query goes here
 
-	res.Response(w, 200, data, "")
+	res.Response(w, 200, nil, "")
 }
 {{end}}
 {{- end }}
