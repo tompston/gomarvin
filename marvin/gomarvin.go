@@ -7,25 +7,26 @@ import (
 
 func Run(cmd *CmdArgs) {
 
-	// fmt.Println(*&cmd.Config)
+	if PathExists(cmd.ConfigPath) { // if gomarvin.json or provided config file exists
 
-	if PathExists(cmd.ConfigPath) { //
-		// fmt.Println("Cmd arg Test value ::", cmd.ConfigPath) // inspec args
-		// conf := ReadConfig(*&cmd.ConfigPath)                 // read json config file
 		conf := ReadConfig(cmd.ConfigPath) // read json config file
-		// fmt.Println(conf)
 
-		GenerateInit(conf, *cmd)     // generate init dirs and files if project dir does not exist or dangerous_regen="true"
-		GenerateModules(conf, *cmd)  // geenerate module dirs and controller files if exist
-		GenerateOptional(conf, *cmd) // generate things that are optional
+		fmt.Println(cmd.FetchOnly)
 
-		FormatAfterGen() // run gofmt to format the project in the dir
+		// if fetch_only is set to default value ("false"), generate the whole project
+		if cmd.FetchOnly == "false" {
+			GenerateInit(conf, *cmd)     // generate init dirs and files if project dir does not exist or dangerous_regen="true"
+			GenerateModules(conf, *cmd)  // geenerate module dirs and controller files if exist
+			GenerateOptional(conf, *cmd) // generate things that are optional
+			FormatAfterGen()             // run gofmt to format the project in the dir
+		} else if cmd.FetchOnly == "true" {
+			// go run main.go -config="examples/v0.3.0/gomarvin-fiber_with_modules.json" -fetch_only="true"
+			GenerateOnlyFetchFunctions(conf, *cmd)
+		}
 
 	} else {
 		fmt.Println("* ERROR :: Could not find the config file!")
 	}
-
-	// go run main.go -config="./previous/gomarvin.json"
 }
 
 // run gofmt after codegen to format the generated code correctly / remove whitespace stuff

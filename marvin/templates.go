@@ -56,8 +56,8 @@ func GenerateTemplates(conf Config, templates []Template) {
 	}
 }
 
-// pass down template data , full path to template and output dir
-// 	* GenerateSingleTemplate(conf, "templates/optional/ts/main.gen.ts.tmpl", "/ts/")
+// pass down template data, full path to template and output dir
+// 	* GenerateSingleTemplate(conf, "templates/optional/ts/gomarvin.gen.ts.tmpl", "/ts/")
 func GenerateSingleTemplate(conf Config, template_path string, output_dir string) {
 	project_name := conf.ProjectInfo.Name
 	project_output_dir := fmt.Sprintf("./%s%s", project_name, output_dir)
@@ -67,9 +67,7 @@ func GenerateSingleTemplate(conf Config, template_path string, output_dir string
 	fmt.Println(CREATED_MSG, full_output_path)
 }
 
-//
-func GenerateTemplatesFromModules(conf Config, template_path string, output_dir string) {
-}
+func GenerateTemplatesFromModules(conf Config, template_path string, output_dir string) {}
 
 func WrapInCurlyBraces(x string) string {
 	return fmt.Sprintf("{" + x + "}")
@@ -88,3 +86,5 @@ var template_functions = template.FuncMap{
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"
+
+const typescript_fetch_template = "templates/optional/ts/gomarvin.gen.ts.tmpl"

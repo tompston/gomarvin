@@ -9,12 +9,12 @@ func GenerateOptional(conf Config, cmd CmdArgs) {
 	}
 
 	if conf.ProjectInfo.IncludeTsFetch {
-		GenerateTypescriptFetchFuncs(conf, cmd)
+		GenerateFetchFunctions(conf, cmd)
 	}
 }
 
-// if there are modules in the config, generate /main.gen.ts in the root of the project
-func GenerateTypescriptFetchFuncs(conf Config, cmd CmdArgs) {
+// if there are modules in the config, generate gomarvin.gen.ts in the /public dir
+func GenerateFetchFunctions(conf Config, cmd CmdArgs) {
 
 	public_dir := fmt.Sprintf("./%s/public/", conf.ProjectInfo.Name)
 
@@ -22,9 +22,17 @@ func GenerateTypescriptFetchFuncs(conf Config, cmd CmdArgs) {
 	if PathExists(public_dir) {
 		CreateDir(public_dir)
 	}
-
-	// if there are module in the config, create Typescript fetch functions
+	// if there are modules in the config file, create the typescript file
 	if len(conf.Modules) != 0 {
-		GenerateSingleTemplate(conf, "templates/optional/ts/main.gen.ts.tmpl", "/public/")
+		GenerateSingleTemplate(conf, typescript_fetch_template, "/public/")
+	}
+}
+
+// if there are modules in the config, generate gomarvin.gen.ts
+func GenerateOnlyFetchFunctions(conf Config, cmd CmdArgs) {
+	if len(conf.Modules) != 0 {
+		template_name, output_file := GenerateTemplateAndOutputName(typescript_fetch_template)
+		ExecuteTemplate(template_name, typescript_fetch_template, "./gomarvin.gen.ts", conf)
+		fmt.Println(CREATED_MSG, output_file)
 	}
 }

@@ -1,5 +1,11 @@
 # Gomarvin changelog
 
+<!--
+- added optional cmd arg for generating only the typescript fetch functions file
+- renamed generated main.gen.ts file to be gomarvin.gen.ts
+
+ -->
+
 ### v0.3.0
 
 - **Support for Chi framework**

@@ -4,3 +4,4 @@
 test/build/*/
 test/build/gomarvin
 gomarvin
+gomarvin.gen.ts

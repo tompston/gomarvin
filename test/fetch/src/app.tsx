@@ -1,4 +1,4 @@
-import * as F from "../../build/fiber_with_modules/main.gen";
+import * as F from "../../build/fiber_with_modules/gomarvin.gen";
 
 export function App() {
   async function Test() {

@@ -54,17 +54,19 @@ go run main.go
 ```
 gomarvin -h
 
--config
+-config string
       Specify path to the gomarvin config file (default "gomarvin.json")
--dangerous_regen
+-dangerous_regen string
       Regenerate everything. If set to true, init server will be regenerated and  all previous changes will be lost (default "false")
+-fetch_only string
+      generate only the typescript file that holds fetch function (default "false")
 ```
 
 ### Generated Typescript fetch functions usage example
 
 ```js
 // import the generated file
-import * as F from "../../build/fiber_with_modules/main.gen";
+import * as F from "../../build/fiber_with_modules/gomarvin.gen";
 
 async function FetchGetUserByIdEndpoint() {
   let res = await F.GetUserById(1);
@@ -101,7 +103,10 @@ gofmt -s -w .
 <!--
 
 # gen
-go run main.go -dangerous_regen="true" -config="./previous/gomarvin-v0.1.0.json"
+
+examples/v0.3.0/gomarvin-fiber_with_modules.json
+
+go run main.go -dangerous_regen="true" -config="./previous/gomarvin_-v0.3.0.json"
 cd server_with_gin_next
 go mod tidy
 go mod download
