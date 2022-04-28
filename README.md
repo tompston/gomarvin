@@ -58,9 +58,12 @@ gomarvin -h
       Specify path to the gomarvin config file (default "gomarvin.json")
 -dangerous_regen string
       Regenerate everything. If set to true, init server will be regenerated and  all previous changes will be lost (default "false")
+```
+
+<!--
 -fetch_only string
       generate only the typescript file that holds fetch function (default "false")
-```
+      -->
 
 ### Generated Typescript fetch functions usage example
 
