@@ -15,6 +15,18 @@ export const API = {
 };
 
 
+{{ if $modules }}
+  {{- range $module := $modules -}}
+    {{- if $module.Endpoints }}
+export const {{ $module.Name}}Endpoints = {
+{{- range $endpoint := $module.Endpoints }}
+  {{ $endpoint.ControllerName}},{{ end }}
+}
+    {{ end -}}
+  {{ end -}}
+{{ end  }}
+
+
 {{ if $modules -}}
   {{- range $module := $modules -}}
     {{- if $module.Endpoints }}
@@ -49,6 +61,9 @@ export interface {{$endpoint.ControllerName}}Body  {
     {{- if $module.Endpoints }}
       {{- range $endpoint := $module.Endpoints }}
 
+/**
+ * @returns {Promise} Promise of the fetch request
+ */
 export async function {{$endpoint.ControllerName}}(
 {{- if $endpoint.URLParams -}}
   {{- range $url_param := $endpoint.URLParams }}

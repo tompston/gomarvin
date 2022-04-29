@@ -17,13 +17,13 @@ DANGEROUS_REGEN="true"
 # Variable used in the config file name + the name of the
 # generated dir ( "project_info": "name": "gin_ecommerce" )
 EXAMPLES=(
-  'gin'
-  'gin_with_modules'
-  'fiber'
-  'fiber_with_modules'
-  'echo'
-  'echo_with_modules'
-  'chi'
+  # 'gin'
+  # 'gin_with_modules'
+  # 'fiber'
+  # 'fiber_with_modules'
+  # 'echo'
+  # 'echo_with_modules'
+  # 'chi'
   'chi_with_modules'
 )
 
@@ -49,9 +49,8 @@ for example in "${EXAMPLES[@]}"; do
     # TODO : figure out how to echo only summary
     if [[ ${example} == *"with_modules"* ]]; then
 
-        echo "------- Running postman tests for ${example} !"
+        echo "--- Running postman tests for ${example} !"
 
-        
         # nohup go run main.go &  
         # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
         # kill -9 $(lsof -t -i:4444)
