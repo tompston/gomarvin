@@ -3,10 +3,12 @@
 <!--
 - added optional cmd arg for generating only the typescript fetch functions file
 - renamed generated main.gen.ts file to be gomarvin.gen.ts
+- gitignore *.gen.txt (generated sql text files)
 - Improved generated fetch functions
   - JSDOC support
   - new variable that groups the fetch functions by the module 
- -->
+
+-->
 
 ### v0.3.0
 
