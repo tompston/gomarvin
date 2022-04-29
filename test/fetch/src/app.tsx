@@ -1,4 +1,4 @@
-import * as F from "../../build/fiber_with_modules/gomarvin.gen";
+import * as F from "../../../gomarvin.gen";
 
 export function App() {
   async function Test() {
@@ -34,6 +34,8 @@ export function App() {
     console.log("CreateComment()", await (await F.CreateComment()).json());
     console.log("DeleteComment()", await (await F.DeleteComment()).json());
     console.log("UpdateComment()", await (await F.UpdateComment()).json());
+    //
+    console.log("GetComment(1)", await (await F.Comments.GetComments()).json());
   }
 
   async function FetchGetUsersEndpoint() {
@@ -63,10 +65,14 @@ export function App() {
       </div>
 
       {/*  */}
-              <div class="flex-center--">
-          <div onClick={FetchGetUsersEndpoint} class="test-btn">FetchGetUsersEndpoint</div>
-          <div onClick={FetchCreateUserEndpoint} class="test-btn">FetchCreateUserEndpoint</div>
+      <div class="flex-center--">
+        <div onClick={FetchGetUsersEndpoint} class="test-btn">
+          FetchGetUsersEndpoint
         </div>
+        <div onClick={FetchCreateUserEndpoint} class="test-btn">
+          FetchCreateUserEndpoint
+        </div>
+      </div>
     </>
   );
 }
