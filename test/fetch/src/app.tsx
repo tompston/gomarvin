@@ -70,37 +70,67 @@ export function App() {
   // object passed to new Headers()
   let init_headers_test = {
     "Content-type": "application/json;charset=UTF-8",
-    "init-test": "fake-header",
+    "X-Custom-Header": "hello world",
   };
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Headers/Headers
   function testHeaders(custom_headers: object = {}) {
-    // let headers = new Headers();
-    // let headers = new Headers(F.API.init_headers);
-    let headers = new Headers(init_headers_test);
-
-    // console.log(headers);
-    for (const [k, v] of Object.entries(appendable_headers)) {
-      headers.append(k, v);
-    }
-
+    // let headers = new Headers(init_headers_test);
     // console.log(Object.entries(custom_headers));
+    // console.log(`custom_headers --> ${custom_headers}`);
+    // for (const [k, v] of Object.entries(custom_headers)) {
+    //   console.log(k + ": " + v);
+    // }
+    // console.log(
+    //   `Object.keys(custom_headers).length -> ${
+    //     Object.keys(custom_headers).length
+    //   }`
+    // );
 
-    for (const [k, v] of Object.entries(custom_headers)) {
-      headers.append(k, v);
-    }
+    // if (Object.keys(custom_headers).length != 0) {
+    //   for (const [k, v] of Object.entries(custom_headers)) {
+    //     // some weird thing is appended if object is empty
+    //     if (k !== "isTrusted") {
+    //       headers.append(k, v);
+    //     }
+    //   }
+    // }
+    let headers = createHeaders(custom_headers);
 
     for (let x of headers.entries()) {
       console.log(x[0] + ": " + x[1]);
     }
 
-    // console.log(headers);
-    // console.log(F.API.init_headers);
+    // const url = `${F.API.url}/comment/`;
+    // return await fetch(url, {
+    //   method: "GET",
+    //   headers: API.init_headers,
+    // });
   }
 
-  let customheadersFetch = testHeaders({
-    "new-header": "this-is-a-new-header",
-  });
+  /**
+   *
+   * @param custom_headers custom object of optional headers, where key and value are strings only
+   * @returns {Headers} headers used in the fetch request
+   */
+  function createHeaders(custom_headers: object): Headers {
+    let headers = new Headers(init_headers_test);
+
+    if (Object.keys(custom_headers).length != 0) {
+      for (const [k, v] of Object.entries(custom_headers)) {
+        // some weird thing is appended if object is empty, so avoid it
+        if (k !== "isTrusted") {
+          headers.append(k, v);
+        }
+      }
+    }
+    return headers;
+  }
+
+  let customheadersFetch = () =>
+    testHeaders({
+      "new-header": "this-is-a-new-header",
+    });
 
   return (
     <>
@@ -124,6 +154,11 @@ export function App() {
         <div onClick={testHeaders} class="test-btn">
           testHeaders
         </div>
+        <div onClick={customheadersFetch} class="test-btn">
+          customheadersFetch
+        </div>
+
+        {/* customheadersFetch */}
 
         {/* FetchComments */}
       </div>
