@@ -35,7 +35,13 @@ export function App() {
     console.log("DeleteComment()", await (await F.DeleteComment()).json());
     console.log("UpdateComment()", await (await F.UpdateComment()).json());
     //
-    console.log("GetComment(1)", await (await F.Comments.GetComments()).json());
+  }
+
+  async function FetchComments() {
+    console.log(
+      "GetComment(1)",
+      await (await F.CommentEndpoints.GetComment(1)).json()
+    );
   }
 
   async function FetchGetUsersEndpoint() {
@@ -72,6 +78,11 @@ export function App() {
         <div onClick={FetchCreateUserEndpoint} class="test-btn">
           FetchCreateUserEndpoint
         </div>
+        <div onClick={FetchComments} class="test-btn">
+          FetchComments
+        </div>
+
+        {/* FetchComments */}
       </div>
     </>
   );
