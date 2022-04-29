@@ -11,7 +11,9 @@ export const API = {
   project_name: "{{$project_info.Name}}",
   base_url: "http://localhost:{{$project_info.Port}}",
   api_prefix: "{{$project_info.APIPrefix}}",
-  init_headers: { "Content-type": "application/json;charset=UTF-8" },
+  init_headers: {
+    "Content-type": "application/json;charset=UTF-8",
+  },
   get url() {
     return `${this.base_url}${this.api_prefix}`;
   }
@@ -66,7 +68,7 @@ export interface {{$endpoint.ControllerName}}Body  {
       {{- range $endpoint := $module.Endpoints }}
 
 /**
- * {{$endpoint.Method}} API_URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}:{{ $url_param.Type }}{{- end }}
+ * {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}:{{ $url_param.Type }}{{- end }}
  * @returns {Promise} Promise of the fetch request
  */
 export async function {{$endpoint.ControllerName}}(
@@ -76,7 +78,8 @@ export async function {{$endpoint.ControllerName}}(
       {{- if (eq $url_param.Type  "int" )    -}} {{$url_param.Field}}: number, {{ end -}}
   {{- end }}
 {{- end -}}
-{{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}}
+{{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
+{{- if $endpoint.Body -}}, custom_headers: object = {} {{ else }}custom_headers: object = {} {{- end -}}
 ): Promise<Response> {
   const url = `${API.url}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}`;
   return await fetch(url, {
@@ -89,3 +92,25 @@ export async function {{$endpoint.ControllerName}}(
 {{ end -}}
 {{ end -}}
 {{ end  }}
+
+
+/**
+ * util function for creating headers. Headers specified in the
+ * API object will be sent on each request.
+ * @param custom_headers
+ * custom object of optional headers, where key and value are strings only
+ * @returns {Headers} headers used in the fetch request
+ */
+export function createHeaders(custom_headers: object, use_default: boolean = true): Headers {
+  let headers = new Headers(API.init_headers);
+
+  if (Object.keys(custom_headers).length != 0) {
+    for (const [k, v] of Object.entries(custom_headers)) {
+      // some weird thing is appended in some cases, so avoid it
+      if (k !== "isTrusted") {
+        headers.append(k, v);
+      }
+    }
+  }
+  return headers;
+}

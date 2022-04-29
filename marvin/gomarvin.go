@@ -11,7 +11,7 @@ func Run(cmd *CmdArgs) {
 
 		conf := ReadConfig(cmd.ConfigPath) // read json config file
 
-		fmt.Println(cmd.FetchOnly)
+		// fmt.Println(cmd.FetchOnly)
 
 		// if fetch_only is set to default value ("false"), generate the whole project
 		if cmd.FetchOnly == "false" {
@@ -20,7 +20,7 @@ func Run(cmd *CmdArgs) {
 			GenerateOptional(conf, *cmd) // generate things that are optional
 			FormatAfterGen()             // run gofmt to format the project in the dir
 		} else if cmd.FetchOnly == "true" {
-			// go run main.go -config="examples/v0.3.0/gomarvin-fiber_with_modules.json" -fetch_only="true"
+			// go run main.go -config="examples/v0.3.0/gomarvin-fiber_with_modules.json" -fetch-only="true"
 			GenerateOnlyFetchFunctions(conf, *cmd)
 		}
 
