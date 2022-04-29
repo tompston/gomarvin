@@ -66,7 +66,7 @@ export interface {{$endpoint.ControllerName}}Body  {
       {{- range $endpoint := $module.Endpoints }}
 
 /**
- * {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}:{{ $url_param.Type }}{{- end }}
+ * {{$endpoint.Method}} API_URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}:{{ $url_param.Type }}{{- end }}
  * @returns {Promise} Promise of the fetch request
  */
 export async function {{$endpoint.ControllerName}}(
