@@ -68,7 +68,9 @@ export interface {{$endpoint.ControllerName}}Body  {
       {{- range $endpoint := $module.Endpoints }}
 
 /**
- * {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}:{{ $url_param.Type }}{{- end }}
+ * ### {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
+ * @param {RequestInit} [options]
+ * If default options need to be edited, provide a custom options object
  * @returns {Promise} Promise of the fetch request
  */
 export async function {{$endpoint.ControllerName}}(
@@ -79,10 +81,12 @@ export async function {{$endpoint.ControllerName}}(
   {{- end }}
 {{- end -}}
 {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
-{{- if $endpoint.Body -}}, custom_headers: object = {} {{ else }}custom_headers: object = {} {{- end -}}
+{{- if $endpoint.Body -}}, options?: RequestInit {{ else }}options?: RequestInit {{- end -}}
 ): Promise<Response> {
   const url = `${API.url}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}`;
-  return await fetch(url, {
+  if (options) {
+    return await fetch(url, options);
+  } else return await fetch(url, {
     method: "{{$endpoint.Method}}",
     headers: API.init_headers,
     {{ if $endpoint.Body -}} body: JSON.stringify(body) {{- end -}}

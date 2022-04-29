@@ -15,6 +15,10 @@ export function App() {
       "new-header": "this-is-a-new-header",
     });
 
+  /**
+   * @param {RequestInit} [options]
+   * If default options need to be edited, provide a custom options object
+   */
   async function RandomEndpoint(options?: RequestInit): Promise<Response> {
     const url = `${F.API.url}/user`;
 
@@ -35,6 +39,11 @@ export function App() {
   }
   async function randomEndpointCustomOptions() {
     const res = await RandomEndpoint({ method: "get" });
+    console.log(res);
+  }
+
+  async function IncorrectOptionsTest() {
+    const res = await F.GetUserById(10, { method: "POST" });
     console.log(res);
   }
 
@@ -62,8 +71,9 @@ export function App() {
         <div onClick={randomEndpointCustomOptions} class="test-btn">
           randomEndpointCustomOptions
         </div>
-
-        {/* TestOptions */}
+        <div onClick={IncorrectOptionsTest} class="test-btn">
+          IncorrectOptionsTest
+        </div>
       </div>
     </>
   );
