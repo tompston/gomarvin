@@ -16,11 +16,46 @@ export function App() {
     });
 
   /**
+   * interface used in the fetch request with optional parameters
+   * @param {RequestInit} [options] 
+   * If default options need to be edited, provide a custom options object
+   * @param {string} [append_url] 
+   * extend the url with custom params (like "?name=jim")
+   */
+  interface OptionalFetchParams {
+    options?: RequestInit;
+    append_url?: string;
+  }
+
+  async function RandomEndpointWithInterface(
+    opt?: OptionalFetchParams
+  ): Promise<Response> {
+    const appended_url = opt?.append_url ? opt?.append_url : "";
+    const url = `${F.API.url}/user${appended_url}`;
+    console.log(url);
+
+    console.log("options -->" + opt?.options);
+    if (opt?.options) {
+      return await fetch(url, opt?.options);
+    } else {
+      return await fetch(url, {
+        method: "GET",
+        headers: F.API.init_headers,
+      });
+    }
+  }
+
+  /**
    * @param {RequestInit} [options]
    * If default options need to be edited, provide a custom options object
    */
-  async function RandomEndpoint(options?: RequestInit): Promise<Response> {
-    const url = `${F.API.url}/user`;
+  async function RandomEndpoint(
+    options?: RequestInit,
+    append_url?: string
+  ): Promise<Response> {
+    const appended_url = append_url ? append_url : "";
+    const url = `${F.API.url}/user${appended_url}`;
+    console.log(url);
 
     // console.log("options -->" + options);
     if (options) {
@@ -33,6 +68,7 @@ export function App() {
     }
   }
 
+  // ----- Functioons that don't have optional named params
   async function randomEndpointDefaultOptions() {
     const res = await RandomEndpoint();
     console.log(res);
@@ -41,10 +77,18 @@ export function App() {
     const res = await RandomEndpoint({ method: "get" });
     console.log(res);
   }
-
   async function IncorrectOptionsTest() {
     const res = await F.GetUserById(10, { method: "POST" });
     console.log(res);
+  }
+
+  // ----- Functioons that have optional named params
+  async function randomEndpointCustomOptionsInterface() {
+    const res = await RandomEndpointWithInterface({
+      // append_url: "/qwe",
+      options: { method: "DELETE" },
+    });
+    // console.log(res);
   }
 
   return (
@@ -74,6 +118,11 @@ export function App() {
         <div onClick={IncorrectOptionsTest} class="test-btn">
           IncorrectOptionsTest
         </div>
+        <div onClick={randomEndpointCustomOptionsInterface} class="test-btn">
+          randomEndpointCustomOptionsInterface
+        </div>
+
+        {/* randomEndpointCustomOptionsqq */}
       </div>
     </>
   );
