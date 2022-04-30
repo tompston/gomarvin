@@ -16,10 +16,10 @@ export function App() {
     });
 
   /**
-   * interface used in the fetch request with optional parameters
-   * @param {RequestInit} [options] 
-   * If default options need to be edited, provide a custom options object
-   * @param {string} [append_url] 
+   * optional interface used in the fetch request with optional parameters
+   * @param {RequestInit} [options]
+   * If default fetch options need to be edited, provide a custom options object
+   * @param {string} [append_url]
    * extend the url with custom params (like "?name=jim")
    */
   interface OptionalFetchParams {
@@ -78,7 +78,7 @@ export function App() {
     console.log(res);
   }
   async function IncorrectOptionsTest() {
-    const res = await F.GetUserById(10, { method: "POST" });
+    const res = await F.GetUserById(10, { options: { method: "POST" } });
     console.log(res);
   }
 

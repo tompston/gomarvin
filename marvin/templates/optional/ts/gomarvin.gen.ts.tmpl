@@ -81,11 +81,13 @@ export async function {{$endpoint.ControllerName}}(
   {{- end }}
 {{- end -}}
 {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
-{{- if $endpoint.Body -}}, options?: RequestInit {{ else }}options?: RequestInit {{- end -}}
+{{- if $endpoint.Body -}}, opt?: OptionalFetchParams {{ else }}opt?: OptionalFetchParams {{- end -}}
 ): Promise<Response> {
-  const url = `${API.url}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}`;
-  if (options) {
-    return await fetch(url, options);
+
+  const appended_url = opt?.append_url ? opt?.append_url : "";
+  const url = `${API.url}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}${appended_url}`;
+  if (opt?.options) {
+    return await fetch(url, opt?.options);
   } else return await fetch(url, {
     method: "{{$endpoint.Method}}",
     headers: API.init_headers,
@@ -117,4 +119,16 @@ export function createHeaders(custom_headers: object, use_default: boolean = tru
     }
   }
   return headers;
+}
+
+/**
+ * optional interface used in the fetch request with optional parameters
+ * @param {RequestInit} [options]
+ * If default fetch options need to be edited, provide a custom options object
+ * @param {string} [append_url]
+ * extend the url with custom params (like "?name=jim")
+ */
+interface OptionalFetchParams {
+  options?: RequestInit;
+  append_url?: string;
 }
