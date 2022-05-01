@@ -38,6 +38,9 @@ gomarvin
 
 # run this if custom config file name or path
 gomarvin -config="PATH_TO_CONFIG"
+
+# generate only the typescript API client file
+gomarvin -fetch-only="true"
 ```
 
 4. run lower commands
@@ -56,14 +59,11 @@ gomarvin -h
 
 -config string
       Specify path to the gomarvin config file (default "gomarvin.json")
--dangerous_regen string
+-dangerous-regen string
       Regenerate everything. If set to true, init server will be regenerated and  all previous changes will be lost (default "false")
-```
-
-<!--
 -fetch-only string
       generate only the typescript file that holds fetch function (default "false")
--->
+```
 
 ### Generated Typescript fetch functions usage example
 
@@ -116,7 +116,7 @@ async function FetchWithAppendedUrlAndCustomOptions() {
   console.log(res);
 }
 
-// Fetch a singe endpoint from the Comment module
+// Fetch a single endpoint from the Comment module
 async function FetchCommentById() {
   const res = await CommentEndpoints.GetComment(20);
   console.log(res);
@@ -131,7 +131,7 @@ If formatting does not work, run this
 gofmt -s -w .
 ```
 
-#### Credits to used packages
+### Credits to used packages
 
 - [go-pluralize](https://github.com/gertd/go-pluralize)
 - [strcase](https://github.com/iancoleman/strcase)
@@ -142,7 +142,7 @@ gofmt -s -w .
 
 examples/v0.3.0/gomarvin-fiber_with_modules.json
 
-go run main.go -dangerous_regen="true" -config="./previous/gomarvin_-v0.3.0.json"
+go run main.go -dangerous-regen="true" -config="./previous/gomarvin_-v0.3.0.json"
 cd server_with_gin_next
 go mod tidy
 go mod download

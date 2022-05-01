@@ -35,7 +35,7 @@ docker image rm {{$PROJECT_NAME}}
 
 ### Renaming generated sql files
 
-```
+```bash
 # run from the root of the project
 for i in ./db/sql/*.sql.gen.txt;  do mv "$i" "${i/.sql.gen.txt}.sql"; done
 ```

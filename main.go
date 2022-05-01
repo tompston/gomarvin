@@ -11,7 +11,7 @@ import (
 func main() {
 
 	cmd := &marvin.CmdArgs{}
-	flag.StringVar(&cmd.DangerousRegen, "dangerous_regen", "false",
+	flag.StringVar(&cmd.DangerousRegen, "dangerous-regen", "false",
 		"Regenerate everything. If set to true, init server will be regenerated and  all previous changes will be lost")
 	flag.StringVar(&cmd.FetchOnly, "fetch-only", "false",
 		"generate only the typescript file that holds fetch function")

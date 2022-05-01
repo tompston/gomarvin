@@ -15,12 +15,13 @@ func Run(cmd *CmdArgs) {
 
 		// if fetch_only is set to default value ("false"), generate the whole project
 		if cmd.FetchOnly == "false" {
-			GenerateInit(conf, *cmd)     // generate init dirs and files if project dir does not exist or dangerous_regen="true"
+			GenerateInit(conf, *cmd)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
 			GenerateModules(conf, *cmd)  // geenerate module dirs and controller files if exist
 			GenerateOptional(conf, *cmd) // generate things that are optional
 			FormatAfterGen()             // run gofmt to format the project in the dir
 		} else if cmd.FetchOnly == "true" {
 			// go run main.go -config="examples/v0.3.0/gomarvin-fiber_with_modules.json" -fetch-only="true"
+			// go run main.go -fetch-only="true"
 			GenerateOnlyFetchFunctions(conf, *cmd)
 		}
 

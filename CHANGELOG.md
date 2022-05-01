@@ -1,17 +1,18 @@
 # Gomarvin changelog
 
-<!--
+### v0.3.1
+
 - added optional cmd arg for generating only the typescript fetch functions file
-- renamed generated main.gen.ts file to be gomarvin.gen.ts
-- gitignore *.gen.txt (generated sql text files)
+- renamed generated `main.gen.ts` file to `gomarvin.gen.ts`
+- gitignore \*.gen.txt (generated sql text files)
+- fixed sqlc queries `:one`, `:many` syntax
+- cli arg `dangerous_regen` renamed to `dangerous-regen`
 - Improved generated fetch functions
   - JSDOC support
-  - endpoint body interfaces document the validation for the fields
+  - endpoint body interfaces documents the validation for the fields
   - new variable that groups the fetch functions by the module
     - this way you can import / find the correct fetch function easier
   - each fetch function has an optional object param that can be used when params need to be changed
-
--->
 
 ### v0.3.0
 
@@ -29,7 +30,7 @@
 
 ### v0.2.0
 
-- **Support for echo framework**
+- **Support for Echo framework**
 - refactored typescript functions to fetch endpoints
 - automatic formatting after codegen using gofmt
 

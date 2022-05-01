@@ -17,13 +17,13 @@ DANGEROUS_REGEN="true"
 # Variable used in the config file name + the name of the
 # generated dir ( "project_info": "name": "gin_ecommerce" )
 EXAMPLES=(
-  # 'gin'
-  # 'gin_with_modules'
-  # 'fiber'
-  # 'fiber_with_modules'
-  # 'echo'
-  # 'echo_with_modules'
-  # 'chi'
+  'gin'
+  'gin_with_modules'
+  'fiber'
+  'fiber_with_modules'
+  'echo'
+  'echo_with_modules'
+  'chi'
   'chi_with_modules'
 )
 
@@ -37,7 +37,7 @@ for example in "${EXAMPLES[@]}"; do
     CONFIG_PATH="${GOMARVIN_CONFIG_DIR}${GOMARVIN_CONFIG_FILE}"
 
     # generate the project
-    ./gomarvin -dangerous_regen=${DANGEROUS_REGEN} -config=${CONFIG_PATH}
+    ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -config=${CONFIG_PATH}
 
     cd ${example}           # cd into the generated dir
     go mod tidy             # tidy things
