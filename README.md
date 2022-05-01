@@ -168,5 +168,4 @@ git tag v0.3.1
 git push origin v0.3.1
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.3.1
 
-
 -->
