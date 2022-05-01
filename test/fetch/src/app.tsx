@@ -3,7 +3,7 @@ import { CommentEndpoints } from "../../../gomarvin.gen";
 import { Test, FetchCreateUserEndpoint } from "./lib/tests";
 
 export function App() {
-  // fetch GetUserById endpoint with changed options
+  // fetch GetUserById endpoint
   async function FetchGetUsersById() {
     const res = await F.GetUserById(10);
     console.log(res);
@@ -21,7 +21,9 @@ export function App() {
     console.log(res);
   }
 
-  // define custom options for the fetch request
+  // Use both optional values
+  // - append a string to the fetch url
+  // - define a new options object used in the fetch request
   async function FetchWithAppendedUrlAndCustomOptions() {
     const res = await F.GetUserById(10, {
       options: { method: "DELETE" },
