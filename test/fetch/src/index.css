@@ -24,13 +24,24 @@ body {
   color: #fff;
 }
 
-.test-btn {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 3px 20px;
-  cursor: pointer;
-}
 .flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.test-btn-grid {
+  flex-direction: column;
+  gap: 10px;
+}
+.test-btn {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+  max-width: 300px;
+  padding: 6px 20px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.should-return-err {
+  color: rgb(243, 118, 118);
 }

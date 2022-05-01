@@ -16,8 +16,20 @@ export const API = {
   },
   get url() {
     return `${this.base_url}${this.api_prefix}`;
-  }
+  },
 };
+
+/**
+ * optional interface used in the fetch request with optional parameters
+ * @param {RequestInit} [options]
+ * If default fetch options need to be edited, provide a custom options object
+ * @param {string} [append_url]
+ * extend the url with custom params (like "?name=jim")
+ */
+interface OptionalFetchParams {
+  options?: RequestInit;
+  append_url?: string;
+}
 
 {{ if $modules }}
   {{- range $module := $modules -}}
@@ -68,9 +80,10 @@ export interface {{$endpoint.ControllerName}}Body  {
       {{- range $endpoint := $module.Endpoints }}
 
 /**
- * ### {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
- * @param {RequestInit} [options]
- * If default options need to be edited, provide a custom options object
+ * ## {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
+ * @param {RequestInit} [opt] Optional object with 2 optional values
+ *  - `append_url` is a string that can be appended to the predefined url
+ *  - `options` is the second fetch() param ( object )
  * @returns {Promise} Promise of the fetch request
  */
 export async function {{$endpoint.ControllerName}}(
@@ -83,7 +96,6 @@ export async function {{$endpoint.ControllerName}}(
 {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
 {{- if $endpoint.Body -}}, opt?: OptionalFetchParams {{ else }}opt?: OptionalFetchParams {{- end -}}
 ): Promise<Response> {
-
   const appended_url = opt?.append_url ? opt?.append_url : "";
   const url = `${API.url}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}${appended_url}`;
   if (opt?.options) {
@@ -101,6 +113,7 @@ export async function {{$endpoint.ControllerName}}(
 
 
 /**
+ * NOTE: function not used currently
  * util function for creating headers. Headers specified in the
  * API object will be sent on each request.
  * @param custom_headers
@@ -119,16 +132,4 @@ export function createHeaders(custom_headers: object, use_default: boolean = tru
     }
   }
   return headers;
-}
-
-/**
- * optional interface used in the fetch request with optional parameters
- * @param {RequestInit} [options]
- * If default fetch options need to be edited, provide a custom options object
- * @param {string} [append_url]
- * extend the url with custom params (like "?name=jim")
- */
-interface OptionalFetchParams {
-  options?: RequestInit;
-  append_url?: string;
 }
