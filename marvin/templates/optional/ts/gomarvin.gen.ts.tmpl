@@ -49,7 +49,13 @@ export const {{ $module.Name }}Endpoints = {
     {{- if $module.Endpoints }}
       {{- range $endpoint := $module.Endpoints }}
         {{- if $endpoint.Body }}
-/** Body for the {{$endpoint.ControllerName}} endpoint */
+/**
+ * ### Body for the {{$endpoint.ControllerName}} endpoint
+ * @interface {{$endpoint.ControllerName}}Body
+ * 
+ {{- range $body_field := $endpoint.Body }}
+ * @field {{$body_field.Field}} `{{$body_field.Validate}}`{{ end }}
+ */
 export interface {{$endpoint.ControllerName}}Body  {
   {{- range $body_field := $endpoint.Body }}
   {{ if (eq $body_field.Type  "string" )    -}} {{$body_field.Field}}: string {{ end -}}

@@ -6,7 +6,10 @@
 - gitignore *.gen.txt (generated sql text files)
 - Improved generated fetch functions
   - JSDOC support
-  - new variable that groups the fetch functions by the module 
+  - endpoint body interfaces document the validation for the fields
+  - new variable that groups the fetch functions by the module
+    - this way you can import / find the correct fetch function easier
+  - each fetch function has an optional object param that can be used when params need to be changed
 
 -->
 

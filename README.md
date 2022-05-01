@@ -61,22 +61,26 @@ gomarvin -h
 ```
 
 <!--
--fetch_only string
+-fetch-only string
       generate only the typescript file that holds fetch function (default "false")
-      -->
+-->
 
 ### Generated Typescript fetch functions usage example
 
 ```js
 // import the generated file
-import * as F from "../../build/fiber_with_modules/gomarvin.gen";
+import * as F from "../../../gomarvin.gen";
+// or import only the Comment module endpoints
+import { CommentEndpoints } from "../../../gomarvin.gen";
 
+// fetch a user by id
 async function FetchGetUserByIdEndpoint() {
   let res = await F.GetUserById(1);
   let users = await res.json();
   console.log(users);
 }
 
+// create a new user
 async function FetchCreateUserEndpoint() {
   let res = await F.CreateUser({
     username: "qweqwe",
@@ -85,8 +89,37 @@ async function FetchCreateUserEndpoint() {
     password: "very-long-and-good-password",
   });
 
-  let users = await res.json();
-  console.log(users);
+  let user = await res.json();
+  console.log(user);
+}
+
+// append optional string to the existing endpoint url
+async function FetchEndpointWithAppendedUrl() {
+  const res = await F.GetUserById(10, { append_url: "?name=jim" });
+  console.log(res);
+}
+
+// define custom options for the fetch request
+async function FetchEndpointWithCustomOptions() {
+  const res = await F.GetUserById(10, { options: { method: "POST" } });
+  console.log(res);
+}
+
+// Use both optional values
+// - append a string to the fetch url
+// - define a new options object used in the fetch request
+async function FetchWithAppendedUrlAndCustomOptions() {
+  const res = await F.GetUserById(10, {
+    options: { method: "DELETE" },
+    append_url: "?name=jim",
+  });
+  console.log(res);
+}
+
+// Fetch a singe endpoint from the Comment module
+async function FetchCommentById() {
+  const res = await CommentEndpoints.GetComment(20);
+  console.log(res);
 }
 ```
 
