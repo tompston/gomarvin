@@ -39,7 +39,7 @@ func ModuleDir(project_name string, module_name string) string {
 	return fmt.Sprintf("%s/%s/", ProjectModuleDirPath(project_name), ModuleDirName(module_name))
 }
 
-// pass in the relative path to the dir you want to check. If the dir exists, functin will return true
+// pass in the relative path to the dir you want to check. If the dir exists, return true
 func PathExists(path string) bool {
 	_, err := os.Stat(path)
 	if os.IsNotExist(err) {
