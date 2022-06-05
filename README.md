@@ -9,7 +9,9 @@ Generate:
 - Typescript fetch functions with type-checked payloads for generated endpoints
 - SQL files with tables and queries for controllers ( Postgres )
 
-from one config file
+from one config file.
+
+Oh, and it's ... **BLaZinGly fAsT!! 🚀🚀🚀**
 
 ## [Documentation](https://gomarvin.pages.dev/docs)
 
