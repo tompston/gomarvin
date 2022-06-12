@@ -11,8 +11,6 @@ Generate:
 
 from one config file.
 
-Oh, and it's ... **BLaZinGly fAsT!! 🚀🚀🚀**
-
 ## [Documentation](https://gomarvin.pages.dev/docs)
 
 ## Install
