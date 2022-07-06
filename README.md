@@ -15,7 +15,7 @@ from one config file.
 
 ## Install
 
-1.  Either create a custom config file [with frontend editor](https://gomarvin.pages.dev/) or copy one of the config file from [examples dir](https://github.com/tompston/gomarvin/tree/main/examples)
+1.  Either create a custom config file [with the frontend editor](https://gomarvin.pages.dev/) or copy one of the config file from [examples dir](https://github.com/tompston/gomarvin/tree/main/examples/v0.3.0)
 
 2.  Install gomarvin
 
@@ -39,7 +39,8 @@ gomarvin
 # run this if custom config file name or path
 gomarvin -config="PATH_TO_CONFIG"
 
-# generate only the typescript API client file
+# or generate only the typescript API client file. Useful if you want to generate fetch
+# functions for a pre-existing REST API in a fast way.
 gomarvin -fetch-only="true"
 ```
 
@@ -72,6 +73,8 @@ gomarvin -h
 import * as F from "../../../gomarvin.gen";
 // or import only the Comment module endpoints
 import { CommentEndpoints } from "../../../gomarvin.gen";
+// or just import a single fetch function
+import { GetUserById } from "../../../gomarvin.gen";
 
 // fetch a user by id
 async function FetchGetUserByIdEndpoint() {
@@ -131,7 +134,11 @@ If formatting does not work, run this
 gofmt -s -w .
 ```
 
+<h3 align="center">If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. (except for bugs caused by url params and routing, those should be fixed manually)</h3>
+
 ### Credits to used packages
+
+_Not installed locally to avoid any dependencies._
 
 - [go-pluralize](https://github.com/gertd/go-pluralize)
 - [strcase](https://github.com/iancoleman/strcase)
