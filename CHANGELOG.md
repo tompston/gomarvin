@@ -1,5 +1,15 @@
 # Gomarvin changelog
 
+<!-- ### v0.3.2
+
+- refactored generated fetch function comments
+  - moved fetch function opt param explanation to the interface.
+  - API object now includes the `config_version` key that shows from 
+    which version the current file is generated.
+
+-->
+
+
 ### v0.3.1
 
 - added optional cmd arg for generating only the typescript fetch functions file

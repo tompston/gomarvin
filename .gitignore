@@ -6,3 +6,5 @@ test/build/gomarvin
 gomarvin
 gomarvin.gen.ts
 gomarvin.json
+
+chi_with_modules

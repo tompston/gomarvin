@@ -145,22 +145,17 @@ _Not installed locally to avoid any dependencies._
 
 <!--
 
-# gen
-
-examples/v0.3.0/gomarvin-fiber_with_modules.json
-
-go run main.go -dangerous-regen="true" -config="./previous/gomarvin_-v0.3.0.json"
-cd server_with_gin_next
+# run a local example
+go run main.go -dangerous-regen="true" -config="./examples/v0.3.0/gomarvin-chi_with_modules.json"
+cd chi_with_modules
 go mod tidy
 go mod download
-gofmt -s -w .
 code .
 cd ..
 
 
 // uncomment lower line to call generated sqlc functions with db connection
 // var Queries = sqlc.New(database.DB)
-
 
 git add .
 git commit -m "next"
