@@ -102,6 +102,7 @@ export interface {{$endpoint.ControllerName}}Body  {
 /**
  * ## {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
  * @param {OptionalFetchParams} [opt] Optional object with 2 optional values
+ {{ if $endpoint.Body -}}* @param {{ WrapInCurlyBracesWithAppendedString $endpoint.ControllerName "Body" }} [body]{{- end }}
  * @returns {Promise} Promise of the fetch request
  */
 export async function {{$endpoint.ControllerName}}(
@@ -124,9 +125,9 @@ export async function {{$endpoint.ControllerName}}(
     {{ if $endpoint.Body -}} body: JSON.stringify(body) {{- end -}}
   });
 }
-{{- end }}
-{{ end -}}
-{{ end -}}
+      {{- end }}
+    {{ end -}}
+  {{ end -}}
 {{ end  }}
 
 

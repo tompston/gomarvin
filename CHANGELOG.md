@@ -6,7 +6,7 @@
   - moved fetch function opt param explanation to the interface.
   - API object now includes the `config_version` key that shows from 
     which version the current file is generated.
-
+  - if the fetch function has a body, hover over the interface in the JSDoc comments to see the required validation for the fields
 -->
 
 

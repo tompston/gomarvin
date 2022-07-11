@@ -153,6 +153,12 @@ go mod download
 code .
 cd ..
 
+# generate only the fetch client thing
+go run main.go              \
+    -dangerous-regen="true" \
+    -config="./examples/v0.3.0/gomarvin-chi_with_modules.json" \
+    -fetch-only="true"
+
 
 // uncomment lower line to call generated sqlc functions with db connection
 // var Queries = sqlc.New(database.DB)

@@ -73,16 +73,21 @@ func WrapInCurlyBraces(x string) string {
 	return fmt.Sprintf("{" + x + "}")
 }
 
+func WrapInCurlyBracesWithAppendedString(x string, appended_string string) string {
+	return fmt.Sprintf("{" + x + appended_string + "}")
+}
+
 var template_functions = template.FuncMap{
 	// name the template function the same as the imported convert function for predictability
-	"ConvertToTitle":           conv.ConvertToTitle,
-	"ConvertToLowercase":       conv.ConvertToLowercase,
-	"ConvertToUppercase":       conv.ConvertToUppercase,
-	"ConvertToLowercaseTitle":  conv.ConvertToLowercaseTitle,
-	"ConvertToCamelCase":       conv.ConvertToCamelCase,
-	"ConvertToPlural":          conv.ConvertToPlural,
-	"ConvertToLowercasePlural": conv.ConvertToLowercasePlural,
-	"WrapInCurlyBraces":        WrapInCurlyBraces,
+	"ConvertToTitle":                      conv.ConvertToTitle,
+	"ConvertToLowercase":                  conv.ConvertToLowercase,
+	"ConvertToUppercase":                  conv.ConvertToUppercase,
+	"ConvertToLowercaseTitle":             conv.ConvertToLowercaseTitle,
+	"ConvertToCamelCase":                  conv.ConvertToCamelCase,
+	"ConvertToPlural":                     conv.ConvertToPlural,
+	"ConvertToLowercasePlural":            conv.ConvertToLowercasePlural,
+	"WrapInCurlyBraces":                   WrapInCurlyBraces,
+	"WrapInCurlyBracesWithAppendedString": WrapInCurlyBracesWithAppendedString,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"
