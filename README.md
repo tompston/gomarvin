@@ -148,8 +148,8 @@ _Not installed locally to avoid any dependencies._
 Versions (tags) have a pattern of `x.y.z`
 
 - `x` is incremented on big releases.
-- `y` is incremented when there is any change that breaks some part of the previously generated servers.
-- `z` is incremented when there is a change that does not break the previously generated servers.
+- `y` is incremented when there is a change that breaks the previously generated servers.
+- `z` is incremented when there is a change that doesn't break the previously generated servers.
 
 For example, updating from `0.1.0` to `0.1.1` does not break anything. Going from `0.2.0` to `0.3.0` will break stuff.
 
