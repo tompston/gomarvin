@@ -155,6 +155,7 @@ For example, updating from `0.1.0` to `0.1.1` does not break anything. Going fro
 
 <!--
 
+
 # run a local example
 go run main.go -dangerous-regen="true" -config="./examples/v0.3.0/gomarvin-chi_with_modules.json"
 cd chi_with_modules
@@ -181,9 +182,9 @@ GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
 # release
 git add .
-git commit -m "gomarvin: release v0.3.1"
-git tag v0.3.1
-git push origin v0.3.1
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.3.1
+git commit -m "gomarvin: release v0.4.0"
+git tag v0.4.0
+git push origin v0.4.0
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.4.0
 
 -->
