@@ -7,8 +7,8 @@
 package {{ ConvertToLowercase  $module}}_module
 
 import (
-	res "{{$project.Name}}/utils/response"
-	"{{$project.Name}}/utils/validate"
+	res "{{$project.Name}}/lib/response"
+	"{{$project.Name}}/lib/validate"
 	"{{$project.Name}}/settings/database"
 	"strconv"
 	"time"
@@ -26,6 +26,7 @@ import (
 
 
 // remove import errors
+// delete this block on refactoring
 var _ = func() {
 	var _ = strconv.IntSize
 	var _ = validate.NewValidator
@@ -64,17 +65,6 @@ var _ = func() {
 
 
 
-{{ range $endpoint := $endpoints }}
-{{ if $endpoint.Body -}} 
-type __{{$endpoint.ControllerName}}Body struct {
-	{{- range $body_field := $endpoint.Body }}
-	{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
-{{- end }}
-}
-{{ end -}}
-{{ end }}
-
-
 
 
 
@@ -91,6 +81,12 @@ func Router__(app *gin.RouterGroup) {
 func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 	{{ if $endpoint.Body -}} 
+	type __{{$endpoint.ControllerName}}Body struct {
+		{{- range $body_field := $endpoint.Body }}
+		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
+	{{- end }}
+	}
+
 	// validate the sent json object
 	payload := new(__{{$endpoint.ControllerName}}Body)
 	if err := c.ShouldBindJSON(payload); err != nil {
@@ -101,13 +97,13 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 		res.Response(c, 400, err, res.FailedPayloadValidation)
 		return
 	}
-	
+
 	{{ end -}}
+
 
 	{{ if $endpoint.URLParams -}} 
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
 
-	{{/* if the URLParams is string  */ -}}
 	{{- if ( eq $URL_PARAM.Type "int") }}
 	{{ $URL_PARAM.Field }}, err := strconv.Atoi(c.Param("{{ $URL_PARAM.Field}}"))
 	if err != nil {
@@ -123,13 +119,19 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 	{{ end }}
 	
 
-
-	{{end}}
+	{{ end }}
 	{{end -}}
 
 	// query goes here
 
+
+	{{- if ( eq $endpoint.ResponseType "default") }}
 	res.Response(c, 200, nil, "")
+	{{- end }}
+
+	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
+	res.ResponseWithPagination(c, 200, nil, "", res.PaginationLinks{})
+	{{- end }}	
 }
 {{end}}
 {{- end }}
@@ -153,16 +155,23 @@ func Router__(app *fiber.App, api fiber.Router) {
 func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 
 	{{ if $endpoint.Body -}} 
+	type responseBody struct {
+		{{- range $body_field := $endpoint.Body }}
+		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
+	{{- end }}
+	}
+
 	// validate the sent json object
-	payload := new(__{{$endpoint.ControllerName}}Body)
+	payload := new(responseBody)
 	if err := c.BodyParser(payload); err != nil {
 		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
 	}
 	if err := validate.ValidateStruct(payload); err != nil {
 		return res.Response(c, 400, err, res.FailedPayloadValidation)
 	}
-	
+
 	{{ end -}}
+
 
 	{{ if $endpoint.URLParams -}} 
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
@@ -185,7 +194,14 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	
 	// query goes here
 
+
+	{{- if ( eq $endpoint.ResponseType "default") }}
 	return res.Response(c, 200, nil, "")
+	{{- end }}
+
+	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
+	return res.ResponseWithPagination(c, 200, nil, "", res.PaginationLinks{})
+	{{- end }}
 }
 {{ end }}
 {{- end }}
@@ -211,8 +227,15 @@ func Router__(app *echo.Group) {
 func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 
 	{{ if $endpoint.Body -}} 
+
+	type responseBody struct {
+		{{- range $body_field := $endpoint.Body }}
+		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
+	{{- end }}
+	}
+	
 	// validate the sent json object
-	payload := new(__{{$endpoint.ControllerName}}Body)
+	payload := new(responseBody)
 	if err := c.Bind(payload); err != nil {
 		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
 	}
@@ -244,9 +267,15 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	
 	// query goes here
 
+	{{- if ( eq $endpoint.ResponseType "default") }}
 	return res.Response(c, 200, nil, "")
+	{{- end }}
+
+	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
+	return res.ResponseWithPagination(c, 200, nil, "", res.PaginationLinks{})
+	{{- end }}
 }
-{{end}}
+{{ end }}
 {{- end }}
 
 
@@ -267,11 +296,16 @@ func Router__(api *chi.Mux) {
 {{range $endpoint := $endpoints }}
 func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-
 	{{ if $endpoint.Body -}} 
+
+	type responseBody struct {
+		{{- range $body_field := $endpoint.Body }}
+		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
+	{{- end }}
+	}
+
 	// validate the sent json object
-	payload := new(__{{$endpoint.ControllerName}}Body)
+	payload := new(responseBody)
 	if err := json.NewDecoder(r.Body).Decode(payload); err != nil {
 		res.Response(w, 400, err.Error(), res.FailedJsonValidation)
 		return
@@ -306,7 +340,14 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	
 	// query goes here
 
+
+	{{- if ( eq $endpoint.ResponseType "default") }}
 	res.Response(w, 200, nil, "")
+	{{- end }}
+
+	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
+	res.ResponseWithPagination(w, 200, nil, "", res.PaginationLinks{})
+	{{- end }}
 }
-{{end}}
+{{ end }}
 {{- end }}

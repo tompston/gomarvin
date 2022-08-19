@@ -1,14 +1,17 @@
 # Gomarvin changelog
 
-<!-- ### v0.3.2
+<!-- ### v0.4.0
 
+- renamed `utils` to `lib`
+- `settings` package holds variables from .env file (name of the var the same as the one used in .env file)
+- Endpoint Body struct pushed to be inside controller (taken from Mat Ryer https://youtu.be/rWBSMsLG8po?t=1671)
+- Block that sets ups the server function is pushed to be a seperate function
+- Decoupled SQL query generation from controllers.
 - refactored generated fetch function comments
   - moved fetch function opt param explanation to the interface.
-  - API object now includes the `config_version` key that shows from 
+  - API object now includes the `config_version` key that shows from
     which version the current file is generated.
-  - if the fetch function has a body, hover over the interface in the JSDoc comments to see the required validation for the fields
--->
-
+  - if the fetch function has a body, hover over the interface in the JSDoc comments to see the required validation for the fields -->
 
 ### v0.3.1
 

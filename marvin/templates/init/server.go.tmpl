@@ -1,0 +1,121 @@
+{{ $go_version      := .ProjectInfo.GoVersion -}}
+{{ $project_name    := .ProjectInfo.Name -}}
+
+package app
+
+import (
+
+	{{- if ( eq .ProjectInfo.Framework "gin") }}
+	"github.com/gin-gonic/gin"
+	{{ end }}
+
+	{{- if ( eq .ProjectInfo.Framework "fiber") }}
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/helmet/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	{{ end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "echo") }}
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	{{ end }}
+
+
+	{{- if ( eq .ProjectInfo.Framework "chi") }}
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
+	{{ end }}
+)
+
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+
+func Start() *gin.Engine {
+
+    app := gin.Default() 	// create the server
+    Router(app) 	// use endpoints
+    return app
+}
+
+{{- end }}
+
+
+
+
+
+    
+
+    
+
+{{- if ( eq .ProjectInfo.Framework "echo") }}
+func Start() *echo.Echo {
+    app := echo.New()				// create the server
+
+    app.Use(
+        middleware.Logger(),        // logs the requests
+        middleware.Recover(),       // 
+        middleware.CORS(),          // allow fetch from frontend
+    )
+
+    Router(app) 	// use endpoints
+    return app
+}
+{{ end }}
+
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
+func Start() *fiber.App {
+    app := fiber.New()    	// create the server
+
+    app.Use(
+        logger.New(),       // logs the requests
+        cors.New(),         // allow fetch from frontend
+        helmet.New(),       // // security headers
+    )
+
+    Router(app) 	// use endpoints
+
+    return app
+}
+{{- end }}
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "chi") }}
+
+func Start() *chi.Mux {
+
+    app := chi.NewRouter()
+
+    app.Use(
+        middleware.Logger, 
+        middleware.Recoverer,
+        middleware.AllowContentType("application/json"),
+        middleware.ContentCharset("UTF-8", "Latin-1", ""),
+        cors.Handler(cors.Options{
+            AllowedOrigins:   []string{"https://*", "http://*"},
+            AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+            AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+            AllowCredentials: false,
+            MaxAge:           300,
+        }),
+    )
+
+    Router(app) 	// use endpoints
+    return app
+}
+{{- end }}
+

@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -24,4 +25,12 @@ func ConvertToPlural(input string) string {
 }
 func ConvertToLowercasePlural(i string) string {
 	return NewClient().Plural(strings.ToLower(i))
+}
+
+// Convert the last value of a string to be a new value
+// 	some_var := ConvertLastCharTo("AAAAAA", "BBB")
+// 	// some_var = AAAAABBB
+func ConvertLastCharTo(x string, last_value string) string {
+	new_str := strings.TrimRight(x, x[len(x)-1:])
+	return fmt.Sprintf("%s%s", new_str, last_value)
 }

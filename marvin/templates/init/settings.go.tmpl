@@ -6,7 +6,23 @@ import (
 	"github.com/joho/godotenv"
 )
 
-const DEBUG = true
+// .env variables. Name of the variable is mapped to the env var name.
+var (
+	// Go .env vars
+	GO_BACKEND_PORT = Config("GO_BACKEND_PORT")
+	DEBUG_MODE  = Config("DEBUG_MODE")
+	HOST_URL	= Config("HOST_URL")
+	API_PATH 	= Config("API_PATH")
+	BASE_URL	= fmt.Sprintf("%s%s", HOST_URL, API_PATH) // host + api prefix path
+	// DB .env vars
+	DB_PASS		= Config("DB_PASS")
+	DB_HOST		= Config("DB_HOST")
+	DB_USER		= Config("DB_USER")
+	DB_NAME		= Config("DB_NAME")
+	DB_PORT		= Config("DB_PORT")
+	DB_SSL		= Config("DB_SSL")
+	DB_TZ		= Config("DB_TZ")
+)
 
 // load all of the env variables from .env
 func LoadEnvFile() {

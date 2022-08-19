@@ -1,10 +1,11 @@
 {{ $project_name := .ProjectInfo.Name -}}
 
-package router
+package app
 
 
 import (
-	res "{{$project_name}}/utils/response"
+	res "{{$project_name}}/lib/response"
+	"{{$project_name}}/settings"
 
 	{{ if ( eq .ProjectInfo.Framework "gin") 	}}"github.com/gin-gonic/gin"{{ end }}
 	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
@@ -26,13 +27,13 @@ import (
 
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 
-func Endpoints(app *gin.Engine) {
+func Router(app *gin.Engine) {
 
 	app.GET("/", func(c *gin.Context) {
-		res.Response(c, 200, "", "Hello There!")
+		res.Response(c, 200, nil, "Hello There!")
 	})
 
-	api := app.Group("{{.ProjectInfo.APIPrefix}}") // prefix for routes
+	api := app.Group(settings.API_PATH) // prefix for routes
 	_ = api
 	{
 	{{ if .Modules -}} 
@@ -49,18 +50,17 @@ func Endpoints(app *gin.Engine) {
 
 
 
-
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 
-func Endpoints(app *fiber.App) {
+func Router(app *fiber.App) {
 
 	// home_view
 	app.Get("/", func (c *fiber.Ctx) error {
-		return res.Response(c, 200, "", "Hello There!")
+		return res.Response(c, 200, nil, "Hello There!")
 	})
 
 	// add a prefix for the routes
-	api := app.Group("{{.ProjectInfo.APIPrefix}}")
+	api := app.Group(settings.API_PATH)
 	_ = api
 
 	{{ if .Modules -}} 
@@ -79,15 +79,15 @@ func Endpoints(app *fiber.App) {
 
 {{- if ( eq .ProjectInfo.Framework "echo") }}
 
-func Endpoints(app *echo.Echo) {
+func Router(app *echo.Echo) {
 
 	// home_view
 	app.GET("/", func (c echo.Context) error {
-		return res.Response(c, 200, "", "Hello There!")
+		return res.Response(c, 200, nil, "Hello There!")
 	})
 
 	// add a prefix for the routes
-	api := app.Group("{{.ProjectInfo.APIPrefix}}")
+	api := app.Group(settings.API_PATH)
 	_ = api
 
 	{{ if .Modules -}} 
@@ -103,7 +103,7 @@ func Endpoints(app *echo.Echo) {
 
 {{- if ( eq .ProjectInfo.Framework "chi") }}
 
-func Endpoints(app *chi.Mux) {
+func Router(app *chi.Mux) {
 
 	// home_view
 	app.Get("/", func(w http.ResponseWriter, r *http.Request) {
@@ -111,7 +111,7 @@ func Endpoints(app *chi.Mux) {
 	})
 
 	api := chi.NewRouter()
-	app.Mount("{{.ProjectInfo.APIPrefix}}", api)
+	app.Mount(settings.API_PATH, api)
 
 	{{ if .Modules -}} 
 		{{- range $module := .Modules }}

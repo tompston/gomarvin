@@ -1,622 +1,785 @@
 {
-  "info": {
-    "_postman_id": "6eb04c1b-32ac-4876-9f9a-4c4da5634f7e",
-    "name": "gomarvin-tests",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "comment-crud",
-      "item": [
-        {
-          "name": "/comment",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/comments\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"\",",
-                  "            \"status\": 200",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/comment",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "comment"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/comment/{id}",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/comments/{id} correct param response\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"\",",
-                  "            \"status\": 200",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/comment/1039",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "comment", "1039"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/comment/{id} false-param (string)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/comments/{id} incorrect param - string\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"Only integers as URL params!\",",
-                  "            \"status\": 400",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/comment/qwe",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "comment", "qwe"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/comment/{id} false-param (string) Copy",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/comments/{id} incorrect param - float\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"Only integers as URL params!\",",
-                  "            \"status\": 400",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/comment/3.14",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "comment", "3.14"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/comment",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/comment post response\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"\",",
-                  "            \"status\": 200",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/comment",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "comment"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/comment",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/comment put response\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"\",",
-                  "            \"status\": 200",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/comment",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "comment"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/comment",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/comment delete response\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"\",",
-                  "            \"status\": 200",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/comment",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "comment"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "user-predefined",
-      "item": [
-        {
-          "name": "/user",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/user, empty body\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"\",",
-                  "            \"status\": 200",
-                  "        }",
-                  "    )",
-                  "});",
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/user",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "user"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/user/{id} param valid",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/user/:id Valid url\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": null,",
-                  "            \"message\": \"\",",
-                  "            \"status\": 200",
-                  "        }",
-                  "    )",
-                  "});",
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/user/1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "user", "1"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/user/{id} param invalid",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/user/{id} - string passed when int expected\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"status\": 400,",
-                  "            \"message\": \"Only integers as URL params!\",",
-                  "            \"data\": null",
-                  "        }",
-                  "    )",
-                  "});",
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/user/qwe1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "user", "qwe1"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/user/register empty-body",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "let res1 = {",
-                  "    \"data\": \"Unprocessable Entity\",",
-                  "    \"message\": \"Invalid JSON Object!\",",
-                  "    \"status\": 400",
-                  "}",
-                  "",
-                  "let res2 = {",
-                  "    \"status\": 400,",
-                  "    \"message\": \"Payload validation failed!\",",
-                  "    \"data\": [",
-                  "        {",
-                  "            \"FailedField\": \"__CreateUserBody.Username\",",
-                  "            \"Tag\": \"required\",",
-                  "            \"Value\": \"\"",
-                  "        },",
-                  "        {",
-                  "            \"FailedField\": \"__CreateUserBody.Email\",",
-                  "            \"Tag\": \"required\",",
-                  "            \"Value\": \"\"",
-                  "        },",
-                  "        {",
-                  "            \"FailedField\": \"__CreateUserBody.Age\",",
-                  "            \"Tag\": \"required\",",
-                  "            \"Value\": \"\"",
-                  "        },",
-                  "        {",
-                  "            \"FailedField\": \"__CreateUserBody.Password\",",
-                  "            \"Tag\": \"required\",",
-                  "            \"Value\": \"\"",
-                  "        }",
-                  "    ]",
-                  "}",
-                  "",
-                  "pm.test(\"/user/register Empty body returns Invalid JSON Object! msg\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(res1)",
-                  "});",
-                  "",
-                  "pm.test(\"/user/register Empty body returns Validator msg\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(res2)",
-                  "});",
-                  "",
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/user/register",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "user", "register"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/user/register empty-object",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"/user/register Payload validation failed! message present in response\", function () {",
-                  "    const res = pm.response.json();",
-                  "    pm.expect(res.message).to.eql('Payload validation failed!');",
-                  "});",
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/user/register",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "user", "register"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/user/register invalid email",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"400, Invalid JSON Object! message\", function () {",
-                  "    pm.expect(pm.response.json()).to.deep.equal(",
-                  "        {",
-                  "            \"data\": [",
-                  "                {",
-                  "                    \"FailedField\": \"__CreateUserBody.Email\",",
-                  "                    \"Tag\": \"email\",",
-                  "                    \"Value\": \"\"",
-                  "                }",
-                  "            ],",
-                  "            \"message\": \"Payload validation failed!\",",
-                  "            \"status\": 400",
-                  "        }",
-                  "    )",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"username\": \"qweqwe\",\n    \"email\": \"qwe--qwe.co\",\n    \"age\": 29,\n    \"password\": \"asdkqweoxolklqpqo\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:4444/api/v1/user/register",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "4444",
-              "path": ["api", "v1", "user", "register"]
-            }
-          },
-          "response": []
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "5c46394b-3e52-4ecb-8341-21bb7f13c291",
+		"name": "gomarvin-v4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20148006"
+	},
+	"item": [
+		{
+			"name": "user with_pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/user, -- with_pagination\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null,",
+							"            \"links\": {",
+							"                \"prev\": \"\",",
+							"                \"next\": \"\",",
+							"                \"self\": \"\"",
+							"            }",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user no-body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- no body\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 400,",
+							"            \"message\": \"Invalid JSON sent!\",",
+							"            \"data\": \"EOF\"",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user empty-body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- empty body\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 400,",
+							"            \"message\": \"Invalid JSON sent!\",",
+							"            \"data\": \"EOF\"",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/api/v1/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user empty-json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- empty JSON\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 400,",
+							"            \"message\": \"Payload validation failed!\",",
+							"            \"data\": [",
+							"                {",
+							"                    \"FailedField\": \"responseBody.Username\",",
+							"                    \"Tag\": \"required\",",
+							"                    \"Value\": \"\"",
+							"                },",
+							"                {",
+							"                    \"FailedField\": \"responseBody.Email\",",
+							"                    \"Tag\": \"required\",",
+							"                    \"Value\": \"\"",
+							"                },",
+							"                {",
+							"                    \"FailedField\": \"responseBody.Password\",",
+							"                    \"Tag\": \"required\",",
+							"                    \"Value\": \"\"",
+							"                }",
+							"            ]",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/api/v1/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user min-password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- min password\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 400,",
+							"            \"message\": \"Payload validation failed!\",",
+							"            \"data\": [",
+							"                {",
+							"                    \"FailedField\": \"responseBody.Password\",",
+							"                    \"Tag\": \"min\",",
+							"                    \"Value\": \"10\"",
+							"                }",
+							"            ]",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"some-random-username\",\n    \"email\": \"some@mail.co\",\n    \"password\": \"asd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/api/v1/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user correct-body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- correct body\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"some-random-username\",\n    \"email\": \"some@mail.co\",\n    \"password\": \"asd-1sdxkwp2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/api/v1/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test empty-body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- empty body\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 400,",
+							"            \"message\": \"Invalid JSON sent!\",",
+							"            \"data\": \"EOF\"",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test empty-json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- empty body, JSON Validation fail\", function () {",
+							"    const res = pm.response.json()",
+							"    pm.expect(res.message).to.eql(\"Payload validation failed!\")",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/api/v1/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test url-with-int",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- URL Param int\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/api/v1/test/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"test",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test url-with-str",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/test, -- URL Param str\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 400,",
+							"            \"message\": \"Only integers as URL params allowed!\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/api/v1/test/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"test",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment with_pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/comment, -- with_pagination\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null,",
+							"            \"links\": {",
+							"                \"prev\": \"\",",
+							"                \"next\": \"\",",
+							"                \"self\": \"\"",
+							"            }",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment url-with-int",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/comment, -- invalid url param used\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/comment/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"comment",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment url-with-str",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/comment, -- invalid url param used\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 400,",
+							"            \"message\": \"Only integers as URL params allowed!\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/comment/asd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"comment",
+						"asd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/comment, -- post\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/comment, -- put\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"/comment, -- delete\", function () {",
+							"    pm.expect(pm.response.json()).to.deep.equal(",
+							"        {",
+							"            \"status\": 200,",
+							"            \"message\": \"\",",
+							"            \"data\": null",
+							"        }",
+							"    )",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/api/v1/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"api",
+						"v1",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:4444/api/v1/user",
+			"type": "string"
+		}
+	]
 }

@@ -24,7 +24,6 @@ func GenerateSql(conf Config, cmd CmdArgs) {
 		// if the /db/sql/ dir exists, loop over modules and pass data to the templates
 		for i := 0; i < len(modules); i++ { // for each  module in modules
 
-			// project_info := conf.ProjectInfo
 			module := modules[i]
 			data := Project{ProjectInfo: conf.ProjectInfo, Modules: module}
 			lowercase_module_name := conv.ConvertToLowercase(module.Name)

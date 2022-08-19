@@ -3,20 +3,28 @@
 
 # {{$PROJECT_NAME}}
 
-### Init project structure
+#### Init project structure
 
 ```bash
 ├── main.go             # holds the server
-├── router              # import and use module routes
+├── app                 # holds the default config for server + all routes
 │── public              # optionally serve some of the generated files for easier accesibility for frontend people            
 ├── settings            # holds util functions for loading .env vars
 │   └── database        # holds a function that creates db connection with .env vars
-└── utils
+└── lib
     ├── response        # predefined response function and messages
     └── validate        # holds functions for validating payload structs
 ```
 
-### Docker commands
+#### Update on change
+
+```bash
+# https://github.com/cespare/reflex
+reflex -r '\.go' -s -- sh -c "go run main.go"
+```
+
+
+#### Docker commands
 
 ```bash
 # NOTE. Dockerfile can be improved
@@ -33,7 +41,7 @@ docker stop {{$PROJECT_NAME}}
 docker image rm {{$PROJECT_NAME}}
 ```
 
-### Renaming generated sql files
+#### Renaming generated sql files
 
 ```bash
 # run from the root of the project

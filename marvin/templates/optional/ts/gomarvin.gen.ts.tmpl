@@ -5,20 +5,20 @@
  * Repo : https://github.com/tompston/gomarvin
  * Docs : https://gomarvin.pages.dev/docs
  * Rename the current file to edit and save changes!
- * @version {{$project_info.GomarvinVersion}}
+ * @version {{ ConvertLastCharTo $project_info.GomarvinVersion "x" }}
  */
 
 /** Api details and params */
 export const API = {
   project_name: "{{$project_info.Name}}",
-  config_version: "{{$project_info.ConfigVersion}}",
-  base_url: "http://localhost:{{$project_info.Port}}",
+  config_version: "{{ $project_info.ConfigVersion}}",
+  host_url: "http://localhost:{{$project_info.Port}}",
   api_prefix: "{{$project_info.APIPrefix}}",
   init_headers: {
     "Content-type": "application/json;charset=UTF-8",
   },
   get url() {
-    return `${this.base_url}${this.api_prefix}`;
+    return `${this.host_url}${this.api_prefix}`;
   },
 };
 
@@ -40,7 +40,7 @@ export const API = {
  *  console.log(res);
  * }
  */
-interface OptionalFetchParams {
+interface OptionalParams {
   options?: RequestInit;
   append_url?: string;
 }
@@ -100,9 +100,13 @@ export interface {{$endpoint.ControllerName}}Body  {
       {{- range $endpoint := $module.Endpoints }}
 
 /**
- * ## {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
- * @param {OptionalFetchParams} [opt] Optional object with 2 optional values
- {{ if $endpoint.Body -}}* @param {{ WrapInCurlyBracesWithAppendedString $endpoint.ControllerName "Body" }} [body]{{- end }}
+ * ### {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
+ * Fetch {{$endpoint.ControllerName}} endpoint and return a promise of the response
+ * @param {OptionalParams} [opt]
+ {{- if $endpoint.Body }}
+ * @param {{ WrapInCurlyBracesWithAppendedString $endpoint.ControllerName "Body" }} [body]
+ * @see {{$endpoint.ControllerName}}Body for validation fields 
+ {{- end }}
  * @returns {Promise} Promise of the fetch request
  */
 export async function {{$endpoint.ControllerName}}(
@@ -113,13 +117,14 @@ export async function {{$endpoint.ControllerName}}(
   {{- end }}
 {{- end -}}
 {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
-{{- if $endpoint.Body -}}, opt?: OptionalFetchParams {{ else }}opt?: OptionalFetchParams {{- end -}}
+{{- if $endpoint.Body -}}, opt?: OptionalParams {{ else }}opt?: OptionalParams {{- end -}}
 ): Promise<Response> {
   const appended_url = opt?.append_url ? opt?.append_url : "";
   const url = `${API.url}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}${appended_url}`;
   if (opt?.options) {
     return await fetch(url, opt?.options);
-  } else return await fetch(url, {
+  }
+  return await fetch(url, {
     method: "{{$endpoint.Method}}",
     headers: API.init_headers,
     {{ if $endpoint.Body -}} body: JSON.stringify(body) {{- end -}}

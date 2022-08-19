@@ -2,7 +2,6 @@ package marvin
 
 import (
 	"fmt"
-	"strings"
 )
 
 func GenerateModules(conf Config, cmd CmdArgs) {
@@ -30,10 +29,17 @@ func GenerateModules(conf Config, cmd CmdArgs) {
 				template_path := "templates/module/controllers.gen.go.tmpl"
 				template_name, output_file := GenerateTemplateAndOutputName(template_path)
 				full_output_path := fmt.Sprintf("./%s%s", module_dir, output_file)
-				full_output_path = strings.Replace(full_output_path, "__module__", "controllers.gen", -1)
+				// full_output_path = strings.Replace(full_output_path, "__module__", "controllers.gen", -1)
 				ExecuteTemplate(template_name, template_path, full_output_path, data)
 				fmt.Println(CREATED_MSG, full_output_path)
 			}
 		}
 	}
 }
+
+// func Shorten(template_path string, full_output_path string, data interface{}) {
+// 	template_name, output_file := GenerateTemplateAndOutputName(template_path)
+// 	// full_output_path := fmt.Sprintf("%s%s", project_sql_dir, output_file)
+// 	full_output_path = strings.Replace(full_output_path, "__module__", lowercase_module_name, -1)
+// 	ExecuteTemplate(template_name, template_path, full_output_path, data)
+// }

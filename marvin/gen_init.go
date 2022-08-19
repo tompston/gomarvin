@@ -9,8 +9,8 @@ func GenerateInit(conf Config, cmd CmdArgs) {
 	project_name := conf.ProjectInfo.Name
 	project_path := fmt.Sprintf("./%s", project_name)
 
-	if !PathExists(project_path) || cmd.DangerousRegen == "true" { // if the project dir does not exist or regen is true
-
+	// if the project dir does not exist or regen is true
+	if !PathExists(project_path) || cmd.DangerousRegen == "true" {
 		GenerateInitProjectDirs(project_name)           // first, generate init dirs
 		GenerateTemplates(conf, init_project_templates) // then generate init files
 		RenameToDotFiles(conf)

@@ -14,14 +14,12 @@ import (
 	"{{$project_name}}/settings"
 	 _ "github.com/lib/pq" 	
 	"fmt"
-	"os"
 	{{ end }}
 
 
 	{{ if ( eq .ProjectInfo.DbType "mysql")}}
 	"{{$project_name}}/settings"
 	"fmt"
-	"os"
 	_ "github.com/go-sql-driver/mysql"
 	{{ end }}
 	
@@ -30,15 +28,14 @@ import (
 
 var DB *sql.DB
 
-{{- if ( eq .ProjectInfo.DbType "mysql") }}
 // create the dsn string from variables that are specified in the .env file
+{{- if ( eq .ProjectInfo.DbType "mysql") }}
 func DsnString() string {
 	
-	settings.LoadEnvFile() // load all the env variables
-	USER := os.Getenv("DB_USER")
-	PASSW := os.Getenv("DB_PASSWORD")
-	DBNAME := os.Getenv("DB_NAME")
-	dsn := fmt.Sprintf("%s:%s@/%s", USER, PASSW, DBNAME)
+	dsn := fmt.Sprintf("%s:%s@/%s", 
+		settings.DB_USER,
+		settings.DB_PASS, 
+		settings.DB_NAME)
 	return dsn
 	
 }
@@ -49,21 +46,16 @@ func DsnString() string {
 
 
 {{- if ( eq .ProjectInfo.DbType "postgres") }}
-// create the dsn string from variables that are specified in the .env file
 func DsnString() string {
 
-	settings.LoadEnvFile() // load all the env variables
-	
-	HOST := os.Getenv("DB_HOST")
-	USER := os.Getenv("DB_USER")
-	PASSW := os.Getenv("DB_PASSWORD")
-	DBNAME := os.Getenv("DB_NAME")
-	PORT := os.Getenv("DB_PORT")
-	SSLMODE := os.Getenv("DB_SSLMODE")
-	TZ := os.Getenv("DB_TZ")
-
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s", 
-				HOST, USER, PASSW, DBNAME, PORT, SSLMODE, TZ)
+				settings.DB_HOST, 
+				settings.DB_USER, 
+				settings.DB_PASS, 
+				settings.DB_NAME, 
+				settings.DB_PORT, 
+				settings.DB_SSL, 
+				settings.DB_TZ)
 	return dsn
 }
 {{ end }}

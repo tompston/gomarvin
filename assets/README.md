@@ -5,6 +5,16 @@
 - Add form / xml fields for go structs?
 - [Go frameworks by stars](https://github.com/mingrammer/go-web-framework-stars)
 
+### Tests
+
+```
+echo with modules
+  empty-body fails, because returns validation field errors
+gin with modules
+  can't run tests because of the repeating url paths that crash the thing by default
+```
+
+
 ### Commands
 
 ```bash
@@ -19,6 +29,12 @@ kill $(lsof -t -i:4444)
 
 # rename placeholder sql files from the root of the generated server
 for i in ./db/sql/*.sql.gen.txt;  do mv "$i" "${i/.sql.gen.txt}.sql"; done
+
+# test generated queries from db dir
+cd .. 
+for i in ./db/sql/*.sql.gen.txt;  do mv "$i" "${i/.sql.gen.txt}.sql"; done
+cd db
+sqlc generate
 
 ```
 

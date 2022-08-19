@@ -8,7 +8,7 @@ func GenerateOptional(conf Config, cmd CmdArgs) {
 		GenerateSql(conf, cmd)
 	}
 
-	if conf.ProjectInfo.IncludeTsFetch {
+	if conf.ProjectInfo.IncludeFetch {
 		GenerateFetchFunctions(conf, cmd)
 	}
 }
@@ -19,7 +19,7 @@ func GenerateFetchFunctions(conf Config, cmd CmdArgs) {
 	public_dir := fmt.Sprintf("./%s/public/", conf.ProjectInfo.Name)
 
 	// if the public dir does not exist, create it
-	if PathExists(public_dir) {
+	if !PathExists(public_dir) {
 		CreateDir(public_dir)
 	}
 	// if there are modules in the config file, create the typescript file

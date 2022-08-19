@@ -16,24 +16,29 @@ import (
 )
 
 const (
-    ParamIsNotIntMessage = "Only integers as URL params!"
+    ParamIsNotIntMessage = "Only integers as URL params allowed!"
     FailedDbConnMessage = "Could not connect to the database!"
 	FailedJsonValidation = "Invalid JSON sent!"
 	FailedPayloadValidation = "Payload validation failed!"
 )
 
 type Res struct {
-	Status  int         `json:"status" xml:"status"`
-	Message string      `json:"message" xml:"message"`
-	Data    interface{} `json:"data" xml:"data"`
+	// Baseline Response
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
 }
 
-// return the full error message only during debug
-func DbConnErrorMessage(err_msg string) string {
-	if !(settings.DEBUG) {
-		return fmt.Sprintln(FailedDbConnMessage)
-	}
-	return fmt.Sprintln(FailedDbConnMessage, err_msg)
+type ResWithPagination struct {
+	// Baseline Response + Pagination links
+	Res
+	Links interface{} `json:"links"`
+}
+
+type PaginationLinks struct {
+	Prev string `json:"prev"`
+	Next string `json:"next"`
+	Self string `json:"self"`
 }
 
 
@@ -44,10 +49,25 @@ func DbConnErrorMessage(err_msg string) string {
 // all of the correct status codes can be found here -> https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 func Response(c *gin.Context, status int, data interface{}, message string) {
-	c.JSON(status, gin.H{
-		"status":  status,
-		"message": message,
-		"data":    data,
+	c.JSON(status, &Res{
+		Status:  status,
+		Message: message,
+		Data:    data,
+	})
+}
+
+func ResponseWithPagination(c *gin.Context, status int, data interface{}, message string, links PaginationLinks) {
+	c.JSON(status, &ResWithPagination{
+		Res: Res{
+			Status:  status,
+			Message: message,
+			Data:    data,
+		},
+		Links: PaginationLinks{
+			Prev: links.Prev,
+			Next: links.Next,
+			Self: links.Self,
+		},
 	})
 }
 {{- end }}
@@ -60,10 +80,25 @@ func Response(c *gin.Context, status int, data interface{}, message string) {
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 func Response(c *fiber.Ctx, status int,data interface{}, message string) error {
-	return c.Status(status).JSON(fiber.Map{
-		"status":  status,
-		"message": message,
-		"data":    data,
+	return c.Status(status).JSON(&Res{
+		Status:  status,
+		Message: message,
+		Data:    data,
+	})
+}
+
+func ResponseWithPagination(c *fiber.Ctx, status int,data interface{}, message string, links PaginationLinks) error {
+	return c.Status(status).JSON(&ResWithPagination{
+		Res: Res{
+			Status:  status,
+			Message: message,
+			Data:    data,
+		},
+		Links: PaginationLinks{
+			Prev: links.Prev,
+			Next: links.Next,
+			Self: links.Self,
+		},
 	})
 }
 {{- end }}
@@ -80,6 +115,21 @@ func Response(c echo.Context, status int, data interface{}, message string) erro
 		Status:  status,
 		Message: message,
 		Data:    data,
+	})
+}
+
+func ResponseWithPagination(c echo.Context, status int, data interface{}, message string, links PaginationLinks) error {
+	return c.JSON(status, &ResWithPagination{
+		Res: Res{
+			Status:  status,
+			Message: message,
+			Data:    data,
+		},
+		Links: PaginationLinks{
+			Prev: links.Prev,
+			Next: links.Next,
+			Self: links.Self,
+		},
 	})
 }
 {{- end }}
@@ -101,4 +151,35 @@ func Response(w http.ResponseWriter, status int, data interface{}, message strin
 		Data:    data,
 	})
 }
+
+func ResponseWithPagination(w http.ResponseWriter, status int, data interface{}, message string, links PaginationLinks) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+
+	return json.NewEncoder(w).Encode(&ResWithPagination{
+		Res: Res{
+			Status:  status,
+			Message: message,
+			Data:    data,
+		},
+		Links: PaginationLinks{
+			Prev: links.Prev,
+			Next: links.Next,
+			Self: links.Self,
+		},
+	})
+}
 {{- end }}
+
+
+
+
+
+
+// return the full error message only during debug
+func DbConnErrorMessage(err_msg string) string {
+	if settings.DEBUG_MODE == "true" {
+		return fmt.Sprintln(FailedDbConnMessage, err_msg)
+	}
+	return fmt.Sprintln(FailedDbConnMessage)
+}

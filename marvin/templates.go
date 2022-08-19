@@ -88,6 +88,7 @@ var template_functions = template.FuncMap{
 	"ConvertToLowercasePlural":            conv.ConvertToLowercasePlural,
 	"WrapInCurlyBraces":                   WrapInCurlyBraces,
 	"WrapInCurlyBracesWithAppendedString": WrapInCurlyBracesWithAppendedString,
+	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"

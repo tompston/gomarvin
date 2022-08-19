@@ -8,7 +8,7 @@
 # ./test/test.sh
 
 CURRENT_DIR=$PWD
-GOMARVIN_V='v0.3.0'
+GOMARVIN_V='v0.4.0'
 GOMARVIN_CONFIG_BASE="gomarvin-"
 GOMARVIN_CONFIG_DIR=${CURRENT_DIR}/examples/${GOMARVIN_V}/
 BUILD_DIR=./test/build/
@@ -17,13 +17,13 @@ DANGEROUS_REGEN="true"
 # Variable used in the config file name + the name of the
 # generated dir ( "project_info": "name": "gin_ecommerce" )
 EXAMPLES=(
-  'gin'
+  # 'gin'
+  # 'fiber'
+  # 'echo'
+  # 'chi'
   'gin_with_modules'
-  'fiber'
   'fiber_with_modules'
-  'echo'
   'echo_with_modules'
-  'chi'
   'chi_with_modules'
 )
 

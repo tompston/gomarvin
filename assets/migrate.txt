@@ -1,0 +1,34 @@
+import { faker } from "https://cdn.skypack.dev/@faker-js/faker";
+import { CreatTest } from "./public/gomarvin.gen.ts";
+import { parse } from "https://deno.land/std@0.136.0/flags/mod.ts";
+const args = parse(Deno.args);
+
+// deno run --allow-net ./main.ts --gen=true --amount=10
+
+/** If the cli arg is a number, use it. Else set to 10 */
+const FAKE_RECORD_COUNT = typeof args.amount === "number" ? args.amount : 10;
+
+/**
+ * create x fake users in the database by using the
+ * generated function for the RegisterUser endpoint.
+ * Once registered, log the response.
+ */
+async function generateFakeRows(AMOUNT: number) {
+  for (let i = 0; i < AMOUNT; i++) {
+    const fake_name = faker.name.findName();
+
+    const res = await CreatTest({
+      change_me: faker.internet.userName(fake_name),
+    });
+    const data = await res.json();
+    console.log(data);
+  }
+}
+
+async function main() {
+  if (args.gen === "true") {
+    await generateFakeRows(FAKE_RECORD_COUNT);
+  }
+}
+
+main();
