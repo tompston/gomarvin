@@ -1,6 +1,6 @@
 # Gomarvin changelog
 
-<!-- ### v0.4.0
+### v0.4.0
 
 - renamed `utils` to `lib`
 - `settings` package holds variables from .env file (name of the var the same as the one used in .env file)
@@ -11,7 +11,7 @@
   - moved fetch function opt param explanation to the interface.
   - API object now includes the `config_version` key that shows from
     which version the current file is generated.
-  - if the fetch function has a body, hover over the interface in the JSDoc comments to see the required validation for the fields -->
+  - if the fetch function has a body, hover over the interface in the JSDoc comments to see the required validation for the fields
 
 ### v0.3.1
 
