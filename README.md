@@ -3,6 +3,8 @@
 
 <h2 align="center">Generate boilerplate for Gin / Fiber / Echo / Chi REST servers.</h2>
 
+https://user-images.githubusercontent.com/82293948/193579218-fff4d030-8e69-4ff7-888b-303299c1484b.mp4
+
 Generate:
 
 - Init server + controllers for endpoints
