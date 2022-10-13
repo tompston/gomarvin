@@ -82,7 +82,7 @@ func Start() *fiber.App {
     app.Use(
         logger.New(),       // logs the requests
         cors.New(),         // allow fetch from frontend
-        helmet.New(),       // // security headers
+        helmet.New(),       // security headers
     )
 
     Router(app) 	// use endpoints

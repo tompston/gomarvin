@@ -62,7 +62,6 @@ Flags:
   -config		Specify path to the gomarvin config file (default "gomarvin.json")
   -dangerous-regen	Regenerate everything. If set to true, init server will be regenerated and all previous changes will be lost (default "false")
   -fetch-only		generate only the typescript file that holds fetch function (default "false")`
-
 ```
 
 ### Generated Typescript fetch functions usage example
@@ -182,6 +181,5 @@ git commit -m "gomarvin: release v0.4.1"
 git tag v0.4.1
 git push origin v0.4.1
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.4.1
-
 
 -->

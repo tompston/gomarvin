@@ -63,5 +63,5 @@ Online Editor:
 
 Flags:
   -config		Specify path to the gomarvin config file (default "gomarvin.json")
-  -dangerous-regen	Regenerate everything. If set to true, init server will be regenerated and all previous changes will be lost (default "false")
+  -dangerous-regen	Regenerate everything. If set to true, all previous changes will be lost (default "false")
   -fetch-only		generate only the typescript file that holds fetch function (default "false")`
