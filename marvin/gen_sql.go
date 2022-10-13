@@ -7,7 +7,7 @@ import (
 	conv "github.com/tompston/gomarvin/marvin/utils/convert"
 )
 
-func GenerateSql(conf Config, cmd CmdArgs) {
+func GenerateSql(conf Config, cmd Flags) {
 
 	project_name := conf.ProjectInfo.Name
 	modules := conf.Modules

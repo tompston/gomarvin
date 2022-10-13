@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func GenerateModules(conf Config, cmd CmdArgs) {
+func GenerateModules(conf Config, cmd Flags) {
 
 	project_name := conf.ProjectInfo.Name
 	modules := conf.Modules

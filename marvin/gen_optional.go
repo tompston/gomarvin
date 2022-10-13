@@ -2,7 +2,7 @@ package marvin
 
 import "fmt"
 
-func GenerateOptional(conf Config, cmd CmdArgs) {
+func GenerateOptional(conf Config, cmd Flags) {
 
 	if conf.ProjectInfo.IncludeSQL { // if include_sql = true
 		GenerateSql(conf, cmd)
@@ -14,7 +14,7 @@ func GenerateOptional(conf Config, cmd CmdArgs) {
 }
 
 // if there are modules in the config, generate gomarvin.gen.ts in the /public dir
-func GenerateFetchFunctions(conf Config, cmd CmdArgs) {
+func GenerateFetchFunctions(conf Config, cmd Flags) {
 
 	public_dir := fmt.Sprintf("./%s/public/", conf.ProjectInfo.Name)
 
@@ -29,7 +29,7 @@ func GenerateFetchFunctions(conf Config, cmd CmdArgs) {
 }
 
 // if there are modules in the config, generate gomarvin.gen.ts
-func GenerateOnlyFetchFunctions(conf Config, cmd CmdArgs) {
+func GenerateOnlyFetchFunctions(conf Config, cmd Flags) {
 	if len(conf.Modules) != 0 {
 		template_name, output_file := GenerateTemplateAndOutputName(typescript_fetch_template)
 		ExecuteTemplate(template_name, typescript_fetch_template, "./gomarvin.gen.ts", conf)

@@ -5,10 +5,9 @@ import (
 	"os/exec"
 )
 
-func Run(cmd *CmdArgs, args []string) {
+func Run(flags *Flags, args []string) {
 
-	fmt.Println(args)
-
+	// if only the program is executed, with no args, print info
 	if len(args) == 0 {
 		fmt.Println(gomarvin_info)
 	}
@@ -16,19 +15,20 @@ func Run(cmd *CmdArgs, args []string) {
 	// if "generate" arg is provided in the cli args, generate the project
 	if stringExistsInSlice("generate", args) {
 
-		// if gomarvin.json or provided config file path exists
-		if PathExists(cmd.ConfigPath) {
-			conf := ReadConfig(cmd.ConfigPath) // read json config file
+		// if gomarvin.json or a custom path to an existing config file is provided
+		if PathExists(flags.ConfigPath) {
+
+			conf := ReadConfig(flags.ConfigPath) // read json config file
 
 			// if fetch_only is set to default value ("false"), generate the whole project
-			if cmd.FetchOnly == "false" {
-				GenerateInit(conf, *cmd)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
-				GenerateModules(conf, *cmd)  // geenerate module dirs and controller files if exist
-				GenerateOptional(conf, *cmd) // generate things that are optional
-				FormatAfterGen()             // run gofmt to format the project in the dir
-			} else if cmd.FetchOnly == "true" {
+			if flags.FetchOnly == "false" {
+				GenerateInit(conf, *flags)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
+				GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist
+				GenerateOptional(conf, *flags) // generate things that are optional
+				FormatAfterGen()               // run gofmt to format the project in the dir
+			} else if flags.FetchOnly == "true" {
 				// go run main.go -config="examples/v0.3.0/gomarvin-fiber_with_modules.json" -fetch-only="true"
-				GenerateOnlyFetchFunctions(conf, *cmd)
+				GenerateOnlyFetchFunctions(conf, *flags)
 			}
 
 		} else {
@@ -40,8 +40,8 @@ func Run(cmd *CmdArgs, args []string) {
 
 // run gofmt after codegen to format the generated code correctly / remove whitespace stuff
 func FormatAfterGen() {
-	cmd := exec.Command("gofmt", "-s", "-w", ".")
-	cmd.Run()
+	flags := exec.Command("gofmt", "-s", "-w", ".")
+	flags.Run()
 }
 
 func stringExistsInSlice(str string, list []string) bool {
@@ -55,11 +55,13 @@ func stringExistsInSlice(str string, list []string) bool {
 
 var CREATED_MSG = "* CREATED"
 
-var gomarvin_info = `
-Usage:
+var gomarvin_info = `Usage:
   gomarvin generate
 
+Online Editor:
+  https://gomarvin.pages.dev
+
 Flags:
-  -x, --experimental   enable experimental features (default: false)
-  -f, --file string    specify an alternate config file (default: sqlc.yaml)
-  -h, --help           help for sqlc`
+  -config		Specify path to the gomarvin config file (default "gomarvin.json")
+  -dangerous-regen	Regenerate everything. If set to true, init server will be regenerated and all previous changes will be lost (default "false")
+  -fetch-only		generate only the typescript file that holds fetch function (default "false")`

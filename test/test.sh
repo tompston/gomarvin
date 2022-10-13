@@ -21,9 +21,9 @@ EXAMPLES=(
   # 'fiber'
   # 'echo'
   # 'chi'
-  # 'gin_with_modules'
-  # 'fiber_with_modules'
-  # 'echo_with_modules'
+  'gin_with_modules'
+  'fiber_with_modules'
+  'echo_with_modules'
   'chi_with_modules'
 )
 
@@ -37,7 +37,7 @@ for example in "${EXAMPLES[@]}"; do
     CONFIG_PATH="${GOMARVIN_CONFIG_DIR}${GOMARVIN_CONFIG_FILE}"
 
     # generate the project
-    ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -config=${CONFIG_PATH}
+    ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -config=${CONFIG_PATH} generate
 
     cd ${example}           # cd into the generated dir
     go mod tidy             # tidy things
@@ -47,16 +47,13 @@ for example in "${EXAMPLES[@]}"; do
 
     # run postman tests on servers that hold the testable endpoints
     # TODO : figure out how to echo only summary
-    if [[ ${example} == *"with_modules"* ]]; then
-
-        echo "--- Running postman tests for ${example} !"
-
-        # nohup go run main.go &  
-        # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
-        # kill -9 $(lsof -t -i:4444)
-        # code .                  # open in vscdoe
-    
-    fi
+    # if [[ ${example} == *"with_modules"* ]]; then
+    #     echo "--- Running postman tests for ${example} !"
+    #     # nohup go run main.go &  
+    #     # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
+    #     # kill -9 $(lsof -t -i:4444)
+    #     # code .                  # open in vscdoe
+    # fi
     
     cd ..               # go back to build dir to run the binary again
 
