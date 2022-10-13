@@ -36,14 +36,14 @@ git clone https://github.com/tompston/gomarvin.git
 
 ```bash
 # run this in the same dir as the config file, if the name of the config is "gomarvin.json"
-gomarvin
+gomarvin generate
 
 # run this if custom config file name or path
-gomarvin -config="PATH_TO_CONFIG"
+gomarvin -config="PATH_TO_CONFIG" generate
 
 # or generate only the typescript API client file. Useful if you want to generate fetch
 # functions for a pre-existing REST API in a fast way.
-gomarvin -fetch-only="true"
+gomarvin -fetch-only="true" generate
 ```
 
 4. run lower commands
@@ -58,14 +58,11 @@ go run main.go
 ## CLI
 
 ```
-gomarvin -h
+Flags:
+  -config		Specify path to the gomarvin config file (default "gomarvin.json")
+  -dangerous-regen	Regenerate everything. If set to true, init server will be regenerated and all previous changes will be lost (default "false")
+  -fetch-only		generate only the typescript file that holds fetch function (default "false")`
 
--config string
-      Specify path to the gomarvin config file (default "gomarvin.json")
--dangerous-regen string
-      Regenerate everything. If set to true, init server will be regenerated and  all previous changes will be lost (default "false")
--fetch-only string
-      generate only the typescript file that holds fetch function (default "false")
 ```
 
 ### Generated Typescript fetch functions usage example
@@ -130,13 +127,13 @@ async function FetchCommentById() {
 
 ### Notes
 
-If formatting does not work, run this
+- If formatting does not work, run this
 
 ```
 gofmt -s -w .
 ```
 
-<h3 align="center">If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. (except for bugs caused by url params and routing, those should be fixed manually)</h3>
+- If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. (except for bugs caused by url params and routing, those should be fixed manually)</h3>
 
 ### Credits to used packages
 
@@ -157,9 +154,8 @@ For example, updating from `0.1.0` to `0.1.1` does not break anything. Going fro
 
 <!--
 
-
 # run a local example
-go run main.go -dangerous-regen="true" -config="./examples/v0.4.0/gomarvin-chi_with_modules.json"
+go run main.go -dangerous-regen="true" -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" generate
 cd chi_with_modules
 go mod tidy
 go mod download
@@ -168,13 +164,8 @@ cd ..
 
 # generate only the fetch client thing
 go run main.go              \
-    -dangerous-regen="true" \
     -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" \
-    -fetch-only="true"
-
-go run main.go              \
-    -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" \
-    -fetch-only="true"
+    -fetch-only="true" generate
 
 // uncomment lower line to call generated sqlc functions with db connection
 // var Queries = sqlc.New(database.DB)
@@ -187,10 +178,10 @@ GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
 # release
 git add .
-git commit -m "gomarvin: release v0.4.0"
-git tag v0.4.0
-git push origin v0.4.0
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.4.0
+git commit -m "gomarvin: release v0.4.1"
+git tag v0.4.1
+git push origin v0.4.1
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.4.1
 
 
 -->
