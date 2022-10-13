@@ -81,14 +81,10 @@ func Router__(app *gin.RouterGroup) {
 func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 	{{ if $endpoint.Body -}} 
-	type __{{$endpoint.ControllerName}}Body struct {
-		{{- range $body_field := $endpoint.Body }}
-		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
-	{{- end }}
-	}
 
 	// validate the sent json object
-	payload := new(__{{$endpoint.ControllerName}}Body)
+	payload := new({{$endpoint.ControllerName}}Body)
+
 	if err := c.ShouldBindJSON(payload); err != nil {
 		res.Response(c, 400, err.Error(), res.FailedJsonValidation)
 		return
@@ -155,14 +151,10 @@ func Router__(app *fiber.App, api fiber.Router) {
 func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 
 	{{ if $endpoint.Body -}} 
-	type responseBody struct {
-		{{- range $body_field := $endpoint.Body }}
-		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
-	{{- end }}
-	}
 
 	// validate the sent json object
-	payload := new(responseBody)
+	payload := new({{$endpoint.ControllerName}}Body)
+
 	if err := c.BodyParser(payload); err != nil {
 		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
 	}
@@ -227,15 +219,10 @@ func Router__(app *echo.Group) {
 func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 
 	{{ if $endpoint.Body -}} 
-
-	type responseBody struct {
-		{{- range $body_field := $endpoint.Body }}
-		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
-	{{- end }}
-	}
 	
 	// validate the sent json object
-	payload := new(responseBody)
+	payload := new({{$endpoint.ControllerName}}Body)
+
 	if err := c.Bind(payload); err != nil {
 		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
 	}
@@ -298,14 +285,9 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 
 	{{ if $endpoint.Body -}} 
 
-	type responseBody struct {
-		{{- range $body_field := $endpoint.Body }}
-		{{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
-	{{- end }}
-	}
-
 	// validate the sent json object
-	payload := new(responseBody)
+	payload := new({{$endpoint.ControllerName}}Body)
+
 	if err := json.NewDecoder(r.Body).Decode(payload); err != nil {
 		res.Response(w, 400, err.Error(), res.FailedJsonValidation)
 		return

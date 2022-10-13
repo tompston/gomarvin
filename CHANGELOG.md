@@ -1,5 +1,12 @@
 # Gomarvin changelog
 
+<!-- ### v0.4.1
+
+- Body of the controller removed from the controller and pushed to a new file
+  - this way, when updating the body fields from the editor, you don't need to update the controllers from scratch
+- changed cli args to be more intuitive
+  - generation works only if you include `generate` -->
+
 ### v0.4.0
 
 - renamed `utils` to `lib`
