@@ -3,7 +3,7 @@
 
 <h2 align="center">Generate boilerplate for Gin / Fiber / Echo / Chi REST servers.</h2>
 
-https://user-images.githubusercontent.com/82293948/193579218-fff4d030-8e69-4ff7-888b-303299c1484b.mp4
+https://user-images.githubusercontent.com/82293948/197339991-ca049896-7a0e-4fa9-ae2b-787f0bb021b2.mp4
 
 Generate:
 
@@ -67,16 +67,13 @@ Flags:
 ### Generated Typescript fetch functions usage example
 
 ```js
-// import the generated file
-import * as F from "../../../gomarvin.gen";
-// or import only the Comment module endpoints
-import { CommentEndpoints } from "../../../gomarvin.gen";
-// or just import a single fetch function
-import { GetUserById } from "../../../gomarvin.gen";
+import * as F from "../../../gomarvin.gen"; // import the generated file
+import { CommentEndpoints } from "../../../gomarvin.gen"; // or import only the Comment module endpoints
+import { GetUserById } from "../../../gomarvin.gen"; // or just import a single fetch function
 
 // fetch a user by id
 async function FetchGetUserByIdEndpoint() {
-  let res = await F.GetUserById(1);
+  let res = await GetUserById(1);
   let users = await res.json();
   console.log(users);
 }
@@ -97,12 +94,6 @@ async function FetchCreateUserEndpoint() {
 // append optional string to the existing endpoint url
 async function FetchEndpointWithAppendedUrl() {
   const res = await F.GetUserById(10, { append_url: "?name=jim" });
-  console.log(res);
-}
-
-// define custom options for the fetch request
-async function FetchEndpointWithCustomOptions() {
-  const res = await F.GetUserById(10, { options: { method: "POST" } });
   console.log(res);
 }
 
