@@ -1,3 +1,5 @@
+// @ts-check
+
 
 export const qwe = "asd"
 
@@ -11,8 +13,10 @@ function Client({ headers, host_url, api_prefix }: _Client) {
     this.headers = headers
     this.host_url = host_url
     this.api_prefix = api_prefix
-    this.url= `${host_url}${api_prefix}`
+    this.url = `${host_url}${api_prefix}`
 }
+
+// Animal.prototype.name
 
 Client.prototype.myUrl = function myUrl() {
     console.log(`url :: ${this.url}`)
@@ -26,7 +30,7 @@ Client.prototype.printThis = function printThis(x: string): string {
     return `${x}`
 }
 
-const api = new Client({
+const api = Client({
     host_url: "http://localhost:4444",
     api_prefix: "/api/v1",
     headers: {
@@ -34,7 +38,9 @@ const api = new Client({
     },
 })
 
+
 let asd = api.config()
+
 let print_my_value = api.printThis()
 // console.log(print_my_value)
 
@@ -47,5 +53,6 @@ let print_my_value = api.printThis()
 
 
 /**
- * Find out why the info of types is lost when using prototypes
+ * Find out why the info of types is lost when using prototypes.
+ * 
  */

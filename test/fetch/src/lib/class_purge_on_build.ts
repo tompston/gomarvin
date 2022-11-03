@@ -32,5 +32,16 @@ export class API_Client {
     }
 }
 
+const client = new API_Client(
+    {
+        host_url: "http://localhost:4444",
+        api_prefix: "/api/v1",
+        headers: {
+            "Content-type": "application/json;charset=UTF-8",
+        },
+    }
+)
+
 // client.SayWoof()
 // client.Log("something")
+// client.Log()
