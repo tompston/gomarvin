@@ -1,13 +1,31 @@
 import * as F from "../../../gomarvin.gen";
-import { CommentEndpoints } from "../../../gomarvin.gen";
+// import { CommentEndpoints } from "../../../gomarvin.gen";
 import { Test, FetchCreateUserEndpoint } from "./lib/tests";
+import { API_Client } from "./lib/class_purge_on_build";
+
 
 export function App() {
+
+  const client = new API_Client(
+    {
+      host_url: "http://localhost:4444",
+      api_prefix: "/api/v1",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    }
+  )
+  client.SayWoof()
+
+
   // fetch GetUserById endpoint
   async function FetchGetUsersById() {
     const res = await F.GetUserById(10);
     console.log(res);
   }
+
+
+
 
   // append optional string to the existing endpoint url
   async function FetchEndpointWithAppendedUrl() {
@@ -29,12 +47,6 @@ export function App() {
       options: { method: "DELETE" },
       append_url: "?name=jim",
     });
-    console.log(res);
-  }
-
-  // Fetch a singe endpoint from the Comment module
-  async function FetchCommentById() {
-    const res = await CommentEndpoints.GetComment(20);
     console.log(res);
   }
 
@@ -67,9 +79,7 @@ export function App() {
         >
           FetchWithAppendedUrlAndCustomOptions
         </div>
-        <div onClick={FetchCommentById} class="test-btn">
-          FetchCommentById
-        </div>
+
       </div>
     </>
   );

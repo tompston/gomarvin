@@ -145,7 +145,15 @@ For example, updating from `0.1.0` to `0.1.1` does not break anything. Going fro
 <!--
 
 # run a local example
-go run main.go -dangerous-regen="true" -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" generate
+go run main.go -dangerous-regen="true" \
+    -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" \
+    -fetch-only="true" generate
+
+
+go run main.go -dangerous-regen="true" \
+    -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" \
+    -fetch-only="true" generate
+
 cd chi_with_modules
 go mod tidy
 go mod download
