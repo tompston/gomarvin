@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "5c46394b-3e52-4ecb-8341-21bb7f13c291",
+		"_postman_id": "7695eff0-96f9-4009-9968-396caff44148",
 		"name": "gomarvin-v4",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20148006"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -156,17 +155,17 @@
 							"            \"message\": \"Payload validation failed!\",",
 							"            \"data\": [",
 							"                {",
-							"                    \"FailedField\": \"responseBody.Username\",",
+							"                    \"FailedField\": \"CreateUserBody.Username\",",
 							"                    \"Tag\": \"required\",",
 							"                    \"Value\": \"\"",
 							"                },",
 							"                {",
-							"                    \"FailedField\": \"responseBody.Email\",",
+							"                    \"FailedField\": \"CreateUserBody.Email\",",
 							"                    \"Tag\": \"required\",",
 							"                    \"Value\": \"\"",
 							"                },",
 							"                {",
-							"                    \"FailedField\": \"responseBody.Password\",",
+							"                    \"FailedField\": \"CreateUserBody.Password\",",
 							"                    \"Tag\": \"required\",",
 							"                    \"Value\": \"\"",
 							"                }",
@@ -222,7 +221,7 @@
 							"            \"message\": \"Payload validation failed!\",",
 							"            \"data\": [",
 							"                {",
-							"                    \"FailedField\": \"responseBody.Password\",",
+							"                    \"FailedField\": \"CreateUserBody.Password\",",
 							"                    \"Tag\": \"min\",",
 							"                    \"Value\": \"10\"",
 							"                }",
