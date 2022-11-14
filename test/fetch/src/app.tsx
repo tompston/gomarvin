@@ -1,7 +1,10 @@
 // import { CommentEndpoints } from "../../../gomarvin.gen";
 import { Test, FetchCreateUserEndpoint } from "./lib/tests";
 
-import * as F from "../../../chi_with_modules/public/gomarvin.gen"
+// import the generated file
+import * as F from "../../../chi_with_modules/public/gomarvin.gen" 
+// or just import a single fetch function
+import { GetUserById } from "../../../chi_with_modules/public/gomarvin.gen"
 
 // either use the default client created from
 // the settings of the config file, or create a new one

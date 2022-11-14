@@ -67,33 +67,45 @@ Flags:
 ### Generated Typescript fetch functions usage example
 
 ```js
-import * as F from "../../../gomarvin.gen"; // import the generated file
-import { CommentEndpoints } from "../../../gomarvin.gen"; // or import only the Comment module endpoints
-import { GetUserById } from "../../../gomarvin.gen"; // or just import a single fetch function
+// import the generated file
+import * as F from "../../../chi_with_modules/public/gomarvin.gen" 
+// or just import a single fetch function
+import { GetUserById } from "../../../chi_with_modules/public/gomarvin.gen"
 
-// fetch a user by id
-async function FetchGetUserByIdEndpoint() {
-  let res = await GetUserById(1);
-  let users = await res.json();
-  console.log(users);
+// either use the default client created from
+// the settings of the config file, or create a new one
+// (useful when switching environments)
+const defaultClient = F.defaultClient
+
+// api client when deployed
+const productionClient: F.Client = {
+  host_url: "http://example.com",
+  api_prefix: "/api/v1",
+  headers: {
+    "Content-type": "application/json;charset=UTF-8",
+  },
 }
 
-// create a new user
-async function FetchCreateUserEndpoint() {
-  let res = await F.CreateUser({
-    username: "qweqwe",
-    email: "qwe@qwe.com",
-    age: 20,
-    password: "very-long-and-good-password",
-  });
+const DEV_MODE = true
 
-  let user = await res.json();
-  console.log(user);
+// switch to productionClient if DEV_MODE is false
+const client = DEV_MODE ? defaultClient : productionClient
+
+// fetch GetUserById endpoint
+async function FetchGetUsersById() {
+  const res = await F.GetUserById(client, 10);
+  console.log(res);
 }
 
 // append optional string to the existing endpoint url
 async function FetchEndpointWithAppendedUrl() {
-  const res = await F.GetUserById(10, { append_url: "?name=jim" });
+  const res = await F.GetUserById(client, 10, { append_url: "?name=jim" });
+  console.log(res);
+}
+
+// define custom options for the fetch request
+async function FetchEndpointWithCustomOptions() {
+  const res = await F.GetUserById(client, 10, { options: { method: "POST" } });
   console.log(res);
 }
 
@@ -101,16 +113,10 @@ async function FetchEndpointWithAppendedUrl() {
 // - append a string to the fetch url
 // - define a new options object used in the fetch request
 async function FetchWithAppendedUrlAndCustomOptions() {
-  const res = await F.GetUserById(10, {
+  const res = await F.GetUserById(client, 10, {
     options: { method: "DELETE" },
     append_url: "?name=jim",
   });
-  console.log(res);
-}
-
-// Fetch a single endpoint from the Comment module
-async function FetchCommentById() {
-  const res = await CommentEndpoints.GetComment(20);
   console.log(res);
 }
 ```
