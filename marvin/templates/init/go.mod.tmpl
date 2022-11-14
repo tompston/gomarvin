@@ -7,7 +7,7 @@ go {{ $go_version }}
 
 
 require (
-	github.com/go-playground/validator/v10 v10.10.1
+	github.com/go-playground/validator/v10 v10.11.1
 	github.com/joho/godotenv v1.3.0
 
 	{{ if ( eq .ProjectInfo.DbType "postgres")}}github.com/lib/pq v1.10.2 	{{ end }}
@@ -15,7 +15,7 @@ require (
 	{{ if ( eq .ProjectInfo.DbType "mysql")}}github.com/go-sql-driver/mysql v1.6.0{{ end }}
 
 	{{- if ( eq .ProjectInfo.Framework "gin") }}
-	github.com/gin-gonic/gin v1.7.7
+	github.com/gin-gonic/gin v1.8.1
 	{{- end }}
 
 
@@ -26,7 +26,7 @@ require (
 
 
 	{{- if ( eq .ProjectInfo.Framework "echo") }}
-	github.com/labstack/echo/v4 v4.7.2
+	github.com/labstack/echo/v4 v4.9.1
 	{{- end }}
 
 

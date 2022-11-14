@@ -4,6 +4,7 @@
 
 <!-- ### v0.5.0
 
+- Updated go.mod dependencies
 - Refactored fetch client
   - Fetch functions now have an required argument which has the settings for the fetch request ( url and headers)
 

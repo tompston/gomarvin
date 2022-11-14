@@ -1,7 +1,7 @@
-import * as F from "../../../chi_with_modules/public/gomarvin.gen"
 // import { CommentEndpoints } from "../../../gomarvin.gen";
 import { Test, FetchCreateUserEndpoint } from "./lib/tests";
 
+import * as F from "../../../chi_with_modules/public/gomarvin.gen"
 
 // either use the default client created from
 // the settings of the config file, or create a new one
@@ -10,8 +10,11 @@ const defaultClient = F.defaultClient
 
 // api client when deployed
 const productionClient: F.Client = {
-  ...defaultClient,
-  host_url: "https://example.com"
+  host_url: "http://example.com",
+  api_prefix: "/api/v1",
+  headers: {
+    "Content-type": "application/json;charset=UTF-8",
+  },
 }
 
 const DEV_MODE = true
