@@ -1,0 +1,5 @@
+{{- if $endpoint.URLParams -}}
+{{- range $url_param := $endpoint.URLParams }}
+{{ if (eq $url_param.Type  "string" ) -}} * @param {{$url_param.Field}}: string, {{- end -}}
+{{ if (eq $url_param.Type  "int" )    -}} * @param {{$url_param.Field}}: number, {{- end -}}
+{{- end -}}{{- end -}}
