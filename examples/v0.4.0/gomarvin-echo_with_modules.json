@@ -172,7 +172,7 @@
           "controller_name": "TestUrlWithString",
           "url_params": [
             {
-              "field": "this",
+              "field": "something",
               "type": "string"
             }
           ],
@@ -185,7 +185,7 @@
           "controller_name": "TestUrlWithInt",
           "url_params": [
             {
-              "field": "this",
+              "field": "something",
               "type": "int"
             }
           ],

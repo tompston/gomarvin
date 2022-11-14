@@ -66,7 +66,7 @@ sqlc generate
 - [x] gomarvin version in ts file
 - [x] Expand postman tests
 - [ ] refactor functions that generate templates with one module at a time
-- [ ] figure out the next framework to add once this is done
+- [x] figure out the next framework to add once this is done
 - [ ]
 
 ### Frontend
@@ -85,9 +85,8 @@ sqlc generate
 - [x] make things look nicer
 - [x] Create a new example with user module (registration, etc)
 - [x] darkmode
-- [ ] adjust styles for mobile
-- [ ] add more TS support
-- [ ] mention possible bugs if older go versions are picked
+- [x] add more TS support
+- [x] mention possible bugs if older go versions are picked
 
 ## References
 

@@ -3,42 +3,53 @@ import * as F from "../../../chi_with_modules/public/gomarvin.gen"
 import { Test, FetchCreateUserEndpoint } from "./lib/tests";
 
 
+// either use the default client created from
+// the settings of the config file, or create a new one
+// (useful when switching environments)
+const defaultClient = F.defaultClient
+
+// api client when deployed
+const productionClient: F.Client = {
+  ...defaultClient,
+  host_url: "https://example.com"
+}
+
+const DEV_MODE = true
+
+// switch to productionClient if DEV_MODE is false
+const client = DEV_MODE ? defaultClient : productionClient
+
+// fetch GetUserById endpoint
+async function FetchGetUsersById() {
+  const res = await F.GetUserById(client, 10);
+  console.log(res);
+}
+
+// append optional string to the existing endpoint url
+async function FetchEndpointWithAppendedUrl() {
+  const res = await F.GetUserById(client, 10, { append_url: "?name=jim" });
+  console.log(res);
+}
+
+// define custom options for the fetch request
+async function FetchEndpointWithCustomOptions() {
+  const res = await F.GetUserById(client, 10, { options: { method: "POST" } });
+  console.log(res);
+}
+
+// Use both optional values
+// - append a string to the fetch url
+// - define a new options object used in the fetch request
+async function FetchWithAppendedUrlAndCustomOptions() {
+  const res = await F.GetUserById(client, 10, {
+    options: { method: "DELETE" },
+    append_url: "?name=jim",
+  });
+  console.log(res);
+}
+
+
 export function App() {
-
-  // either use the default client created from
-  // the settings of the config file, or create a new one
-  // (useful when switching environments)
-  const client = F.defaultClient
-
-  // fetch GetUserById endpoint
-  async function FetchGetUsersById() {
-    const res = await F.GetUserById(client, 10);
-    console.log(res);
-  }
-
-  // append optional string to the existing endpoint url
-  async function FetchEndpointWithAppendedUrl() {
-    const res = await F.GetUserById(client, 10, { append_url: "?name=jim" });
-    console.log(res);
-  }
-
-  // define custom options for the fetch request
-  async function FetchEndpointWithCustomOptions() {
-    const res = await F.GetUserById(client, 10, { options: { method: "POST" } });
-    console.log(res);
-  }
-
-  // Use both optional values
-  // - append a string to the fetch url
-  // - define a new options object used in the fetch request
-  async function FetchWithAppendedUrlAndCustomOptions() {
-    const res = await F.GetUserById(client, 10, {
-      options: { method: "DELETE" },
-      append_url: "?name=jim",
-    });
-    console.log(res);
-  }
-
   return (
     <>
       <div class="flex-center test-btn-grid">

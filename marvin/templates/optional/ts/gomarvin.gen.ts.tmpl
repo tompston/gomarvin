@@ -111,10 +111,10 @@ export interface {{$endpoint.ControllerName}}Body  {
  * ### {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
  * Fetch {{$endpoint.ControllerName}} endpoint and return the promise of the response
  * @param {Client} client init settings for the api client (url and headers)
- {{- if $endpoint.Body -}}
+ {{- if $endpoint.Body }}
  * @param {{ WrapInCurlyBracesWithAppendedString $endpoint.ControllerName "Body" }} body
  * @see {{$endpoint.ControllerName}}Body for validation fields 
- {{ end }}
+ {{- end }}
 {{- if $endpoint.URLParams }}
 {{ range $url_param := $endpoint.URLParams }}
 {{- if (eq $url_param.Type  "string" ) }} * @param {{ WrapInCurlyBraces "string"}} {{$url_param.Field}} url param for the endpoint {{ end }}

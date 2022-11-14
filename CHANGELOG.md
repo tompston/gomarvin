@@ -1,5 +1,21 @@
 # Gomarvin changelog
 
+
+
+<!-- ### v0.5.0
+
+- Refactored fetch client
+  - Fetch functions now have an required argument which has the settings for the fetch request ( url and headers)
+
+    This allows an easier switch between the dev and the prod environment. As `gomarvin.gen.ts` file is regenerated and ideally should not be edited, switching the api client settings between the dev and prod env can be done only manually, if the api settings are called from the pre-existing settings object. 
+    
+    If the settings of the client are passed as a argument to the function, that problem dissapears.
+
+    - Note that this could be implemented as a class, but then the unused methods don't get purged, thus increasing the bundle size (at least in local tests)
+
+  - JSDoc comments now include the type annotations for the url params -->
+
+
 ### v0.4.1
 
 - Body of the controller removed from the controller and pushed to a new file
