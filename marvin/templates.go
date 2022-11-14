@@ -39,7 +39,7 @@ func ExecuteTemplate(t_name string, t_path string, full_output_path string, data
 }
 
 // generate 2 strings from the template path, that are needed to run the ExecuteTemplate() func
-//  - temp_name = return everything that is after the last / to get the name of the template.
+//   - temp_name = return everything that is after the last / to get the name of the template.
 func GenerateTemplateAndOutputName(template_path string) (string, string) {
 	temp_name := regexp.MustCompile(`[^/]*$`).FindString(template_path)
 	out := strings.TrimSuffix(temp_name, filepath.Ext(temp_name))
@@ -57,7 +57,7 @@ func GenerateTemplates(conf Config, templates []Template) {
 }
 
 // pass down template data, full path to template and output dir
-// 	* GenerateSingleTemplate(conf, "templates/optional/ts/gomarvin.gen.ts.tmpl", "/ts/")
+//   - GenerateSingleTemplate(conf, "templates/optional/ts/gomarvin.gen.ts.tmpl", "/ts/")
 func GenerateSingleTemplate(conf Config, template_path string, output_dir string) {
 	project_name := conf.ProjectInfo.Name
 	project_output_dir := fmt.Sprintf("./%s%s", project_name, output_dir)

@@ -1,23 +1,10 @@
 {{- if $endpoint.URLParams }}
-{{- range $url_param := $endpoint.URLParams -}}
-{{ if (eq $url_param.Type  "string" ) }} * @param {{ WrapInCurlyBraces "string"}} {{$url_param.Field}} url param for the endpoint {{- end }}
-{{ if (eq $url_param.Type  "int" )    }} * @param {{ WrapInCurlyBraces "number"}} {{$url_param.Field}} url param for the endpoint {{- end }}
-{{- end -}}{{- end }}
-
-
-{{- if $endpoint.URLParams }}
-{{ range $url_param := $endpoint.URLParams }}
-{{- if (eq $url_param.Type  "string" ) }} * @param {{ WrapInCurlyBraces "string"}} {{$url_param.Field}} url param for the endpoint {{ end }}
-{{- if (eq $url_param.Type  "int" )    }} * @param {{ WrapInCurlyBraces "number"}} {{$url_param.Field}} url param for the endpoint {{ end }}
-{{ end }}{{- end }}
-
-
-{{- if $endpoint.URLParams }}
 {{ range $url_param := $endpoint.URLParams }}
 {{- if (eq $url_param.Type  "string" ) }} * @param {{ WrapInCurlyBraces "string"}} {{$url_param.Field}} url param for the endpoint {{ end }}
 {{- if (eq $url_param.Type  "int" )    }} * @param {{ WrapInCurlyBraces "number"}} {{$url_param.Field}} url param for the endpoint {{ end }}
 {{ end }}
 {{- end }}
+
 
 {{- if $endpoint.URLParams }}
 {{ range $url_param := $endpoint.URLParams }}

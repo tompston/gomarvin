@@ -1,41 +1,30 @@
-import * as F from "../../../gomarvin.gen";
+import * as F from "../../../chi_with_modules/public/gomarvin.gen"
 // import { CommentEndpoints } from "../../../gomarvin.gen";
 import { Test, FetchCreateUserEndpoint } from "./lib/tests";
-import { API_Client } from "./lib/class_purge_on_build";
 
 
 export function App() {
 
-  const client = new API_Client(
-    {
-      host_url: "http://localhost:4444",
-      api_prefix: "/api/v1",
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-      },
-    }
-  )
-  client.SayWoof()
-
+  // either use the default client created from
+  // the settings of the config file, or create a new one
+  // (useful when switching environments)
+  const client = F.defaultClient
 
   // fetch GetUserById endpoint
   async function FetchGetUsersById() {
-    const res = await F.GetUserById(10);
+    const res = await F.GetUserById(client, 10);
     console.log(res);
   }
 
-
-
-
   // append optional string to the existing endpoint url
   async function FetchEndpointWithAppendedUrl() {
-    const res = await F.GetUserById(10, { append_url: "?name=jim" });
+    const res = await F.GetUserById(client, 10, { append_url: "?name=jim" });
     console.log(res);
   }
 
   // define custom options for the fetch request
   async function FetchEndpointWithCustomOptions() {
-    const res = await F.GetUserById(10, { options: { method: "POST" } });
+    const res = await F.GetUserById(client, 10, { options: { method: "POST" } });
     console.log(res);
   }
 
@@ -43,7 +32,7 @@ export function App() {
   // - append a string to the fetch url
   // - define a new options object used in the fetch request
   async function FetchWithAppendedUrlAndCustomOptions() {
-    const res = await F.GetUserById(10, {
+    const res = await F.GetUserById(client, 10, {
       options: { method: "DELETE" },
       append_url: "?name=jim",
     });

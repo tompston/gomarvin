@@ -28,8 +28,9 @@ func ConvertToLowercasePlural(i string) string {
 }
 
 // Convert the last value of a string to be a new value
-// 	some_var := ConvertLastCharTo("AAAAAA", "BBB")
-// 	// some_var = AAAAABBB
+//
+//	some_var := ConvertLastCharTo("AAAAAA", "BBB")
+//	// some_var = AAAAABBB
 func ConvertLastCharTo(x string, last_value string) string {
 	new_str := strings.TrimRight(x, x[len(x)-1:])
 	return fmt.Sprintf("%s%s", new_str, last_value)

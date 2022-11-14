@@ -145,25 +145,7 @@ For example, updating from `0.1.0` to `0.1.1` does not break anything. Going fro
 <!--
 
 # run a local example
-go run main.go -dangerous-regen="true" \
-    -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" \
-    -fetch-only="true" generate
 
-
-go run main.go -dangerous-regen="true" \
-    -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" \
-    -fetch-only="true" generate
-
-cd chi_with_modules
-go mod tidy
-go mod download
-code .
-cd ..
-
-# generate only the fetch client thing
-go run main.go              \
-    -config="./examples/v0.4.0/gomarvin-chi_with_modules.json" \
-    -fetch-only="true" generate
 
 // uncomment lower line to call generated sqlc functions with db connection
 // var Queries = sqlc.New(database.DB)
