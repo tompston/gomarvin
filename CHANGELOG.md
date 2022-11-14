@@ -2,7 +2,7 @@
 
 
 
-<!-- ### v0.5.0
+### v0.5.0
 
 - Updated go.mod dependencies
 - Refactored fetch client
@@ -14,7 +14,7 @@
 
     - Note that this could be implemented as a class, but then the unused methods don't get purged, thus increasing the bundle size (at least in local tests)
 
-  - JSDoc comments now include the type annotations for the url params -->
+  - JSDoc comments now include type annotations for the url params
 
 
 ### v0.4.1
