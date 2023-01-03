@@ -153,6 +153,7 @@ For example, updating from `0.1.0` to `0.1.1` does not break anything. Going fro
 # run a local example
 
 
+
 // uncomment lower line to call generated sqlc functions with db connection
 // var Queries = sqlc.New(database.DB)
 
