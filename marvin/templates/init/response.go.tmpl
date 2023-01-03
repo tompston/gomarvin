@@ -36,9 +36,8 @@ type ResWithPagination struct {
 }
 
 type PaginationLinks struct {
-	Prev string `json:"prev"`
-	Next string `json:"next"`
-	Self string `json:"self"`
+	Prev string `json:"prev,omitempty"`
+	Next string `json:"next,omitempty"`
 }
 
 
@@ -66,7 +65,6 @@ func ResponseWithPagination(c *gin.Context, status int, data interface{}, messag
 		Links: PaginationLinks{
 			Prev: links.Prev,
 			Next: links.Next,
-			Self: links.Self,
 		},
 	})
 }
@@ -97,7 +95,6 @@ func ResponseWithPagination(c *fiber.Ctx, status int,data interface{}, message s
 		Links: PaginationLinks{
 			Prev: links.Prev,
 			Next: links.Next,
-			Self: links.Self,
 		},
 	})
 }
@@ -128,7 +125,6 @@ func ResponseWithPagination(c echo.Context, status int, data interface{}, messag
 		Links: PaginationLinks{
 			Prev: links.Prev,
 			Next: links.Next,
-			Self: links.Self,
 		},
 	})
 }
@@ -165,7 +161,6 @@ func ResponseWithPagination(w http.ResponseWriter, status int, data interface{},
 		Links: PaginationLinks{
 			Prev: links.Prev,
 			Next: links.Next,
-			Self: links.Self,
 		},
 	})
 }
