@@ -1,0 +1,13 @@
+{{ $project_info  := .ProjectInfo -}}
+{{ $modules       := .Modules     -}}
+
+{{ if $modules }}
+  {{- range $module := $modules -}}
+    {{- if $module.Endpoints }}
+    // {{ $module.Name }}
+        {{- range $endpoint := $module.Endpoints }}
+            // {{ $endpoint.ControllerName }}
+        {{ end }}
+    {{ end -}}
+  {{ end -}}
+{{ end  }}

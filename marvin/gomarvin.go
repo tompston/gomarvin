@@ -26,6 +26,8 @@ func Run(flags *Flags, args []string) {
 				GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist
 				GenerateOptional(conf, *flags) // generate things that are optional
 				FormatAfterGen()               // run gofmt to format the project in the dir
+				// GenerateSeeder(conf, *flags)
+
 			} else if flags.FetchOnly == "true" {
 				GenerateOnlyFetchFunctions(conf, *flags)
 			}

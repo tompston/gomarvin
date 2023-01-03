@@ -81,5 +81,3 @@ var template_functions = template.FuncMap{
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"
-
-const typescript_fetch_template = "templates/optional/ts/gomarvin.gen.ts.tmpl"

@@ -36,3 +36,11 @@ func GenerateOnlyFetchFunctions(conf Config, cmd Flags) {
 		fmt.Println(CREATED_MSG, output_file)
 	}
 }
+
+// func GenerateSeeder(conf Config, cmd Flags) {
+// 	if len(conf.Modules) != 0 {
+// 		template_name, output_file := GenerateTemplateAndOutputName(typescript_fetch_template)
+// 		ExecuteTemplate(template_name, typescript_seed_template, "./seeder.gen.ts", conf)
+// 		fmt.Println(CREATED_MSG, output_file)
+// 	}
+// }
