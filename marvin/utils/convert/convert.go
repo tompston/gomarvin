@@ -35,3 +35,11 @@ func ConvertLastCharTo(x string, last_value string) string {
 	new_str := strings.TrimRight(x, x[len(x)-1:])
 	return fmt.Sprintf("%s%s", new_str, last_value)
 }
+
+func WrapInCurlyBraces(x string) string {
+	return fmt.Sprintf("{" + x + "}")
+}
+
+func WrapInCurlyBracesWithAppendedString(x string, appended_string string) string {
+	return fmt.Sprintf("{" + x + appended_string + "}")
+}

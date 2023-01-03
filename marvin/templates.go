@@ -49,7 +49,6 @@ func GenerateTemplateAndOutputName(template_path string) (string, string) {
 // pass down config and array of predefined tempates and generate them
 func GenerateTemplates(conf Config, templates []Template) {
 	for i := 0; i < len(templates); i++ {
-
 		output_dir := templates[i].output_dir
 		templ_path := templates[i].template_path
 		GenerateSingleTemplate(conf, templ_path, output_dir)
@@ -67,16 +66,6 @@ func GenerateSingleTemplate(conf Config, template_path string, output_dir string
 	fmt.Println(CREATED_MSG, full_output_path)
 }
 
-func GenerateTemplatesFromModules(conf Config, template_path string, output_dir string) {}
-
-func WrapInCurlyBraces(x string) string {
-	return fmt.Sprintf("{" + x + "}")
-}
-
-func WrapInCurlyBracesWithAppendedString(x string, appended_string string) string {
-	return fmt.Sprintf("{" + x + appended_string + "}")
-}
-
 var template_functions = template.FuncMap{
 	// name the template function the same as the imported convert function for predictability
 	"ConvertToTitle":                      conv.ConvertToTitle,
@@ -86,8 +75,8 @@ var template_functions = template.FuncMap{
 	"ConvertToCamelCase":                  conv.ConvertToCamelCase,
 	"ConvertToPlural":                     conv.ConvertToPlural,
 	"ConvertToLowercasePlural":            conv.ConvertToLowercasePlural,
-	"WrapInCurlyBraces":                   WrapInCurlyBraces,
-	"WrapInCurlyBracesWithAppendedString": WrapInCurlyBracesWithAppendedString,
+	"WrapInCurlyBraces":                   conv.WrapInCurlyBraces,
+	"WrapInCurlyBracesWithAppendedString": conv.WrapInCurlyBracesWithAppendedString,
 	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
 }
 

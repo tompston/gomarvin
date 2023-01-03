@@ -15,7 +15,10 @@ func GenerateModules(conf Config, cmd Flags) {
 			module := modules[i]
 
 			// pass down structs that hold global project data + single module
-			data := Project{ProjectInfo: conf.ProjectInfo, Modules: module}
+			data := Project{
+				ProjectInfo: conf.ProjectInfo,
+				Modules:     module,
+			}
 
 			module_dir := ModuleDir(project_name, module.Name)
 

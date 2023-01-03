@@ -27,7 +27,6 @@ func Run(flags *Flags, args []string) {
 				GenerateOptional(conf, *flags) // generate things that are optional
 				FormatAfterGen()               // run gofmt to format the project in the dir
 			} else if flags.FetchOnly == "true" {
-				// go run main.go -config="examples/v0.3.0/gomarvin-fiber_with_modules.json" -fetch-only="true"
 				GenerateOnlyFetchFunctions(conf, *flags)
 			}
 
