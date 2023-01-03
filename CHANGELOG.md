@@ -1,6 +1,11 @@
 # Gomarvin changelog
 
+### v0.6.0
 
+- Improved SQL / SQLC queries
+  - Better naming
+  - Query for curor pagination with `module_id` and `created_at`
+- Renamed `DbConnErrorMessage` -> `DbErrorMessage`
 
 ### v0.5.0
 

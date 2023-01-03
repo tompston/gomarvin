@@ -177,7 +177,7 @@ func ResponseWithPagination(w http.ResponseWriter, status int, data interface{},
 
 
 // return the full error message only during debug
-func DbConnErrorMessage(err_msg string) string {
+func DbErrorMessage(err_msg string) string {
 	if settings.DEBUG_MODE == "true" {
 		return fmt.Sprintln(FailedDbConnMessage, err_msg)
 	}

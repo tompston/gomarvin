@@ -16,72 +16,84 @@ CREATE TABLE IF NOT EXISTS {{ $table_name }} (
 );
 
 
-
 -- when the row is updated, update the "updated_at" timestamp
-CREATE TRIGGER set_timestamp
-BEFORE UPDATE ON {{ $table_name }}
+CREATE TRIGGER set_timestamp BEFORE UPDATE ON {{ $table_name }}
 FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
 
 
--- name: {{ $uppercase_module_name }}_one__CountAll :one
+-- name: {{ $uppercase_module_name }}_CountAll :one
 SELECT      COUNT(*)
 FROM        {{ $table_name }};
 
 
--- name: {{ $uppercase_module_name }}_one__CountAllWhereChange_MeIncludes :one
-SELECT      COUNT(*)
-FROM        {{ $table_name }}
-WHERE       change_me ILIKE '%' || ( $1 ) || '%';
-
-
--- name: {{ $uppercase_module_name }}_many__GetAllOrderByCreatedAtDesc :many
-SELECT      {{ $id }}, created_at
+-- name: {{ $uppercase_module_name }}_GetAll :many
+SELECT      {{ $id }}, created_at, change_me
 FROM        {{ $table_name }}
 ORDER BY    created_at DESC;
 
 
--- name: {{ $uppercase_module_name }}_many__GetAllWhereCreatedAtOrderByCreatedAtDesc :many
-SELECT      {{ $id }}, created_at
+-- name: {{ $uppercase_module_name }}_GetAllWithPaginationFirstPage :many
+SELECT      {{ $id }}, created_at, change_me
+FROM        {{ $table_name }}
+ORDER BY    created_at DESC
+LIMIT       $1;
+
+
+-- name: {{ $uppercase_module_name }}_GetAllWithPaginationNextPage :many
+SELECT      {{ $id }}, created_at, change_me
+FROM        {{ $table_name }}
+WHERE
+    (
+      created_at <= @created_at::TIMESTAMP
+      OR 
+      ( created_at = @created_at::TIMESTAMP AND {{ $id }} < @{{ $id }}::uuid )
+    )
+ORDER BY    created_at DESC
+LIMIT       @_limit::int;
+
+
+-- name: {{ $uppercase_module_name }}_GetAllWhereCreatedAt :many
+SELECT      {{ $id }}, created_at, change_me
 FROM        {{ $table_name }}
 WHERE       created_at = $1
 ORDER BY    created_at DESC;
 
 
--- name: {{ $uppercase_module_name }}_many__GetAllBetweenDatesOrderByCreatedAtDesc :many
-SELECT      {{ $id }}, created_at
+-- name: {{ $uppercase_module_name }}_GetAllBetweenDates :many
+SELECT      {{ $id }}, created_at, change_me
 FROM        {{ $table_name }}
 WHERE       created_at BETWEEN SYMMETRIC $1 AND $2
 ORDER BY    created_at DESC;
 
 
--- name: {{ $uppercase_module_name }}_many__GetWhereChange_MeIncludesOrderByCreatedAtDesc :many
-SELECT      {{ $id }}, created_at
+-- name: {{ $uppercase_module_name }}_GetWhereChange_MeIncludes :many
+SELECT      {{ $id }}, created_at, change_me
 FROM        {{ $table_name }}
 WHERE       change_me ILIKE '%' || ( $1 ) || '%'
 ORDER BY    created_at DESC;
 
 
--- name: {{ $uppercase_module_name }}_one__GetWhereId :one
-SELECT      {{ $id }}, created_at
+-- name: {{ $uppercase_module_name }}_GetWhereIdEquals :one
+SELECT      {{ $id }}, created_at, change_me
 FROM        {{ $table_name }}
 WHERE       {{ $id }} = $1
 LIMIT 1;
 
 
--- name: {{ $uppercase_module_name }}_one__Create :one
+-- name: {{ $uppercase_module_name }}_Create :one
 INSERT INTO {{ $table_name }} ( change_me )
 VALUES      ( $1 )
 RETURNING   *;
 
 
--- name: {{ $uppercase_module_name }}_one__UpdateChange_MeWhereId :one
+-- name: {{ $uppercase_module_name }}_UpdateChange_MeWhereIdEquals :one
 UPDATE      {{ $table_name }}
 SET         change_me = $1
 WHERE       {{ $id }} = $2
 RETURNING   *;
 
 
--- name: {{ $uppercase_module_name }}_one__DeleteWhereId :one
+-- name: {{ $uppercase_module_name }}_DeleteWhereIdEquals :one
 DELETE FROM {{ $table_name }}
 WHERE       {{ $id }} = $1
 RETURNING   *;

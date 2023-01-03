@@ -1,0 +1,6 @@
+
+
+-- name: {{ $uppercase_module_name }}__CountAllWhereChange_MeIncludes :one
+SELECT      COUNT(*)
+FROM        {{ $table_name }}
+WHERE       change_me ILIKE '%' || ( $1 ) || '%';
