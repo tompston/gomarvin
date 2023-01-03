@@ -114,7 +114,7 @@ export interface {{$endpoint.ControllerName}}Body  {
  * Fetch {{$endpoint.ControllerName}} endpoint and return the promise of the response
  * @param {Client} client init settings for the api client (url and headers)
  {{- if $endpoint.Body }}
- * @param {{ WrapInCurlyBracesWithAppendedString $endpoint.ControllerName "Body" }} body check {{$endpoint.ControllerName}}Body interface for validation fields
+ * @param {{ WrapInCurlyBracesWithAppendedString $endpoint.ControllerName "Body" }} body see {{$endpoint.ControllerName}}Body interface for validation fields
  {{- end }}
 {{- if $endpoint.URLParams }}
 {{ range $url_param := $endpoint.URLParams }}

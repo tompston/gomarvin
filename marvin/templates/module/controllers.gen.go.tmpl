@@ -31,6 +31,7 @@ import (
 		{{ end }}	
 	{{ end -}}
 
+
 	{{/* If there is an endpoint with a body, import the validation package */ -}}
 	{{- range $endpoint := $endpoints -}}
 		{{ if $endpoint.Body -}}
@@ -38,6 +39,7 @@ import (
 			{{ break }}
 		{{ end }}	
 	{{ end -}}
+
 
 	{{/* If the current framework is chi and  there is an endpoint with a body, import the json package */ -}}
 	{{- if ( eq .ProjectInfo.Framework "chi") -}}
