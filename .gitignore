@@ -8,3 +8,6 @@ gomarvin.gen.ts
 gomarvin.json
 
 chi_with_modules
+gin_with_modules
+fiber_with_modules
+echo_with_modules
