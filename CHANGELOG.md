@@ -6,6 +6,8 @@
   - Better naming
   - Query for curor pagination with `module_id` and `created_at`
 - Renamed `DbConnErrorMessage` -> `DbErrorMessage`
+- Refactored payload validation response to be more UI friendly
+  - Credits -> https://github.com/go-playground/validator/issues/559
 
 ### v0.5.0
 
