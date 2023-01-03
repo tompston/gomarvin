@@ -14,6 +14,8 @@
 - Refactored pagination links struct
   - Removed Self field
   - omitempty if no value is provided
+- Removed the placeholder block in modules that is used for removing possible import errors.
+
 
 ### v0.5.0
 

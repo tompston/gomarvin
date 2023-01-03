@@ -9,32 +9,47 @@ package {{ ConvertToLowercase  $module}}_module
 
 import (
 	res "{{$project.Name}}/lib/response"
-	"{{$project.Name}}/lib/validate"
-	"{{$project.Name}}/settings/database"
-	"strconv"
-	"time"
-	"encoding/json"
 
 	{{ if ( eq .ProjectInfo.Framework "gin") }}"github.com/gin-gonic/gin"{{ end }}
 	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
 	{{ if ( eq .ProjectInfo.Framework "echo") }}"github.com/labstack/echo/v4"{{ end }}
-
 	{{ if ( eq .ProjectInfo.Framework "chi") }}
 	"github.com/go-chi/chi/v5"
 	"net/http"
 	{{ end }}
+
+
+	{{/* If an endpoint with an strconv URL Param exists, import the package */ -}}
+	{{- range $endpoint := $endpoints -}}
+		{{ if $endpoint.URLParams -}}
+			{{- range $URL_PARAM := $endpoint.URLParams }}
+				{{ if ( eq $URL_PARAM.Type "int") }}
+					"strconv"
+					{{ break }}
+				{{- end -}}
+			{{ end }}
+		{{ end }}	
+	{{ end -}}
+
+	{{/* If there is an endpoint with a body, import the validation package */ -}}
+	{{- range $endpoint := $endpoints -}}
+		{{ if $endpoint.Body -}}
+			"{{$project.Name}}/lib/validate"
+			{{ break }}
+		{{ end }}	
+	{{ end -}}
+
+	{{/* If the current framework is chi and  there is an endpoint with a body, import the json package */ -}}
+	{{- if ( eq .ProjectInfo.Framework "chi") -}}
+		{{range $endpoint := $endpoints -}}
+			{{ if $endpoint.Body -}}
+				"encoding/json"
+				{{ break }}
+			{{ end }}
+		{{ end }}
+	{{ end -}}
 )
 
-
-// remove import errors
-// delete this block when refactoring
-var _ = func() {
-	var _ = strconv.IntSize
-	var _ = validate.NewValidator
-	var _ = time.August
-	var _ = database.DB
-	var _ = json.RawMessage("")
-}
 
 
 {{- if ( eq .ProjectInfo.Framework "chi") }}

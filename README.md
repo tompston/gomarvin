@@ -3,6 +3,8 @@
 
 <h2 align="center">Generate boilerplate for Gin / Fiber / Echo / Chi REST servers.</h2>
 
+<div align="center"> <em>AKA Why spend 5 minutes doing it when I can spend 3 months automating it?</em> </div>
+
 https://user-images.githubusercontent.com/82293948/197339991-ca049896-7a0e-4fa9-ae2b-787f0bb021b2.mp4
 
 Generate:
