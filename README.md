@@ -165,7 +165,11 @@ git tag v0.6.0
 git push origin v0.6.0
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.6.0
 
-# switch to pre-release dev branch
-git checkout v0.6.x
+
+# create a new branch
+git branch BRANCH_NAME
+# switch to branch
+git checkout BRANCH_NAME
+
 
 -->
