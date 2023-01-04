@@ -4,7 +4,7 @@
 
 - Improved SQL / SQLC queries
   - Better naming
-  - Query for curor pagination with `module_id` and `created_at`
+  - Query for cursor pagination with `module_id` and `created_at`
     - Credits / References
       - https://morningcoffee.io/stable-pagination.html
       - https://medium.easyread.co/how-to-do-pagination-in-postgres-with-golang-in-4-common-ways-12365b9fb528
