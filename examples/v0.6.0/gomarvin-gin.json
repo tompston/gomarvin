@@ -9,7 +9,7 @@
     "db_type": "postgres",
     "include_sql": false,
     "include_fetch": false,
-    "gomarvin_version": "v0.5.x"
+    "gomarvin_version": "v0.6.x"
   },
   "modules": []
 }

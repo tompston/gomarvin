@@ -9,7 +9,7 @@
     "db_type": "sqlite",
     "include_sql": true,
     "include_fetch": true,
-    "gomarvin_version": "v0.5.x"
+    "gomarvin_version": "v0.6.x"
   },
   "modules": [
     {
