@@ -58,10 +58,18 @@ var CREATED_MSG = "* CREATED"
 var gomarvin_info = `Usage:
   gomarvin generate
 
+Version: 0.6.0
+
 Online Editor:
   https://gomarvin.pages.dev
 
 Flags:
-  -config		Specify path to the gomarvin config file (default "gomarvin.json")
-  -dangerous-regen	Regenerate everything. If set to true, all previous changes will be lost (default "false")
-  -fetch-only		generate only the typescript file that holds fetch function (default "false")`
+  -config		
+	Specify path to the gomarvin config file 
+	(default "gomarvin.json")
+  -dangerous-regen	
+  	Regenerate everything. If set to true, all previous changes will be lost 
+	(default "false")
+  -fetch-only		
+  	generate only the typescript file that holds fetch function 
+	(default "false")`

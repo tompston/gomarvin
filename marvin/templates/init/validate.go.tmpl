@@ -14,7 +14,7 @@ type ErrorResponse struct {
 
 // Return an understandabe / UI friendly message that potentially
 // can be displayed on the client side, when validation for 
-// a field fails.
+// a field fails. Be free to add new tags!
 func messageForTag(fe validator.FieldError) string {
 
 	field := fe.Field()

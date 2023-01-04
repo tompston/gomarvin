@@ -15,7 +15,8 @@
   - Removed Self field
   - omitempty if no value is provided
 - Removed the placeholder block in modules that is used for removing possible import errors.
-- Added a placeholder function that can be replaced to the function which runs the database query and returns the info + checks for error messages.
+- Added a placeholder function that can be replaced to the function which runs the database query and returns the data + checks for error messages.
+
 
 ### v0.5.0
 
