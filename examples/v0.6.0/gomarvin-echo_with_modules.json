@@ -1,0 +1,321 @@
+{
+  "project_info": {
+    "go_version": 1.17,
+    "name": "echo_with_modules",
+    "framework": "echo",
+    "port": 4444,
+    "api_prefix": "/api/v1",
+    "config_version": 0.1,
+    "db_type": "mysql",
+    "include_sql": true,
+    "include_fetch": true,
+    "gomarvin_version": "v0.5.x"
+  },
+  "modules": [
+    {
+      "name": "User",
+      "endpoints": [
+        {
+          "url": "/user",
+          "method": "GET",
+          "response_type": "with_pagination",
+          "controller_name": "GetUsers",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/user",
+          "method": "GET",
+          "response_type": "default",
+          "controller_name": "GetUserById",
+          "url_params": [
+            {
+              "field": "id",
+              "type": "int"
+            }
+          ],
+          "body": []
+        },
+        {
+          "url": "/user/register",
+          "method": "POST",
+          "response_type": "default",
+          "controller_name": "CreateUser",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required,min=2,max=140",
+              "field": "username",
+              "type": "string"
+            },
+            {
+              "validate": "required,email",
+              "field": "email",
+              "type": "string"
+            },
+            {
+              "validate": "required,min=10,max=300",
+              "field": "password",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "url": "/user",
+          "method": "DELETE",
+          "response_type": "default",
+          "controller_name": "DeleteUser",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/user",
+          "method": "PUT",
+          "response_type": "default",
+          "controller_name": "UpdateUser",
+          "url_params": [],
+          "body": []
+        }
+      ]
+    },
+    {
+      "name": "Test",
+      "endpoints": [
+        {
+          "url": "/test",
+          "method": "GET",
+          "response_type": "default",
+          "controller_name": "TestBodyTypes",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required",
+              "field": "string",
+              "type": "string"
+            },
+            {
+              "validate": "required",
+              "field": "int",
+              "type": "int"
+            },
+            {
+              "validate": "required",
+              "field": "int_sixtyfour",
+              "type": "int64"
+            },
+            {
+              "validate": "required",
+              "field": "int_thirtytwo",
+              "type": "int32"
+            },
+            {
+              "validate": "required",
+              "field": "int_sixteen",
+              "type": "int16"
+            },
+            {
+              "validate": "required",
+              "field": "int_eight",
+              "type": "int8"
+            },
+            {
+              "validate": "required",
+              "field": "float_sixtyfour",
+              "type": "float64"
+            },
+            {
+              "validate": "required",
+              "field": "float_thirtytwo",
+              "type": "float32"
+            },
+            {
+              "validate": "required",
+              "field": "time_time",
+              "type": "time.Time"
+            },
+            {
+              "validate": "required",
+              "field": "bool",
+              "type": "bool"
+            },
+            {
+              "validate": "required",
+              "field": "uint",
+              "type": "uint"
+            },
+            {
+              "validate": "required",
+              "field": "uint_sixtyfour",
+              "type": "uint64"
+            },
+            {
+              "validate": "required",
+              "field": "uint_thirtytwo",
+              "type": "uint32"
+            },
+            {
+              "validate": "required",
+              "field": "uint_sixteen",
+              "type": "uint16"
+            },
+            {
+              "validate": "required",
+              "field": "uint_eight",
+              "type": "uint8"
+            }
+          ]
+        },
+        {
+          "url": "/test",
+          "method": "GET",
+          "response_type": "default",
+          "controller_name": "TestUrlWithString",
+          "url_params": [
+            {
+              "field": "something",
+              "type": "string"
+            }
+          ],
+          "body": []
+        },
+        {
+          "url": "/test",
+          "method": "GET",
+          "response_type": "default",
+          "controller_name": "TestUrlWithInt",
+          "url_params": [
+            {
+              "field": "something",
+              "type": "int"
+            }
+          ],
+          "body": []
+        },
+        {
+          "url": "/test",
+          "method": "POST",
+          "response_type": "default",
+          "controller_name": "CreateTest",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required",
+              "field": "change_me",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "url": "/test/email",
+          "method": "POST",
+          "response_type": "default",
+          "controller_name": "TestEmailValidation",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required,email",
+              "field": "email",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "url": "/test/min",
+          "method": "POST",
+          "response_type": "default",
+          "controller_name": "TestMinValidation",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required,min=10",
+              "field": "min_ten",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "url": "/test/max",
+          "method": "POST",
+          "response_type": "default",
+          "controller_name": "TestMaxValidation",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required,max=10",
+              "field": "max_ten",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "url": "/test/undefined",
+          "method": "POST",
+          "response_type": "default",
+          "controller_name": "TestUndefinedValidation",
+          "url_params": [],
+          "body": [
+            {
+              "validate": "required,rgba",
+              "field": "undefined_validation_field",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "endpoints": []
+    },
+    {
+      "name": "Comment",
+      "endpoints": [
+        {
+          "url": "/comment",
+          "method": "GET",
+          "response_type": "with_pagination",
+          "controller_name": "GetComments",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "GET",
+          "response_type": "default",
+          "controller_name": "GetComment",
+          "url_params": [
+            {
+              "field": "id",
+              "type": "int"
+            }
+          ],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "POST",
+          "response_type": "default",
+          "controller_name": "CreateComment",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "DELETE",
+          "response_type": "default",
+          "controller_name": "DeleteComment",
+          "url_params": [],
+          "body": []
+        },
+        {
+          "url": "/comment",
+          "method": "PUT",
+          "response_type": "default",
+          "controller_name": "UpdateComment",
+          "url_params": [],
+          "body": []
+        }
+      ]
+    }
+  ]
+}

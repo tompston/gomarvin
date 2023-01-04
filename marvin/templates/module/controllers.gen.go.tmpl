@@ -143,15 +143,14 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 		res.Response(c, 400, nil, res.DbErrorMessage(err.Error()))
 		return
 	}
-	_ = data
 
 
 	{{ if ( eq $endpoint.ResponseType "default") }}
-	res.Response(c, 200, nil, "")
+	res.Response(c, 200, data, "")
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	res.ResponseWithPagination(c, 200, nil, "", res.PaginationLinks{})
+	res.ResponseWithPagination(c, 200, data, "", res.PaginationLinks{})
 	{{- end }}	
 }
 {{end}}
@@ -214,14 +213,13 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	if err != nil {
 		return res.Response(c, 400, nil, res.DbErrorMessage(err.Error()))
 	}
-	_ = data
 
 	{{ if ( eq $endpoint.ResponseType "default") }}
-	return res.Response(c, 200, nil, "")
+	return res.Response(c, 200, data, "")
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	return res.ResponseWithPagination(c, 200, nil, "", res.PaginationLinks{})
+	return res.ResponseWithPagination(c, 200, data, "", res.PaginationLinks{})
 	{{- end }}
 }
 {{ end }}
@@ -286,14 +284,13 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	if err != nil {
 		return res.Response(c, 400, nil, res.DbErrorMessage(err.Error()))
 	}
-	_ = data
 
 	{{ if ( eq $endpoint.ResponseType "default") }}
-	return res.Response(c, 200, nil, "")
+	return res.Response(c, 200, data, "")
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	return res.ResponseWithPagination(c, 200, nil, "", res.PaginationLinks{})
+	return res.ResponseWithPagination(c, 200, data, "", res.PaginationLinks{})
 	{{- end }}
 }
 {{ end }}
@@ -360,15 +357,14 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 		res.Response(w, 400, nil, res.DbErrorMessage(err.Error()))
 		return
 	}
-	_ = data
 
 
 	{{ if ( eq $endpoint.ResponseType "default") }}
-	res.Response(w, 200, nil, "")
+	res.Response(w, 200, data, "")
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	res.ResponseWithPagination(w, 200, nil, "", res.PaginationLinks{})
+	res.ResponseWithPagination(w, 200, data, "", res.PaginationLinks{})
 	{{- end }}
 }
 {{ end }}

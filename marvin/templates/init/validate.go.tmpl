@@ -31,17 +31,14 @@ func messageForTag(fe validator.FieldError) string {
 	case "max":
 		return field + " should be less than " + param + " characters long"
 	}
-	// return fe.Error() // default error
 	return field + " failed validation for " + tag + ", " + param
 }
-
-var NewValidator = validator.New()
 
 // Pass in the sent struct and check if the
 // fields pass validation
 func ValidateStruct(i interface{}) []*ErrorResponse {
 	var errors []*ErrorResponse
-	err := NewValidator.Struct(i)
+	err := validator.New().Struct(i)
 
 	if err != nil {
 		for _, err := range err.(validator.ValidationErrors) {

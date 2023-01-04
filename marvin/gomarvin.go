@@ -36,7 +36,6 @@ func Run(flags *Flags, args []string) {
 			fmt.Println("* ERROR :: Could not find the config file!")
 		}
 	}
-
 }
 
 // run gofmt after codegen to format the generated code correctly / remove whitespace stuff
