@@ -155,24 +155,14 @@ For example, updating from `0.1.0` to `0.1.1` does not break anything. Going fro
 <!--
 
 # run a local example
-
-
-
-// uncomment lower line to call generated sqlc functions with db connection
-// var Queries = sqlc.New(database.DB)
-
-git add .
-git commit -m "next"
-git push
-
 GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
 # release
 git add .
-git commit -m "gomarvin: release v0.5.0"
-git tag v0.5.0
-git push origin v0.5.0
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.5.0
+git commit -m "gomarvin: release v0.6.0"
+git tag v0.6.0
+git push origin v0.6.0
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.6.0
 
 # switch to pre-release dev branch
 git checkout v0.6.x
