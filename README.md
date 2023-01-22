@@ -127,13 +127,25 @@ async function FetchWithAppendedUrlAndCustomOptions() {
 
 ### Notes
 
-- If formatting does not work, run this
+- Seeding the db
+  - As the generated fetch functions are mapped to the endpoints, you can use them to seed the database pretty easily. Using deno with the faker package can make the process trivial.
+- If formatting does not work for some reason, run this
 
-```
-gofmt -s -w .
-```
+  ```
+  gofmt -s -w .
+  ```
+- Using the tool to generate fetch functions for pre-existing REST APIs
+  - If you want to generate a client for an already existing REST API in a fast way, you can use the editor to document the needed values to codegen the fetch functions in a fast way
+  
+  ```bash
+  # run this after exporting the config file, assuming that
+  # the gomarvin.json file is in the same dir
+  gomarvin -fetch-only="true" generate
+  ```
 
-- If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. (except for bugs caused by url params and routing, those should be fixed manually)</h3>
+- If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. 
+- Gin and router bugs
+  - bugs caused by url params and routing should be fixed manually. Due to the way in which the routers and controllers are generated, the generated Gin servers won't be able to run initially.
 
 ### Credits to used packages
 
