@@ -9,8 +9,10 @@ func GenerateModules(conf Config, cmd Flags) {
 	project_name := conf.ProjectInfo.Name
 	modules := conf.Modules
 
-	if len(modules) != 0 { // if there are modules in the config file
-		for i := 0; i < len(modules); i++ { // for each  module in modules
+	// if there are modules in the config file
+	if len(modules) != 0 {
+		// for each  module in modules
+		for i := 0; i < len(modules); i++ {
 
 			module := modules[i]
 

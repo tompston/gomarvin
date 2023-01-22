@@ -1,5 +1,11 @@
 # Gomarvin changelog
 
+<!-- 
+v0.7.0
+- DbConnErrorMessage() input type changed from string to error, to reduce the amount of chars written
+
+-->
+
 ### v0.6.0
 
 - Improved SQL / SQLC queries

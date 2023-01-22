@@ -53,7 +53,7 @@ func stringExistsInSlice(str string, list []string) bool {
 	return false
 }
 
-var CREATED_MSG = "* CREATED"
+const CREATED_MSG = "* CREATED"
 
 var gomarvin_info = `Usage:
   gomarvin generate
