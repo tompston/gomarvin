@@ -42,12 +42,8 @@ LIMIT       $1;
 -- name: {{ $uppercase_module_name }}_GetAllWithPaginationNextPage :many
 SELECT      {{ $id }}, created_at, change_me
 FROM        {{ $table_name }}
-WHERE
-    (
-      created_at <= @created_at::TIMESTAMP
-      OR 
-      ( created_at = @created_at::TIMESTAMP AND {{ $id }} < @{{ $id }}::uuid )
-    )
+WHERE ( created_at <= @created_at::TIMESTAMP  OR 
+      ( created_at = @created_at::TIMESTAMP   AND {{ $id }} < @{{ $id }}::uuid ))
 ORDER BY    created_at DESC
 LIMIT       @_limit::int;
 
