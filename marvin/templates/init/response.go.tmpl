@@ -43,8 +43,9 @@ type PaginationLinks struct {
 
 
 
-
-// all of the correct status codes can be found here -> https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
+// Response is a function that is used in the controllers to 
+// return an predictable json object. All of the correct 
+// status codes can be found here -> https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 func Response(c *gin.Context, status int, data interface{}, message string) {
 	c.JSON(status, &Res{

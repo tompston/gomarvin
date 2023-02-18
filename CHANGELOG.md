@@ -8,18 +8,22 @@ v0.7.0
 - Removed the unused app value that was passed in the fiber Router__ functions
 - Refactor the ValidateStruct function to return an error instead of a struct, so that validating the body could be done as a single function call in the controllers (less loc)
 - If the validate field does not include an `required` value, the generated interface for the body type will also be an optional param
+- the `body.gen.go` file will be generated only when the module has at least a single body for an endpoint
 
 
 TODOS ::
 
+- Should ResponseWithPagination be deleted, and Response converted to a variadic function?
+  Do benchmarking for this.
+
 - Write more comments for the generated functions to explain what they do ( + examples that show how they work )
 -  Figure out how to do unit tests. Two possible options ->
-   -  generate deno tests, using the generated controller functions
+   -  generate deno tests, using the generated fetch functions
    -  generate tests in go, in a file called `controllers_test.gen.go`
 - Check out this package -> https://github.com/csweichel/bel
   Figure out how you can convert the expected response into a typescript interface.
   This is a slightly tricky problem, because a controller might return different types
-  if there's a lot of logic
+  if there's a lot of logic based on the input params
 - Write a func which checks if the data variable holds an interface that is returned
   when the validation fails.
 - Maybe refactor the editor / config files to hold a comment value that explains what 
