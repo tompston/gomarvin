@@ -6,16 +6,12 @@ v0.7.0
   - renamed to DbErrorMessage()
   - input type changed from string to error, to reduce the amount of chars written
 - Removed the unused app value that was passed in the fiber Router__ functions
+- Refactor the ValidateStruct function to return an error instead of a struct, so that validating the body could be done as a single function call in the controllers (less loc)
 
 
 TODOS ::
 
 - Write more comments for the generated functions to explain what they do (+ examples that show how they work)
--  refactor the Validate Body function to return an error instead of a struct, 
-    so that validating the body could be done as a single
-    function call in the controllers (less loc)
-    - If this is done, you shold also rename the const variables
-      that hold the message which says what went wrong.
 -  Figure out how to do unit tests. Two possible options ->
    -  generate deno tests, using the generated controller functions
    -  generate tests in go, in a file called `controllers_test.gen.go`

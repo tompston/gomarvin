@@ -22,7 +22,6 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	{{ end }}
-	
 )
 
 
@@ -62,8 +61,14 @@ func DsnString() string {
 
 
 
-
-// call a db connection without using the global db variable
+// GetDbConn creates a database connection without using the global db variable.
+// 
+// Example:
+// 	db, err := database.GetDbConn()
+// 	if err != nil {
+//		fmt.Println(err) 
+//	}
+//	defer db.Close()
 func GetDbConn() (*sql.DB, error) {
 
 	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()) {{ end }}
@@ -74,7 +79,6 @@ func GetDbConn() (*sql.DB, error) {
 		panic(err)
 	}
 	return db, err
-
 }
 
 
@@ -90,5 +94,4 @@ func Connect() {
 
 	// assign *sql.DB to the global variable
 	DB = db
-
 }
