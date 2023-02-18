@@ -29,10 +29,22 @@ func GenerateModules(conf Config, cmd Flags) {
 				CreateDir(module_dir) // create the dir
 			}
 
+			endpoints := data.Modules.Endpoints
+
 			// if there are endpoints in the module, create files that hold them
-			if len(data.Modules.Endpoints) != 0 {
+			if len(endpoints) != 0 {
 				CreateModuleFile("templates/module/controllers.gen.go.tmpl", module_dir, data)
-				CreateModuleFile("templates/module/body.gen.go.tmpl", module_dir, data)
+
+				// if there is at least a single endpoint which has a body that does not have
+				// a lenght of 0, generate the `body.gen.go` file with all of the body structs
+				for q := 0; q < len(endpoints); q++ {
+					endpoint_body := endpoints[q].Body
+					if len(endpoint_body) != 0 {
+						CreateModuleFile("templates/module/body.gen.go.tmpl", module_dir, data)
+						break
+					}
+					// break
+				}
 			}
 		}
 	}

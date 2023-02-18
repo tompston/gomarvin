@@ -7,6 +7,7 @@ v0.7.0
   - input type changed from string to error, to reduce the amount of chars written
 - Removed the unused app value that was passed in the fiber Router__ functions
 - Refactor the ValidateStruct function to return an error instead of a struct, so that validating the body could be done as a single function call in the controllers (less loc)
+- If the validate field does not include an `required` value, the generated interface for the body type will also be an optional param
 
 
 TODOS ::
@@ -25,8 +26,6 @@ TODOS ::
   the generated controllers do, and use that string as a comment before controllers
   and fetch functions.
 - Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
-- If the validate field does not include an required value, generate the 
-  the body interfaces with the optional param.
 
 - Check out how echo implements the json validation
 
