@@ -62,10 +62,7 @@ func ResponseWithPagination(c *gin.Context, status int, data interface{}, messag
 			Message: message,
 			Data:    data,
 		},
-		Links: PaginationLinks{
-			Prev: links.Prev,
-			Next: links.Next,
-		},
+		Links: links,
 	})
 }
 {{- end }}
@@ -92,10 +89,7 @@ func ResponseWithPagination(c *fiber.Ctx, status int,data interface{}, message s
 			Message: message,
 			Data:    data,
 		},
-		Links: PaginationLinks{
-			Prev: links.Prev,
-			Next: links.Next,
-		},
+		Links: links,
 	})
 }
 {{- end }}
@@ -122,10 +116,7 @@ func ResponseWithPagination(c echo.Context, status int, data interface{}, messag
 			Message: message,
 			Data:    data,
 		},
-		Links: PaginationLinks{
-			Prev: links.Prev,
-			Next: links.Next,
-		},
+		Links: links,
 	})
 }
 {{- end }}
@@ -158,10 +149,7 @@ func ResponseWithPagination(w http.ResponseWriter, status int, data interface{},
 			Message: message,
 			Data:    data,
 		},
-		Links: PaginationLinks{
-			Prev: links.Prev,
-			Next: links.Next,
-		},
+		Links: links,
 	})
 }
 {{- end }}

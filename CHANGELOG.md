@@ -15,6 +15,7 @@ TODOS ::
 
 - Should ResponseWithPagination be deleted, and Response converted to a variadic function?
   Do benchmarking for this.
+- Benchmark tests?
 
 - Write more comments for the generated functions to explain what they do ( + examples that show how they work )
 -  Figure out how to do unit tests. Two possible options ->
