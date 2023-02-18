@@ -65,7 +65,7 @@ func Router(app *fiber.App) {
 
 	{{ if .Modules -}} 
 		{{- range $module := .Modules }}
-			{{ if $module.Endpoints }}{{ ConvertToLowercase $module.Name }}_module.Router__(app, api){{ end -}}
+			{{ if $module.Endpoints }}{{ ConvertToLowercase $module.Name }}_module.Router__(api){{ end -}}
 		{{ end -}}
 	{{ end -}}
 }

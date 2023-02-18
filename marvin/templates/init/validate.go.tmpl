@@ -5,10 +5,14 @@ import (
 	"github.com/go-playground/validator/v10"
 	"fmt"
 
-	{{ if ( eq .ProjectInfo.Framework "chi") }}
+	{{- if ( eq .ProjectInfo.Framework "chi") }}
 	"encoding/json"
 	"net/http"
-	{{ end }}
+	{{- end }}
+
+	{{ if ( eq .ProjectInfo.Framework "gin")   }}"github.com/gin-gonic/gin"{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "echo")  }}"github.com/labstack/echo/v4"{{ end }}
 )
 
 
@@ -51,8 +55,7 @@ func messageForTag(fe validator.FieldError) string {
 	return field + " failed validation for " + tag + ", " + param
 }
 
-// Pass in the sent struct and check if the
-// fields pass validation
+// Pass in the sent struct and check if the fields pass validation
 func ValidateStruct(i interface{}) error {
 	err := validator.New().Struct(i)
 	if err != nil {
@@ -69,13 +72,59 @@ func ValidateStruct(i interface{}) error {
 }
 
 
-{{ if ( eq .ProjectInfo.Framework "chi") }}
-func ValidateJSON(r *http.Request, payload interface{}) error {
-	return json.NewDecoder(r.Body).Decode(payload)
-}
 
+
+
+{{ if ( eq .ProjectInfo.Framework "chi") }}
 func ValidatePayload(r *http.Request, payload interface{}) error {
 	if err := json.NewDecoder(r.Body).Decode(payload); err != nil {
+		return err
+	}
+	if err := ValidateStruct(payload); err != nil {
+		return err
+	}
+	return nil
+}
+{{ end }}
+
+
+
+
+
+{{ if ( eq .ProjectInfo.Framework "fiber") }}
+func ValidatePayload(c *fiber.Ctx, payload interface{}) error {
+	if err := c.BodyParser(payload); err != nil {
+		return err
+	}
+	if err := ValidateStruct(payload); err != nil {
+		return err
+	}
+	return nil
+}
+{{ end }}
+
+
+
+
+
+{{ if ( eq .ProjectInfo.Framework "echo") }}
+func ValidatePayload(c echo.Context, payload interface{}) error {
+	if err := c.Bind(payload); err != nil {
+		return err
+	}
+	if err := ValidateStruct(payload); err != nil {
+		return err
+	}
+	return nil
+}
+{{ end }}
+
+
+
+
+{{ if ( eq .ProjectInfo.Framework "gin") }}
+func ValidatePayload(c *gin.Context, payload interface{}) error {
+	if err := c.ShouldBindJSON(payload); err != nil {
 		return err
 	}
 	if err := ValidateStruct(payload); err != nil {

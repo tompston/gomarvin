@@ -93,13 +93,8 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 	// validate the sent json object
 	payload := new({{$endpoint.ControllerName}}Body)
-
-	if err := c.ShouldBindJSON(payload); err != nil {
-		res.Response(c, 400, err.Error(), res.FailedJsonValidation)
-		return
-	}
-	if err := validate.ValidateStruct(payload); err != nil {
-		res.Response(c, 400, err, res.PayloadValidationFailedMessage)
+	if err := validate.ValidatePayload(c, payload); err != nil {
+		res.Response(c, 400, err, res.FailedPayloadValidationMessage)
 		return
 	}
 
@@ -156,7 +151,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 
-func Router__(app *fiber.App, api fiber.Router) {
+func Router__(api fiber.Router) {
         {{- range $endpoint := $endpoints }}
         api.{{ ConvertToLowercaseTitle $endpoint.Method }}( __{{ $endpoint.ControllerName }}Url , __{{ $endpoint.ControllerName }}){{end}}
 }
@@ -168,12 +163,8 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 
 	// validate the sent json object
 	payload := new({{$endpoint.ControllerName}}Body)
-
-	if err := c.BodyParser(payload); err != nil {
-		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
-	}
-	if err := validate.ValidateStruct(payload); err != nil {
-		return res.Response(c, 400, err, res.PayloadValidationFailedMessage)
+	if err := validate.ValidatePayload(c, payload); err != nil {
+		return res.Response(c, 400, err, res.FailedPayloadValidationMessage)
 	}
 
 	{{ end -}}
@@ -239,12 +230,8 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	
 	// validate the sent json object
 	payload := new({{$endpoint.ControllerName}}Body)
-
-	if err := c.Bind(payload); err != nil {
-		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
-	}
-	if err := validate.ValidateStruct(payload); err != nil {
-		return res.Response(c, 400, err, res.PayloadValidationFailedMessage)
+	if err := validate.ValidatePayload(c, payload); err != nil {
+		return res.Response(c, 400, err, res.FailedPayloadValidationMessage)
 	}
 	
 	{{ end -}}
@@ -309,7 +296,7 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	// validate the sent json object
 	payload := new({{$endpoint.ControllerName}}Body)
 	if err := validate.ValidatePayload(r, payload); err != nil {
-		res.Response(w, 400, err, res.PayloadValidationFailedMessage)
+		res.Response(w, 400, err, res.FailedPayloadValidationMessage)
 		return
 	}
 	

@@ -5,6 +5,8 @@ v0.7.0
 - DbConnErrorMessage() 
   - renamed to DbErrorMessage()
   - input type changed from string to error, to reduce the amount of chars written
+- Removed the unused app value that was passed in the fiber Router__ functions
+
 
 TODOS ::
 
@@ -29,6 +31,9 @@ TODOS ::
 - Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
 - If the validate field does not include an required value, generate the 
   the body interfaces with the optional type.
+
+- Check out how echo implements the json validation
+
 
 - Editor
   - The import tab should ideally validate if the passed in string is a valid config file
