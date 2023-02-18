@@ -1,0 +1,15 @@
+{
+  "project_info": {
+    "go_version": 1.17,
+    "name": "fiber",
+    "framework": "fiber",
+    "port": 4444,
+    "api_prefix": "/api/v1",
+    "config_version": 0.1,
+    "db_type": "postgres",
+    "include_sql": false,
+    "include_fetch": false,
+    "gomarvin_version": "v0.7.x"
+  },
+  "modules": []
+}

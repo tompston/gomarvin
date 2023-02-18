@@ -80,9 +80,9 @@ export const {{ $module.Name }}Endpoints = {
  {{- range $body_field := $endpoint.Body }}
  * @field {{$body_field.Field}} `{{$body_field.Validate}}`{{ end }}
  */
-export interface {{$endpoint.ControllerName}}Body  {
+export interface {{ $endpoint.ControllerName }}Body  {
   {{- range $body_field := $endpoint.Body }}
-  {{ if (eq $body_field.Type  "string" )    -}} {{$body_field.Field}}: string {{ end -}}
+  {{ if ( eq $body_field.Type  "string" )    -}} {{ $body_field.Field }}: string {{ end -}}
   {{- if or  
       ( eq $body_field.Type  "int"     ) 
       ( eq $body_field.Type  "int64"   ) 
@@ -96,9 +96,9 @@ export interface {{$endpoint.ControllerName}}Body  {
       ( eq $body_field.Type  "uint8"   ) 
       ( eq $body_field.Type  "float64" )
       ( eq $body_field.Type  "float32" )    -}} 
-  {{$body_field.Field}}: number {{ end -}}
-  {{ if (eq $body_field.Type  "time.Time" )    -}} {{$body_field.Field}}: any {{ end -}}
-  {{ if (eq $body_field.Type  "bool"      )    -}} {{$body_field.Field}}: boolean {{ end -}}
+  {{ $body_field.Field }}: number {{ end -}}
+  {{ if (eq $body_field.Type  "time.Time" )    -}} {{ $body_field.Field }}: any {{ end -}}
+  {{ if (eq $body_field.Type  "bool"      )    -}} {{ $body_field.Field }}: boolean {{ end -}}
   {{ end }}
 }
 {{ end -}}{{- end -}}{{- end -}}{{ end -}}

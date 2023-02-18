@@ -6,5 +6,6 @@
 #     -fetch-only="true" generate
 
 go run main.go -dangerous-regen="true" \
-    -config="./examples/v0.6.0/gomarvin-chi_with_modules.json" \
+    -config="./examples/v0.7.0/gomarvin-chi_with_modules.json" \
     -fetch-only="true" generate
+

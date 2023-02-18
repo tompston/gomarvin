@@ -67,8 +67,17 @@ func GenerateSingleTemplate(conf Config, template_path string, output_dir string
 }
 
 // includesRequired checks if the input string contains a "required" value
-func includesRequired(input string) bool {
-	return strings.Contains(input, "required")
+func includesRequired(x string) bool {
+	return strings.Contains(x, "required")
+}
+
+// if the validate string includes a validate property, return the default field.
+// Else return the field as an optional param.
+func TypescriptField(field_name, validate_field string) string {
+	if includesRequired(validate_field) {
+		return field_name
+	}
+	return fmt.Sprintf("%v?", field_name)
 }
 
 var template_functions = template.FuncMap{
@@ -84,7 +93,7 @@ var template_functions = template.FuncMap{
 	"WrapInCurlyBracesWithAppendedString": conv.WrapInCurlyBracesWithAppendedString,
 	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
 	// other util functions
-	"includesRequired": includesRequired,
+	"TypescriptField": TypescriptField,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"
