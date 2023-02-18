@@ -6,15 +6,15 @@
 #### Init project structure
 
 ```bash
-├── main.go             # holds the server
+├── main.go             # run the server
 ├── app                 # holds the default config for server + all routes
 │── public              # optionally serve some of the generated files for easier accesibility for frontend people            
 ├── settings            # holds util functions for loading .env vars
-│   └── database        # holds a function that creates db connection with .env vars
+│   └── database        # holds functions that creates db connection with .env vars
 └── lib
-    ├── response        # predefined response function and messages
-    └── validate        # holds functions for validating payload structs
-    └── utils           # holds placeholder function used inside the controllers
+    ├── response        # holds predefined response function and messages
+    └── validate        # holds functions for validating the sent json and payload structs
+    └── utils           # holds a placeholder function that's used inside the controllers
 ```
 
 #### Update on change

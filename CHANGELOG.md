@@ -13,6 +13,7 @@ v0.7.0
 
 TODOS ::
 
+- Convert CamelCase module values into a correct name also
 - New postam tests that check what happens when 
   - "{" sent in the payload
   - Invalid body type sent in the payolad

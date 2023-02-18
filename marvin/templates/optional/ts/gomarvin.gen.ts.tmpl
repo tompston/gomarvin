@@ -122,7 +122,7 @@ export interface {{ $endpoint.ControllerName }}Body  {
 {{- if (eq $url_param.Type  "int" )    }} * @param {{ WrapInCurlyBraces "number"}} {{$url_param.Field}} url param for the endpoint {{ end }}
 {{ end }}{{ end }}
  * @param {OptionalParams} [opt] optional params you can add to the request ( appended_url and custom options )
- * @returns {Promise<Response>} Promise of the fetch request
+ * @returns {Promise<Response>} Promise of Response
  */
 export async function {{$endpoint.ControllerName}}(client : Client, 
 {{- if $endpoint.URLParams -}}
