@@ -31,15 +31,12 @@ reflex -r '\.go' -s -- sh -c "go run main.go"
 # NOTE. Dockerfile can be improved
 # build the image
 docker build -t {{$PROJECT_NAME}} .
-
-# run and publish with the name of {{$PROJECT_NAME}}
-docker run --publish {{$GOLANG_PORT}}:{{$GOLANG_PORT}} --name {{$PROJECT_NAME}} {{$PROJECT_NAME}}
-
+# run and publish with the name of {{ $PROJECT_NAME }}
+docker run --publish {{ $GOLANG_PORT }}:{{ $GOLANG_PORT }} --name {{ $PROJECT_NAME }} {{ $PROJECT_NAME }}
 # stop
-docker stop {{$PROJECT_NAME}}
-
+docker stop {{ $PROJECT_NAME }}
 # remove 
-docker image rm {{$PROJECT_NAME}}
+docker image rm {{ $PROJECT_NAME }}
 ```
 
 #### Renaming generated sql files

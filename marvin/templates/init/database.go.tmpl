@@ -24,11 +24,13 @@ import (
 	{{ end }}
 )
 
-
+// DB variable holds the connection to the database,
+// if the Connect function is executed.
 var DB *sql.DB
 
-// create the dsn string from variables that are specified in the .env file
+
 {{- if ( eq .ProjectInfo.DbType "mysql") }}
+// create the dsn string from variables that are specified in the .env file
 func DsnString() string {
 	
 	dsn := fmt.Sprintf("%s:%s@/%s", 
@@ -45,6 +47,7 @@ func DsnString() string {
 
 
 {{- if ( eq .ProjectInfo.DbType "postgres") }}
+// create the dsn string from variables that are specified in the .env file
 func DsnString() string {
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s", 
@@ -81,7 +84,8 @@ func GetDbConn() (*sql.DB, error) {
 	return db, err
 }
 
-
+// Connect function connects to the database, and sets the
+// database.DB variable to hold the connection to the db.
 func Connect() {
 
 	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()){{ end }}

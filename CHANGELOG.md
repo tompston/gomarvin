@@ -9,14 +9,16 @@ v0.7.0
 - Refactor the ValidateStruct function to return an error instead of a struct, so that validating the body could be done as a single function call in the controllers (less loc)
 - If the validate field does not include an `required` value, the generated interface for the body type will also be an optional param
 - the `body.gen.go` file will be generated only when the module has at least a single body for an endpoint
-
+- Removed `ResponseWithPagination` function. Now the `Response` function takes in the 4th optional parameter. This makes stuff shorter.
 
 TODOS ::
 
-- Should ResponseWithPagination be deleted, and Response converted to a variadic function?
-  Do benchmarking for this.
+- New postam tests that check what happens when 
+  - "{" sent in the payload
+  - Invalid body type sent in the payolad
+  - Empty object is sent for the TestOptionalParam endpoint
+- Test what happens when there are 4 and 5 params in Response function.
 - Benchmark tests?
-
 - Write more comments for the generated functions to explain what they do ( + examples that show how they work )
 -  Figure out how to do unit tests. Two possible options ->
    -  generate deno tests, using the generated fetch functions
