@@ -66,6 +66,11 @@ func GenerateSingleTemplate(conf Config, template_path string, output_dir string
 	fmt.Println(CREATED_MSG, full_output_path)
 }
 
+// includesRequired checks if the input string contains a "required" value
+func includesRequired(input string) bool {
+	return strings.Contains(input, "required")
+}
+
 var template_functions = template.FuncMap{
 	// name the template function the same as the imported convert function for predictability
 	"ConvertToTitle":                      conv.ConvertToTitle,
@@ -78,6 +83,8 @@ var template_functions = template.FuncMap{
 	"WrapInCurlyBraces":                   conv.WrapInCurlyBraces,
 	"WrapInCurlyBracesWithAppendedString": conv.WrapInCurlyBracesWithAppendedString,
 	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
+	// other util functions
+	"includesRequired": includesRequired,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"

@@ -7,7 +7,7 @@
 
 CREATE TABLE IF NOT EXISTS {{ $table_name }} (
   -- init
-  {{ $id }}     uuid              DEFAULT uuid_generate_v4 () PRIMARY KEY,
+  {{ $id }}     uuid              DEFAULT uuid_generate_v4() PRIMARY KEY,
   created_at    TIMESTAMP         NOT NULL DEFAULT NOW(),
   updated_at    TIMESTAMP         NOT NULL DEFAULT NOW(),
 

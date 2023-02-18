@@ -11,7 +11,7 @@ v0.7.0
 
 TODOS ::
 
-- Write more comments for the generated functions to explain what they do (+ examples that show how they work)
+- Write more comments for the generated functions to explain what they do ( + examples that show how they work )
 -  Figure out how to do unit tests. Two possible options ->
    -  generate deno tests, using the generated controller functions
    -  generate tests in go, in a file called `controllers_test.gen.go`
@@ -19,19 +19,20 @@ TODOS ::
   Figure out how you can convert the expected response into a typescript interface.
   This is a slightly tricky problem, because a controller might return different types
   if there's a lot of logic
-- Write a ts func which checks if the data variable holds an interface that is returned
+- Write a func which checks if the data variable holds an interface that is returned
   when the validation fails.
 - Maybe refactor the editor / config files to hold a comment value that explains what 
   the generated controllers do, and use that string as a comment before controllers
   and fetch functions.
 - Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
 - If the validate field does not include an required value, generate the 
-  the body interfaces with the optional type.
+  the body interfaces with the optional param.
 
 - Check out how echo implements the json validation
 
 
 - Editor
+  - Create a new page in the frontend app that links to the cloudflare builds for different versions
   - The import tab should ideally validate if the passed in string is a valid config file
     and only then allow the import
   - Increase the width of input elements a bit
