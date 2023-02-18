@@ -41,16 +41,6 @@ import (
 		{{ end }}	
 	{{ end -}}
 
-
-	{{/* If the current framework is chi and  there is an endpoint with a body, import the json package */ -}}
-	{{- if ( eq .ProjectInfo.Framework "chi") -}}
-		{{range $endpoint := $endpoints -}}
-			{{ if $endpoint.Body -}}
-				"encoding/json"
-				{{ break }}
-			{{ end }}
-		{{ end }}
-	{{ end -}}
 )
 
 
@@ -109,7 +99,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 		return
 	}
 	if err := validate.ValidateStruct(payload); err != nil {
-		res.Response(c, 400, err, res.FailedPayloadValidation)
+		res.Response(c, 400, err, res.PayloadValidationFailedMessage)
 		return
 	}
 
@@ -183,7 +173,7 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
 	}
 	if err := validate.ValidateStruct(payload); err != nil {
-		return res.Response(c, 400, err, res.FailedPayloadValidation)
+		return res.Response(c, 400, err, res.PayloadValidationFailedMessage)
 	}
 
 	{{ end -}}
@@ -254,7 +244,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 		return res.Response(c, 400, err.Error(), res.FailedJsonValidation)
 	}
 	if err := validate.ValidateStruct(payload); err != nil {
-		return res.Response(c, 400, err, res.FailedPayloadValidation)
+		return res.Response(c, 400, err, res.PayloadValidationFailedMessage)
 	}
 	
 	{{ end -}}
@@ -318,13 +308,8 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 
 	// validate the sent json object
 	payload := new({{$endpoint.ControllerName}}Body)
-
-	if err := json.NewDecoder(r.Body).Decode(payload); err != nil {
-		res.Response(w, 400, err.Error(), res.FailedJsonValidation)
-		return
-	}
-	if err := validate.ValidateStruct(payload); err != nil {
-		res.Response(w, 400, err, res.FailedPayloadValidation)
+	if err := validate.ValidatePayload(r, payload); err != nil {
+		res.Response(w, 400, err, res.PayloadValidationFailedMessage)
 		return
 	}
 	
@@ -334,7 +319,7 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	{{- range $URL_PARAM := $endpoint.URLParams -}}
 
 	{{- if ( eq $URL_PARAM.Type "int") }}
-	{{ $URL_PARAM.Field }}, err := strconv.Atoi(chi.URLParam(r, "{{ $URL_PARAM.Field}}"))
+	{{ $URL_PARAM.Field }}, err := strconv.Atoi(chi.URLParam(r, "{{ $URL_PARAM.Field }}"))
 	if err != nil {
 		res.Response(w, 400, nil, res.ParamIsNotIntMessage)
 		return

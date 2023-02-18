@@ -2,8 +2,9 @@
 
 <!-- 
 v0.7.0
-- DbConnErrorMessage() input type changed from string to error, to reduce the amount of chars written
-  - Even better naming would be DbErrorMessage (shorter and more general)
+- DbConnErrorMessage() 
+  - renamed to DbErrorMessage()
+  - input type changed from string to error, to reduce the amount of chars written
 
 TODOS ::
 

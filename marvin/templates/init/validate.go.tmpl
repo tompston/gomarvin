@@ -3,6 +3,12 @@ package validate
 
 import (
 	"github.com/go-playground/validator/v10"
+	"fmt"
+
+	{{ if ( eq .ProjectInfo.Framework "chi") }}
+	"encoding/json"
+	"net/http"
+	{{ end }}
 )
 
 
@@ -11,6 +17,17 @@ type ErrorResponse struct {
 	Message     string `json:"message"`
 }
 
+type ValidationErrors struct {
+	Errors []*ErrorResponse
+}
+
+func (e *ValidationErrors) Error() string {
+	var message string
+	for _, err := range e.Errors {
+		message += fmt.Sprintf("Field %s: %s\n", err.FailedField, err.Message)
+	}
+	return message
+}
 
 // Return an understandabe / UI friendly message that potentially
 // can be displayed on the client side, when validation for 
@@ -36,17 +53,34 @@ func messageForTag(fe validator.FieldError) string {
 
 // Pass in the sent struct and check if the
 // fields pass validation
-func ValidateStruct(i interface{}) []*ErrorResponse {
-	var errors []*ErrorResponse
+func ValidateStruct(i interface{}) error {
 	err := validator.New().Struct(i)
-
 	if err != nil {
+		var errors []*ErrorResponse
 		for _, err := range err.(validator.ValidationErrors) {
 			errors = append(errors, &ErrorResponse{
 				FailedField: err.Field(),
 				Message:     messageForTag(err),
 			})
 		}
+		return &ValidationErrors{errors}
 	}
-	return errors
+	return nil
 }
+
+
+{{ if ( eq .ProjectInfo.Framework "chi") }}
+func ValidateJSON(r *http.Request, payload interface{}) error {
+	return json.NewDecoder(r.Body).Decode(payload)
+}
+
+func ValidatePayload(r *http.Request, payload interface{}) error {
+	if err := json.NewDecoder(r.Body).Decode(payload); err != nil {
+		return err
+	}
+	if err := ValidateStruct(payload); err != nil {
+		return err
+	}
+	return nil
+}
+{{ end }}
