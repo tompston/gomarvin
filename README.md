@@ -125,6 +125,10 @@ async function FetchWithAppendedUrlAndCustomOptions() {
 }
 ```
 
+### Disclaimer
+
+I'm still figuring out how to do stuff better, so if there's a new release where the `y` in `x.y.z` is incremented, that means that there are breaking changes. The current versions works, but there's a lot of improvements that can be done to make stuff better.
+
 ### Notes
 
 - Seeding the db
