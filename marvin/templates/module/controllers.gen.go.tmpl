@@ -135,7 +135,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	res.ResponseWithPagination(c, 200, data, "", res.PaginationLinks{})
+	res.Response(c, 200, data, "", res.PaginationLinks{})
 	{{- end }}	
 }
 {{end}}
@@ -200,7 +200,7 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	return res.ResponseWithPagination(c, 200, data, "", res.PaginationLinks{})
+	return res.Response(c, 200, data, "", res.PaginationLinks{})
 	{{- end }}
 }
 {{ end }}
@@ -267,7 +267,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	return res.ResponseWithPagination(c, 200, data, "", res.PaginationLinks{})
+	return res.Response(c, 200, data, "", res.PaginationLinks{})
 	{{- end }}
 }
 {{ end }}
@@ -336,7 +336,7 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	{{- end }}
 
 	{{- if ( eq $endpoint.ResponseType "with_pagination") }}
-	res.ResponseWithPagination(w, 200, data, "", res.PaginationLinks{})
+	res.Response(w, 200, data, "", res.PaginationLinks{})
 	{{- end }}
 }
 {{ end }}
