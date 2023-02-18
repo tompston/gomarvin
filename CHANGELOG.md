@@ -3,7 +3,40 @@
 <!-- 
 v0.7.0
 - DbConnErrorMessage() input type changed from string to error, to reduce the amount of chars written
+  - Even better naming would be DbErrorMessage (shorter and more general)
 
+TODOS ::
+
+- Write more comments for the generated functions to explain what they do (+ examples that show how they work)
+-  refactor the Validate Body function to return an error instead of a struct, 
+    so that validating the body could be done as a single
+    function call in the controllers (less loc)
+    - If this is done, you shold also rename the const variables
+      that hold the message which says what went wrong.
+-  Figure out how to do unit tests. Two possible options ->
+   -  generate deno tests, using the generated controller functions
+   -  generate tests in go, in a file called `controllers_test.gen.go`
+- Check out this package -> https://github.com/csweichel/bel
+  Figure out how you can convert the expected response into a typescript interface.
+  This is a slightly tricky problem, because a controller might return different types
+  if there's a lot of logic
+- Write a ts func which checks if the data variable holds an interface that is returned
+  when the validation fails.
+- Maybe refactor the editor / config files to hold a comment value that explains what 
+  the generated controllers do, and use that string as a comment before controllers
+  and fetch functions.
+- Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
+- If the validate field does not include an required value, generate the 
+  the body interfaces with the optional type.
+
+- Editor
+  - The import tab should ideally validate if the passed in string is a valid config file
+    and only then allow the import
+  - Increase the width of input elements a bit
+  - Maybe refactor that full width hr to fit only in the container
+  - settings config_version throw error if the input is not a valid float
+  - Increase the width of the docs container a bit
+  - Figure out how to display go version 1.20 in the dropdown (now is converted to 1.2)
 -->
 
 ### v0.6.0
@@ -28,7 +61,7 @@ v0.7.0
 
 - Updated go.mod dependencies
 - Refactored fetch client
-  - Fetch functions now have an required argument which has the settings for the fetch request ( url and headers)
+  - Fetch functions now have an required argument which has the settings for the fetch request ( url and headers )
 
     This allows an easier switch between the dev and the prod environment. As `gomarvin.gen.ts` file is regenerated and ideally should not be edited, switching the api client settings between the dev and prod env can be done only manually, if the api settings are called from the pre-existing settings object. 
     
