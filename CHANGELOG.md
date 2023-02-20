@@ -10,7 +10,7 @@ v0.7.0
 - If the validate field does not include an `required` value, the generated interface for the body type will also be an optional param
 - the `body.gen.go` file will be generated only when the module has at least a single body for an endpoint
 - Removed `ResponseWithPagination` function. Now the `Response` function takes in the 4th optional parameter. This makes stuff shorter.
-
+- The generated Typescript client now has an interface that defines how the returned response should look like (see ApiResponse)
 
 
 TODOS ::
@@ -23,13 +23,13 @@ TODOS ::
 - Test what happens when there are 4 and 5 params in Response function.
 - Benchmark tests?
 - Write more comments for the generated functions to explain what they do ( + examples that show how they work )
--  Figure out how to do unit tests. Two possible options ->
+-  Figure out how to do tests for the controllers. Two possible options ->
    -  generate deno tests, using the generated fetch functions
    -  generate tests in go, in a file called `controllers_test.gen.go`
-- Check out this package -> https://github.com/csweichel/bel
-  Figure out how you can convert the expected response into a typescript interface.
-  This is a slightly tricky problem, because a controller might return different types
-  if there's a lot of logic based on the input params
+- Check out how echo implements the json validation
+
+### Typescript
+
 - Write a typescript func which checks if the data variable holds an interface that is returned
   when the validation fails.
 - Maybe refactor the editor / config files to hold a comment value that explains what 
@@ -37,18 +37,13 @@ TODOS ::
   and fetch functions.
 - Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
 
-- Check out how echo implements the json validation
 
-
-- Editor
+### Editor
   - Create a new page in the frontend app that links to the cloudflare builds for different versions
   - The import tab should ideally validate if the passed in string is a valid config file
     and only then allow the import
-  - Increase the width of input elements a bit
-  - Maybe refactor that full width hr to fit only in the container
   - settings config_version throw error if the input is not a valid float
-  - Increase the width of the docs container a bit
-  - Figure out how to display go version 1.20 in the dropdown (now is converted to 1.2)
+
 -->
 
 ### v0.6.0
