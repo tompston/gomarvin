@@ -21,17 +21,17 @@ const (
 	FailedPayloadValidationMessage 	= "Payload validation failed!"
 )
 
+// Baseline Response for the controllers
 type Res struct {
-	// Baseline Response
 	Status  int         `json:"status"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 }
 
+// Baseline Response + Pagination links
 type ResWithPagination struct {
-	// Baseline Response + Pagination links
 	Res
-	Links interface{} `json:"links"`
+	Links PaginationLinks `json:"links,omitempty"`
 }
 
 type PaginationLinks struct {
@@ -40,10 +40,12 @@ type PaginationLinks struct {
 }
 
 
-
-// Response is a function that is used in the controllers to 
-// return an predictable json object. All of the correct 
-// status codes can be found here -> https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
+// Response is used in the controllers to return an predictable
+// json object. There is a 4th optional parameter, which is
+// used to send pagination links to the client, if needed.
+// 
+// All of the correct status codes can be found here:
+// https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 func Response(c *gin.Context, status int, data interface{}, message string, links ...PaginationLinks) {
 
@@ -118,7 +120,8 @@ func Response(w http.ResponseWriter, status int, data interface{}, message strin
 {{- end }}
 
 
-// return the full error message only during debug
+// DbErrorMessage return the full error message only during debug. 
+// This function can be optionally extended to log the full error.
 func DbErrorMessage(err error) string {
 	if settings.DEBUG_MODE == "true" {
 		return fmt.Sprintln(FailedDbConnMessage, err.Error())

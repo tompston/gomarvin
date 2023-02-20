@@ -5,11 +5,13 @@ v0.7.0
 - DbConnErrorMessage() 
   - renamed to DbErrorMessage()
   - input type changed from string to error, to reduce the amount of chars written
-- Removed the unused app value that was passed in the fiber Router__ functions
+- Removed the unused app value that was passed in the generated fiber Router__ functions
 - Refactor the ValidateStruct function to return an error instead of a struct, so that validating the body could be done as a single function call in the controllers (less loc)
 - If the validate field does not include an `required` value, the generated interface for the body type will also be an optional param
 - the `body.gen.go` file will be generated only when the module has at least a single body for an endpoint
 - Removed `ResponseWithPagination` function. Now the `Response` function takes in the 4th optional parameter. This makes stuff shorter.
+
+
 
 TODOS ::
 
@@ -28,7 +30,7 @@ TODOS ::
   Figure out how you can convert the expected response into a typescript interface.
   This is a slightly tricky problem, because a controller might return different types
   if there's a lot of logic based on the input params
-- Write a func which checks if the data variable holds an interface that is returned
+- Write a typescript func which checks if the data variable holds an interface that is returned
   when the validation fails.
 - Maybe refactor the editor / config files to hold a comment value that explains what 
   the generated controllers do, and use that string as a comment before controllers

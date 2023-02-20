@@ -22,6 +22,18 @@ export interface Client {
   headers: HeadersInit
 }
 
+/** Interface for the expected response */
+export interface ApiResponse {
+  data : any,
+  message : string
+  status : number
+  links? : {
+    next? : string
+    prev? : string
+  }
+}
+
+
 /** Default api params */
 export const defaultClient : Client = {
   host_url: "http://localhost:{{$project_info.Port}}",

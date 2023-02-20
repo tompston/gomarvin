@@ -27,8 +27,6 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/validate.go.tmpl", output_dir: "/lib/validate/"},
 	{template_path: "templates/init/utils.go.tmpl", output_dir: "/lib/utils/"},
 	{template_path: "templates/init/router.go.tmpl", output_dir: "/app/"},
-
-	// server.go.tmpl
 	{template_path: "templates/init/server.go.tmpl", output_dir: "/app/"},
 }
 
