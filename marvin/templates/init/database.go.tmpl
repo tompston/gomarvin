@@ -84,7 +84,7 @@ func GetDbConn() (*sql.DB, error) {
 }
 
 // Connect function connects to the database, and sets the
-// database.DB variable to hold the connection to the db.
+// database.dbConn variable to hold the connection to the db.
 func Connect() error {
 
 	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()){{- end }}

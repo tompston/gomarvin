@@ -12,7 +12,7 @@ v0.7.0
 - Removed `ResponseWithPagination` function. Now the `Response` function takes in the 4th optional parameter. This makes stuff shorter.
 - The generated Typescript client now has an interface that defines how the returned response should look like (see ApiResponse)
 - * CREATED cli color is now green
-- 
+- Removing panics in database package
 
 TODOS ::
 
