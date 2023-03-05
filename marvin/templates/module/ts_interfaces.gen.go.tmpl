@@ -13,22 +13,21 @@ import (
 
 )
 
-type PlaceholderStruct struct{
-    Qwe string
+type placeholderStruct struct{
+    Field1 string `json:"field_1"`
 }
 
 // grouped typescript interfaces for the {{ ConvertToLowercase  $module}} module
-func TypescriptInterfaces__(){
+func TypescriptInterfaces__() string {
     interfaces := fmt.Sprintln(
         {{- range $endpoint := $endpoints }}
             // expected type from the API response for {{ $endpoint.ControllerName }} endpoint
             gut.ToTypescript(
-                PlaceholderStruct{}, 
+                placeholderStruct{}, 
                 gut.Interface{Name : "{{ $endpoint.ControllerName }}"},
             ),
         {{- end }}
     )
 
-    _ = interfaces
-
+    return interfaces
 }
