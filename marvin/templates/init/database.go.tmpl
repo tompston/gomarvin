@@ -4,6 +4,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 
 	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
 	_ "github.com/mattn/go-sqlite3"
@@ -13,20 +14,18 @@ import (
 	{{ if ( eq .ProjectInfo.DbType "postgres")}}
 	"{{$project_name}}/settings"
 	 _ "github.com/lib/pq" 	
-	"fmt"
 	{{ end }}
 
 
 	{{ if ( eq .ProjectInfo.DbType "mysql")}}
 	"{{$project_name}}/settings"
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	{{ end }}
 )
 
-// DB variable holds the connection to the database,
+// dbConn variable holds the connection to the database,
 // if the Connect function is executed.
-var DB *sql.DB
+var dbConn *sql.DB
 
 
 {{- if ( eq .ProjectInfo.DbType "mysql") }}
@@ -86,16 +85,30 @@ func GetDbConn() (*sql.DB, error) {
 
 // Connect function connects to the database, and sets the
 // database.DB variable to hold the connection to the db.
-func Connect() {
+func Connect() error {
 
 	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()){{ end }}
 	{{ if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db"){{ end }}
 	{{ if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", DsnString()){{ end }}
 
 	if err != nil {
-		panic(err)
+		return err
 	}
 
+	// Ping the database to verify the connection
+    err = db.Ping()
+    if err != nil {
+        return fmt.Errorf("error pinging database: %v", err)
+    }
+
 	// assign *sql.DB to the global variable
-	DB = db
+	dbConn = db
+
+	return nil
+}
+
+
+// GetDB returns a database connection
+func GetDB() *sql.DB {
+    return dbConn
 }

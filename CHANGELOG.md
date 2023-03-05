@@ -11,10 +11,12 @@ v0.7.0
 - the `body.gen.go` file will be generated only when the module has at least a single body for an endpoint
 - Removed `ResponseWithPagination` function. Now the `Response` function takes in the 4th optional parameter. This makes stuff shorter.
 - The generated Typescript client now has an interface that defines how the returned response should look like (see ApiResponse)
-
+- * CREATED cli color is now green
+- 
 
 TODOS ::
 
+- Figure out if toml for configs is a better choice
 - Convert CamelCase module values into a correct name also
 - New postam tests that check what happens when 
   - "{" sent in the payload
@@ -30,13 +32,11 @@ TODOS ::
 
 ### Typescript
 
-- Write a typescript func which checks if the data variable holds an interface that is returned
-  when the validation fails.
+- Write a typescript func which checks if the data variable holds an interface that is returned is the error fields struct, when the validation fails.
 - Maybe refactor the editor / config files to hold a comment value that explains what 
   the generated controllers do, and use that string as a comment before controllers
   and fetch functions.
 - Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
-
 
 ### Editor
   - Create a new page in the frontend app that links to the cloudflare builds for different versions
