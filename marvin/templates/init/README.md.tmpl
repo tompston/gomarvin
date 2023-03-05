@@ -1,19 +1,20 @@
 {{ $GOLANG_PORT     := .ProjectInfo.Port -}}
 {{ $PROJECT_NAME    := .ProjectInfo.Name -}}
 
-# {{$PROJECT_NAME}}
+# {{ $PROJECT_NAME }}
 
 #### Init project structure
 
 ```bash
-├── main.go             # run the server
+├── main.go             # initialize the env and run the server
 ├── app                 # holds the default config for server + all routes
 │── public              # optionally serve some of the generated files for easier accesibility for frontend people            
-├── settings            # holds util functions for loading .env vars
-│   └── database        # holds functions that creates db connection with .env vars
+├── settings            # holds util functions for loading .env vars and storing them in the settings.Environment variable
+│   └── database        # holds functions that creates db connection by using the settings.Environment variable
 └── lib
     ├── response        # holds predefined response function and messages
     └── validate        # holds functions for validating the sent json and payload structs
+    └── convert         # holds util functions for converting types ( used in the settings package )
     └── utils           # holds a placeholder function that's used inside the controllers
 ```
 
@@ -25,10 +26,9 @@ reflex -r '\.go' -s -- sh -c "go run main.go"
 ```
 
 
-#### Docker commands
+#### Docker commands ( Note : the Dockerfile can be improved)
 
 ```bash
-# NOTE. Dockerfile can be improved
 # build the image
 docker build -t {{$PROJECT_NAME}} .
 # run and publish with the name of {{ $PROJECT_NAME }}
