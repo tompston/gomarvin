@@ -78,7 +78,7 @@ func GetDbConn() (*sql.DB, error) {
 	{{ if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", DsnString()){{ end }}
 
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	return db, err
 }
@@ -87,10 +87,9 @@ func GetDbConn() (*sql.DB, error) {
 // database.DB variable to hold the connection to the db.
 func Connect() error {
 
-	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()){{ end }}
-	{{ if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db"){{ end }}
-	{{ if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", DsnString()){{ end }}
-
+	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()){{- end }}
+	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db"){{- end }}
+	{{- if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", DsnString()){{- end }}
 	if err != nil {
 		return err
 	}
@@ -108,7 +107,8 @@ func Connect() error {
 }
 
 
-// GetDB returns a database connection
+// GetDB returns a database connection that is initialized
+// when the app is started
 func GetDB() *sql.DB {
     return dbConn
 }

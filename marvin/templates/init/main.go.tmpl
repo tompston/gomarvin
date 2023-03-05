@@ -11,6 +11,7 @@ import (
 	"{{$project_name}}/settings/database"
 	"{{$project_name}}/app"
 	"fmt"
+	"log"
 
 	{{- if ( eq .ProjectInfo.Framework "chi") }}
 	"net/http"
@@ -18,15 +19,25 @@ import (
 )
 
 
+// setup the environment for the go app on the
+// on the initialization
+func setupEnvironmet() error {
+	// setup the database connection
+	if err := database.Connect(); err != nil {
+		return err
+	}
 
+	return nil
+}
 
 
 func main() {
 
+	if err := setupEnvironmet(); err != nil {
+		log.Fatal(err)
+	}
+
 	address := fmt.Sprintf("localhost:%s", settings.GO_BACKEND_PORT)
-
-	database.Connect()		// set database.DB var to hold a connection to the db
-
 	server := app.Start()
 
 
