@@ -9,6 +9,7 @@ go {{ $go_version }}
 require (
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/joho/godotenv v1.5.1
+	github.com/tompston/gut v0.0.2
 
 	{{ if ( eq .ProjectInfo.DbType "postgres")}}github.com/lib/pq v1.10.7 	{{ end }}
 	{{ if ( eq .ProjectInfo.DbType "sqlite")}}github.com/mattn/go-sqlite3 v1.14.12 {{ end }}

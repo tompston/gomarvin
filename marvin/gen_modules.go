@@ -33,7 +33,10 @@ func GenerateModules(conf Config, cmd Flags) {
 
 			// if there are endpoints in the module, create files that hold them
 			if len(endpoints) != 0 {
+				// Create the file which holds controllers
 				CreateModuleFile("templates/module/controllers.gen.go.tmpl", module_dir, data)
+				// Create the file which holds functions that convert golang structs to ts interfaces
+				CreateModuleFile("templates/module/ts_interfaces.gen.go.tmpl", module_dir, data)
 
 				// if there is at least a single endpoint which has a body that does not have
 				// a lenght of 0, generate the `body.gen.go` file with all of the body structs

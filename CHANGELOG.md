@@ -14,24 +14,25 @@ v0.7.0
 - * CREATED cli color is now green
 - Removing panics in database package
 - Refactored the way env variables are loaded 
-  - Instead of storing calling them all as strings from the settings, save them to the settings.Environment variable (+ convert to the expected type)
-- New convert package
+  - Instead of storing calling them all as strings from the settings, save them to the settings.Environment variable (+ convert to the expected type) when the main() func is executed
+- New convert package added, so that the `settings.SetEnvironmentConfig()` could convert the loaded env variables correctly.
+
 
 TODOS ::
 
-- Figure out if toml for configs is a better choice
-- Convert CamelCase module values into a correct name also
 - New postam tests that check what happens when 
   - "{" sent in the payload
   - Invalid body type sent in the payolad
   - Empty object is sent for the TestOptionalParam endpoint
-- Test what happens when there are 4 and 5 params in Response function.
-- Benchmark tests?
+- Test what happens when there are 4 and 5 params in res.Response function (to check if pagination is not returned).
+- Test the returend response if the body includes the incorrect type.
+
 - Write more comments for the generated functions to explain what they do ( + examples that show how they work )
 -  Figure out how to do tests for the controllers. Two possible options ->
    -  generate deno tests, using the generated fetch functions
    -  generate tests in go, in a file called `controllers_test.gen.go`
 - Check out how echo implements the json validation
+
 
 ### Typescript
 
@@ -40,6 +41,7 @@ TODOS ::
   the generated controllers do, and use that string as a comment before controllers
   and fetch functions.
 - Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
+
 
 ### Editor
   - Create a new page in the frontend app that links to the cloudflare builds for different versions
