@@ -19,10 +19,15 @@ import (
 )
 
 
-// setup the environment for the go app on the
-// on the initialization
+// setup the environment for the go app on the initialization
+//   - read .env config file and store it in settings.Environment var
+//   - store db connection in the database.dbConn variable
 func setupEnvironmet() error {
-	// setup the database connection
+
+	if err := settings.SetEnvironmentConfig(".env"); err != nil {
+		return err
+	}
+
 	if err := database.Connect(); err != nil {
 		return err
 	}
@@ -37,7 +42,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	address := fmt.Sprintf("localhost:%s", settings.GO_BACKEND_PORT)
+	address := fmt.Sprintf("localhost:%v", settings.Environment.Backend.Port)
 	server := app.Start()
 
 

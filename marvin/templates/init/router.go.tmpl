@@ -33,7 +33,7 @@ func Router(app *gin.Engine) {
 		res.Response(c, 200, nil, "Hello There!")
 	})
 
-	api := app.Group(settings.API_PATH) // prefix for routes
+	api := app.Group(settings.Environment.Backend.APIPath) // prefix for routes
 	_ = api
 	{
 	{{ if .Modules -}} 
@@ -60,7 +60,7 @@ func Router(app *fiber.App) {
 	})
 
 	// add a prefix for the routes
-	api := app.Group(settings.API_PATH)
+	api := app.Group(settings.Environment.Backend.APIPath)
 	_ = api
 
 	{{ if .Modules -}} 
@@ -87,7 +87,7 @@ func Router(app *echo.Echo) {
 	})
 
 	// add a prefix for the routes
-	api := app.Group(settings.API_PATH)
+	api := app.Group(settings.Environment.Backend.APIPath)
 	_ = api
 
 	{{ if .Modules -}} 
@@ -111,7 +111,7 @@ func Router(app *chi.Mux) {
 	})
 
 	api := chi.NewRouter()
-	app.Mount(settings.API_PATH, api)
+	app.Mount(settings.Environment.Backend.APIPath, api)
 
 	{{ if .Modules -}} 
 		{{- range $module := .Modules }}

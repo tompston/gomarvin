@@ -13,6 +13,9 @@ v0.7.0
 - The generated Typescript client now has an interface that defines how the returned response should look like (see ApiResponse)
 - * CREATED cli color is now green
 - Removing panics in database package
+- Refactored the way env variables are loaded 
+  - Instead of storing calling them all as strings from the settings, save them to the settings.Environment variable (+ convert to the expected type)
+- New convert package
 
 TODOS ::
 

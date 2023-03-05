@@ -32,10 +32,12 @@ var dbConn *sql.DB
 // create the dsn string from variables that are specified in the .env file
 func DsnString() string {
 	
+	db := settings.Environment.Database
+
 	dsn := fmt.Sprintf("%s:%s@/%s", 
-		settings.DB_USER,
-		settings.DB_PASS, 
-		settings.DB_NAME)
+		db.User,
+		db.Pass, 
+		db.Name)
 	return dsn
 	
 }
@@ -49,14 +51,17 @@ func DsnString() string {
 // create the dsn string from variables that are specified in the .env file
 func DsnString() string {
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s", 
-				settings.DB_HOST, 
-				settings.DB_USER, 
-				settings.DB_PASS, 
-				settings.DB_NAME, 
-				settings.DB_PORT, 
-				settings.DB_SSL, 
-				settings.DB_TZ)
+	db := settings.Environment.Database
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%v sslmode=%s TimeZone=%s", 
+		db.Host,
+		db.User,
+		db.Pass,
+		db.Name,
+		db.Port,
+		db.SSL,
+		db.Timezone)
+
 	return dsn
 }
 {{ end }}

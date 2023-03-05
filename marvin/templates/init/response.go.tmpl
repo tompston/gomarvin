@@ -123,7 +123,7 @@ func Response(w http.ResponseWriter, status int, data interface{}, message strin
 // DbErrorMessage return the full error message only during debug. 
 // This function can be optionally extended to log the full error.
 func DbErrorMessage(err error) string {
-	if settings.DEBUG_MODE == "true" {
+	if settings.Environment.Backend.DebugMode {
 		return fmt.Sprintln(FailedDbConnMessage, err.Error())
 	}
 	return fmt.Sprintln(FailedDbConnMessage)
