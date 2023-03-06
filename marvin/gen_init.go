@@ -24,7 +24,7 @@ func GenerateInitProjectDirs(project_name string) {
 	}
 }
 
-// Don't know why but using  dotfiles in Templates struct causes errror when executing
+// Don't know why but using dotfiles in Templates struct causes errror when executing
 // the template. So just rename files to dotfiles once the thing is generated
 func RenameToDotFiles(conf Config) {
 

@@ -2,7 +2,6 @@
 
 - Include faker?
 - `-config` can also fetch urls that hold the configs (easier setup)
-- Add form / xml fields for go structs?
 - [Go frameworks by stars](https://github.com/mingrammer/go-web-framework-stars)
 
 ### Tests
