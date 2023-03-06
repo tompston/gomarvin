@@ -51,9 +51,6 @@ func Start() *gin.Engine {
 
 
 
-    
-
-    
 
 {{- if ( eq .ProjectInfo.Framework "echo") }}
 func Start() *echo.Echo {
@@ -69,7 +66,6 @@ func Start() *echo.Echo {
     return app
 }
 {{ end }}
-
 
 
 
@@ -94,8 +90,8 @@ func Start() *fiber.App {
 
 
 
-{{- if ( eq .ProjectInfo.Framework "chi") }}
 
+{{- if ( eq .ProjectInfo.Framework "chi") }}
 func Start() *chi.Mux {
 
     app := chi.NewRouter()

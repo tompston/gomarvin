@@ -112,8 +112,8 @@ func Connect() error {
 }
 
 
-// GetDB returns a database connection that is initialized
+// DbConn returns a database connection that is initialized
 // when the app is started
-func GetDB() *sql.DB {
+func DbConn() *sql.DB {
     return dbConn
 }

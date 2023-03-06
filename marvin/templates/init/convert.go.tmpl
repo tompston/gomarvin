@@ -6,18 +6,19 @@ import (
 	"strconv"
 )
 
-func StringToInt(input string) (int, error) {
-	i, err := strconv.Atoi(input)
+// StringToInt converts a 
+func StringToInt(s string) (int, error) {
+	i, err := strconv.Atoi(s)
 	if err != nil {
-		return 0, fmt.Errorf("could not convert %s to int: %v", input, err)
+		return 0, fmt.Errorf("could not convert %s to int: %v", s, err)
 	}
 	return i, nil
 }
 
-func StringToBool(input string) (bool, error) {
-	b, err := strconv.ParseBool(input)
+func StringToBool(s string) (bool, error) {
+	b, err := strconv.ParseBool(s)
 	if err != nil {
-		return false, fmt.Errorf("could not convert %s to bool: %v", input, err)
+		return false, fmt.Errorf("could not convert %s to bool: %v", s, err)
 	}
 	return b, nil
 }

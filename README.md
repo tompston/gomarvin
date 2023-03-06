@@ -72,17 +72,17 @@ Flags:
 
 ```js
 // import the generated file
-import * as F from "../../../chi_with_modules/public/gomarvin.gen" 
+import * as gomarvin from "../../../chi_with_modules/public/gomarvin.gen" 
 // or just import a single fetch function
 import { GetUserById } from "../../../chi_with_modules/public/gomarvin.gen"
 
 // either use the default client created from
 // the settings of the config file, or create a new one
 // (useful when switching environments)
-const defaultClient = F.defaultClient
+const defaultClient = gomarvin.defaultClient
 
 // api client when deployed
-const productionClient: F.Client = {
+const productionClient: gomarvin.Client = {
   host_url: "http://example.com",
   api_prefix: "/api/v1",
   headers: {
@@ -97,19 +97,19 @@ const client = DEV_MODE ? defaultClient : productionClient
 
 // fetch GetUserById endpoint
 async function FetchGetUsersById() {
-  const res = await F.GetUserById(client, 10);
+  const res = await gomarvin.GetUserById(client, 10);
   console.log(res);
 }
 
 // append optional string to the existing endpoint url
 async function FetchEndpointWithAppendedUrl() {
-  const res = await F.GetUserById(client, 10, { append_url: "?name=jim" });
+  const res = await gomarvin.GetUserById(client, 10, { append_url: "?name=jim" });
   console.log(res);
 }
 
 // define custom options for the fetch request
 async function FetchEndpointWithCustomOptions() {
-  const res = await F.GetUserById(client, 10, { options: { method: "POST" } });
+  const res = await gomarvin.GetUserById(client, 10, { options: { method: "POST" } });
   console.log(res);
 }
 
@@ -117,7 +117,7 @@ async function FetchEndpointWithCustomOptions() {
 // - append a string to the fetch url
 // - define a new options object used in the fetch request
 async function FetchWithAppendedUrlAndCustomOptions() {
-  const res = await F.GetUserById(client, 10, {
+  const res = await gomarvin.GetUserById(client, 10, {
     options: { method: "DELETE" },
     append_url: "?name=jim",
   });
@@ -127,9 +127,12 @@ async function FetchWithAppendedUrlAndCustomOptions() {
 
 ### Disclaimer
 
-I'm still figuring out how to do stuff better, so if there's a new release where the `y` in `x.y.z` is incremented, that means that there are breaking changes. The current versions work, but there's a lot of improvements that can be done to make stuff better.
+I'm still figuring out how to do stuff better, so if there's a new release where the `y` in `x.y.z`  the version ( tag ) is incremented, that means that there are breaking changes. The current versions work, but there's a lot of improvements that can be done to make stuff better.
 
 ### Notes
+
+- Gin and router bugs
+  - bugs caused by url params and routing should be fixed manually. Due to the way in which the routers and controllers are generated, the generated Gin servers won't be able to run initially.
 
 - Seeding the db
   - As the generated fetch functions are mapped to the endpoints, you can use them to seed the database pretty easily. Using deno with the faker package can make the process trivial.
@@ -148,8 +151,6 @@ I'm still figuring out how to do stuff better, so if there's a new release where
   ```
 
 - If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. 
-- Gin and router bugs
-  - bugs caused by url params and routing should be fixed manually. Due to the way in which the routers and controllers are generated, the generated Gin servers won't be able to run initially.
 
 ### Credits to used packages
 
@@ -158,15 +159,6 @@ _Not installed locally to avoid any dependencies._
 - [go-pluralize](https://github.com/gertd/go-pluralize)
 - [strcase](https://github.com/iancoleman/strcase)
 
-#### Note on versioning
-
-Versions (tags) have a pattern of `x.y.z`
-
-- `x` is incremented on big releases.
-- `y` is incremented when there is a change that breaks the previously generated servers.
-- `z` is incremented when there is a change that doesn't break the previously generated servers.
-
-For example, updating from `0.1.0` to `0.1.1` does not break anything. Going from `0.2.0` to `0.3.0` will break stuff.
 
 <!--
 

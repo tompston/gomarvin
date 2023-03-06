@@ -73,8 +73,7 @@ func Response(c *fiber.Ctx, status int,data interface{}, message string, links .
 	if len(links) == 1 {
 		return c.Status(status).JSON(&ResWithPagination{
 			Res:   res,
-			Links: links[0],
-		})
+			Links: links[0]})
 	}
 	
 	return c.Status(status).JSON(&res)
@@ -91,8 +90,7 @@ func Response(c echo.Context, status int, data interface{}, message string, link
 	if len(links) == 1 {
 		return c.JSON(status, &ResWithPagination{
 			Res:   res,
-			Links: links[0],
-		})
+			Links: links[0]})
 	}
 
 	return c.JSON(status, &res)
@@ -111,8 +109,7 @@ func Response(w http.ResponseWriter, status int, data interface{}, message strin
 	if len(links) == 1 {
 		return json.NewEncoder(w).Encode(&ResWithPagination{
 			Res:   res,
-			Links: links[0],
-		})
+			Links: links[0]})
 	}
 
 	return json.NewEncoder(w).Encode(&res)
