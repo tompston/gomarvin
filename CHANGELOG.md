@@ -20,7 +20,7 @@ v0.7.0
 
 TODOS ::
 
-- New postam tests that check what happens when 
+- New postman tests that check what happens when 
   - "{" sent in the payload
   - Invalid body type sent in the payolad
   - Empty object is sent for the TestOptionalParam endpoint

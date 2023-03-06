@@ -131,8 +131,9 @@ I'm still figuring out how to do stuff better, so if there's a new release where
 
 ### Notes
 
-- Gin and router bugs
-  - bugs caused by url params and routing should be fixed manually. Due to the way in which the routers and controllers are generated, the generated Gin servers won't be able to run initially.
+- Gin crashes by default. This is due to the way the framework handles routing.
+
+- bugs caused by url params and routing should be fixed manually.
 
 - Seeding the db
   - As the generated fetch functions are mapped to the endpoints, you can use them to seed the database pretty easily. Using deno with the faker package can make the process trivial.

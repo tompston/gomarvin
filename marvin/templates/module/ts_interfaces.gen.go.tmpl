@@ -24,7 +24,7 @@ func TypescriptInterfaces__() string {
             // expected type from the API response for {{ $endpoint.ControllerName }} endpoint
             gut.ToTypescript(
                 placeholderStruct{}, 
-                gut.Interface{Name : "{{ $endpoint.ControllerName }}"},
+                gut.Interface{Name : "{{ $endpoint.ControllerName }}Response"},
             ),
         {{- end }}
     )
