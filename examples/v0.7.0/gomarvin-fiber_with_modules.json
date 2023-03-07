@@ -6,7 +6,7 @@
     "port": 4444,
     "api_prefix": "/api/v1",
     "config_version": 0.1,
-    "db_type": "sqlite",
+    "db_type": "postgres",
     "include_sql": true,
     "include_fetch": true,
     "gomarvin_version": "v0.7.x"
