@@ -21,7 +21,7 @@ from one config file.
 
 ## Install
 
-1.  Either create a custom config file [with the frontend editor](https://gomarvin.pages.dev/) or copy one of the config file from [examples dir](https://github.com/tompston/gomarvin/tree/main/examples/v0.3.0)
+1.  Either create a custom config file [with the frontend editor](https://gomarvin.pages.dev/) or copy one of the config file from [examples dir](https://github.com/tompston/gomarvin/tree/main/examples)
 
 2.  Install gomarvin
 
@@ -69,7 +69,7 @@ Flags:
   -config		Specify path to the gomarvin config file (default "gomarvin.json")
   -dangerous-regen	Regenerate everything. If set to true, init server will be regenerated and all previous changes will be lost (default "false")
   -fetch-only		generate only the typescript file that holds fetch function (default "false")`
-  -gut    generate additional file in the modules dir which concats all of the functions that convert possible response structs to typescript interfaces
+  -gut          generate additional file in the modules dir which concats all of the functions that convert possible response structs to typescript interfaces
 ```
 
 ### Generated Typescript fetch functions usage example
