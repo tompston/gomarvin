@@ -1,56 +1,25 @@
 # Gomarvin changelog
 
-<!-- 
-v0.7.0
-- DbConnErrorMessage() 
+
+### v0.7.0
+
+- `DbConnErrorMessage()`
   - renamed to DbErrorMessage()
-  - input type changed from string to error, to reduce the amount of chars written
+  - input type changed from string to error to reduce the amount of chars written
 - Removed the unused app value that was passed in the generated fiber Router__ functions
 - Refactor the ValidateStruct function to return an error instead of a struct, so that validating the body could be done as a single function call in the controllers (less loc)
 - If the validate field does not include an `required` value, the generated interface for the body type will also be an optional param
 - the `body.gen.go` file will be generated only when the module has at least a single body for an endpoint
 - Removed `ResponseWithPagination` function. Now the `Response` function takes in the 4th optional parameter. This makes stuff shorter.
 - The generated Typescript client now has an interface that defines how the returned response should look like (see ApiResponse)
-- * CREATED cli color is now green
+- CREATED cli color is now green
 - Removing panics in database package
 - Refactored the way env variables are loaded 
-  - Instead of storing calling them all as strings from the settings, save them to the settings.Environment variable (+ convert to the expected type) when the main() func is executed
+  - Instead of calling them all as strings from the settings, save them to the settings.Environment variable (+ convert to the expected type), when the main() func is executed
 - New convert package added, so that the `settings.SetEnvironmentConfig()` could convert the loaded env variables correctly.
 - Added a new flag (gut), which optionally can generate files in the modules dir which hold go struct -> typescript interfaces converters (for possible controller endpoints)
-- validate.ValidateStruct renamed to Struct to be more concise.
+- `validate.ValidateStruct` renamed to `validate.Struct` to be more concise.
 
-TODOS ::
-
-- New postman tests that check what happens when 
-  - "{" sent in the payload
-  - Invalid body type sent in the payolad
-  - Empty object is sent for the TestOptionalParam endpoint
-- Test what happens when there are 4 and 5 params in res.Response function (to check if pagination is not returned).
-- Test the returend response if the body includes the incorrect type.
-
-- Write more comments for the generated functions to explain what they do ( + examples that show how they work )
--  Figure out how to do tests for the controllers. Two possible options ->
-   -  generate deno tests, using the generated fetch functions
-   -  generate tests in go, in a file called `controllers_test.gen.go`
-- Check out how echo implements the json validation
-
-
-### Typescript
-
-- Write a typescript func which checks if the data variable holds an interface that is returned is the error fields struct, when the validation fails.
-- Maybe refactor the editor / config files to hold a comment value that explains what 
-  the generated controllers do, and use that string as a comment before controllers
-  and fetch functions.
-- Figure out if you can also suppor url query params in some way. This could be slightly tricky tho
-
-
-### Editor
-  - Create a new page in the frontend app that links to the cloudflare builds for different versions
-  - The import tab should ideally validate if the passed in string is a valid config file
-    and only then allow the import
-  - settings config_version throw error if the input is not a valid float
-
--->
 
 ### v0.6.0
 
