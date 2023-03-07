@@ -23,10 +23,12 @@ EXAMPLES=(
   # 'echo'
   # 'chi'
   # 'gin_with_modules'
-  # 'echo_with_modules'
-  # 'chi_with_modules'
+  'echo_with_modules'
+  'chi_with_modules'
   'fiber_with_modules'
 )
+
+# reflex -r '\.go' -s -- sh -c "go run main.go"
 
 # build binary to ./test/build/ and cd into the dir
 GOOS=darwin GOARCH=arm64 go build -o ${BUILD_DIR}gomarvin main.go 
