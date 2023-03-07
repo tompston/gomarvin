@@ -173,10 +173,10 @@ GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
 # release
 git add .
-git commit -m "gomarvin: release v0.6.0"
-git tag v0.6.0
-git push origin v0.6.0
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.6.0
+git commit -m "gomarvin: release v0.7.0"
+git tag v0.7.0
+git push origin v0.7.0
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.7.0
 
 
 # create a new branch
