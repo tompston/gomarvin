@@ -16,7 +16,7 @@ func GenerateSql(conf Config, cmd Flags) {
 	if len(modules) != 0 { // if there are modules in the config
 
 		// if path to /db/sql/ dir does not exist or  dangerous-regen is true, create it and create init sql files
-		if !PathExists(project_sql_dir) || cmd.DangerousRegen == "true" {
+		if !PathExists(project_sql_dir) || cmd.DangerousRegen {
 			CreateDir(project_sql_dir)
 			GenerateTemplates(conf, optional_sql_templates) // generate sqlc.yml and functions.sql
 		}

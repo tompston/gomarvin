@@ -9,8 +9,9 @@ import (
 
 // https://golangdocs.com/command-line-arguments-in-golang
 type Flags struct {
-	DangerousRegen string // true | false	( default = false )
-	FetchOnly      string // true | false	( default = false )
+	DangerousRegen bool   // true | false	( default = false )
+	FetchOnly      bool   // true | false	( default = false )
+	Gut            bool   // true | false
 	ConfigPath     string // if no params are  specified, get the config from current dir
 }
 

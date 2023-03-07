@@ -15,20 +15,22 @@ func Run(flags *Flags, args []string) {
 	// if "generate" arg is provided in the cli args, generate the project
 	if stringExistsInSlice("generate", args) {
 
+		// fmt.Println("flags: ", flags.ConfigPath)
+
 		// if gomarvin.json or a custom path to an existing config file is provided
 		if PathExists(flags.ConfigPath) {
 
 			conf := ReadConfig(flags.ConfigPath) // read json config file
 
 			// if fetch_only is set to default value ("false"), generate the whole project
-			if flags.FetchOnly == "false" {
+			if !flags.FetchOnly {
 				GenerateInit(conf, *flags)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
 				GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist
 				GenerateOptional(conf, *flags) // generate things that are optional
 				FormatAfterGen()               // run gofmt to format the project in the dir
 				// GenerateSeeder(conf, *flags)
 
-			} else if flags.FetchOnly == "true" {
+			} else if flags.FetchOnly {
 				GenerateOnlyFetchFunctions(conf, *flags)
 			}
 

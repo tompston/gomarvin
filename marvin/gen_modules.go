@@ -25,7 +25,7 @@ func GenerateModules(conf Config, cmd Flags) {
 			module_dir := ModuleDir(project_name, module.Name)
 
 			// if the dir does not exist or regen is true
-			if !PathExists(module_dir) || cmd.DangerousRegen == "true" {
+			if !PathExists(module_dir) || cmd.DangerousRegen {
 				CreateDir(module_dir) // create the dir
 			}
 
@@ -36,7 +36,10 @@ func GenerateModules(conf Config, cmd Flags) {
 				// Create the file which holds controllers
 				CreateModuleFile("templates/module/controllers.gen.go.tmpl", module_dir, data)
 				// Create the file which holds functions that convert golang structs to ts interfaces
-				CreateModuleFile("templates/module/ts_interfaces.gen.go.tmpl", module_dir, data)
+
+				if cmd.Gut {
+					CreateModuleFile("templates/module/ts_interfaces.gen.go.tmpl", module_dir, data)
+				}
 
 				// if there is at least a single endpoint which has a body that does not have
 				// a lenght of 0, generate the `body.gen.go` file with all of the body structs
@@ -59,3 +62,14 @@ func CreateModuleFile(template_path string, module_dir string, data Project) {
 	ExecuteTemplate(template_name, template_path, full_output_path, data)
 	fmt.Println(CREATED_MSG, full_output_path)
 }
+
+/*
+
+
+go run main.go -gut=true  \
+    -config="./examples/v0.7.0/gomarvin-fiber_with_modules.json" generate
+
+
+
+
+*/
