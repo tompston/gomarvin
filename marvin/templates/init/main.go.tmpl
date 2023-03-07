@@ -31,6 +31,10 @@ func setupEnvironmet() error {
 		return err
 	}
 
+	if err := app.GenerateResponseInterfaces(); err != nil {
+		return err
+	}
+
 	return nil
 }
 

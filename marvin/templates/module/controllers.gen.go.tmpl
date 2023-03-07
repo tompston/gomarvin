@@ -123,7 +123,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 	{{end -}}
 
 	// replace the function to return the data from the db
-	data, err := utils.PlaceholderFunction()
+	data, err := utils.PlaceholderFunc()
 	if err != nil {
 		res.Response(c, 400, nil, res.DbErrorMessage(err))
 		return
@@ -190,7 +190,7 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 	{{end -}}
 	
 	// replace the function to return the data from the db
-	data, err := utils.PlaceholderFunction()
+	data, err := utils.PlaceholderFunc()
 	if err != nil {
 		return res.Response(c, 400, nil, res.DbErrorMessage(err))
 	}
@@ -257,7 +257,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	{{ end -}}
 	
 	// replace the function to return the data from the db
-	data, err := utils.PlaceholderFunction()
+	data, err := utils.PlaceholderFunc()
 	if err != nil {
 		return res.Response(c, 400, nil, res.DbErrorMessage(err))
 	}
@@ -324,7 +324,7 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 	{{ end -}}
 	
 	// replace the function to return the data from the db
-	data, err := utils.PlaceholderFunction()
+	data, err := utils.PlaceholderFunc()
 	if err != nil {
 		res.Response(w, 400, nil, res.DbErrorMessage(err))
 		return
