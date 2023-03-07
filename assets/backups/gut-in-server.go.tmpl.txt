@@ -28,6 +28,24 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	{{ end }}
+
+    {{ if .Modules -}}
+		{{ range $module := .Modules -}}
+			{{- if $module.Endpoints -}}
+                "{{$project_name}}/modules/{{ ConvertToLowercase $module.Name }}_module"
+             {{ end -}}
+		{{ end -}}
+	{{- end -}}
+
+    {{ if .Modules -}}
+		{{ range $module := .Modules -}}
+			{{- if $module.Endpoints -}}
+                "github.com/tompston/gut"
+                "fmt"
+                {{ break }}
+             {{ end -}}
+		{{ end -}}
+	{{- end -}}
 )
 
 
@@ -116,3 +134,31 @@ func Start() *chi.Mux {
 {{- end }}
 
 
+
+
+
+
+
+// concat all of the exported interfaces from the modules
+// and save them to a file.
+func GenerateResponseInterfaces() error {
+
+    file := "./public/response.gen.ts"
+
+	if err := gut.GenerateTypescriptInterfaces(
+		file,
+		fmt.Sprintln(
+    {{ if .Modules -}}
+        {{ range $module := .Modules -}}
+            {{- if $module.Endpoints -}}
+                {{ ConvertToLowercase $module.Name }}_module.TypescriptInterfaces__(),
+            {{ end -}}
+        {{ end -}}
+    {{- end -}}
+        ),
+		gut.DefaultSettings,
+	); err != nil {
+		return err
+	}
+	return nil
+}

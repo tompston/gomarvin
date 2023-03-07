@@ -35,8 +35,9 @@ func GenerateModules(conf Config, cmd Flags) {
 			if len(endpoints) != 0 {
 				// Create the file which holds controllers
 				CreateModuleFile("templates/module/controllers.gen.go.tmpl", module_dir, data)
-				// Create the file which holds functions that convert golang structs to ts interfaces
 
+				// Create the file which holds functions that convert golang structs to ts interfaces
+				// if the -gut flag was set as true
 				if cmd.Gut {
 					CreateModuleFile("templates/module/ts_interfaces.gen.go.tmpl", module_dir, data)
 				}

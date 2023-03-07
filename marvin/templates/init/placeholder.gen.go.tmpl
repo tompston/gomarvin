@@ -12,7 +12,7 @@ func PlaceholderFunc() (struct{}, error) {
 }
 
 // PlaceholderStruct is used as a temporary input param for gut.ToTypescript 
-// functions in the ts_interfaces.gen.go files
+// functions in the ts_interfaces.gen.go files (if the gut=true flag is provided)
 type PlaceholderStruct struct {
 	Field1 string `json:"field_1"`
 }
