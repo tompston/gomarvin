@@ -23,8 +23,8 @@ EXAMPLES=(
   # 'echo'
   # 'chi'
   # 'gin_with_modules'
-  'echo_with_modules'
-  'chi_with_modules'
+  # 'echo_with_modules'
+  # 'chi_with_modules'
   'fiber_with_modules'
 )
 
@@ -41,6 +41,7 @@ for example in "${EXAMPLES[@]}"; do
 
     # generate the project
     ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -gut=true -config=${CONFIG_PATH} generate
+    # ./gomarvin -config=${CONFIG_PATH} generate
 
     cd ${example}           # cd into the generated dir
     go mod tidy             # tidy things
