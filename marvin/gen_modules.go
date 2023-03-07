@@ -39,7 +39,7 @@ func GenerateModules(conf Config, cmd Flags) {
 				// Create the file which holds functions that convert golang structs to ts interfaces
 				// if the -gut flag was set as true
 				if cmd.Gut {
-					CreateModuleFile("templates/module/ts_interfaces.gen.go.tmpl", module_dir, data)
+					CreateModuleFile("templates/module/typescript.gen.go.tmpl", module_dir, data)
 				}
 
 				// if there is at least a single endpoint which has a body that does not have
