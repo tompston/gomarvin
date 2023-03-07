@@ -75,4 +75,8 @@ Flags:
 	(default "false")
   -fetch-only		
   	generate only the typescript file that holds fetch function 
+	(default "false")
+  -gut
+	generate additional file in the modules dir which concats all of the 
+	functions that convert possible response structs to typescript interfaces
 	(default "false")`

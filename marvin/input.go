@@ -11,7 +11,7 @@ import (
 type Flags struct {
 	DangerousRegen bool   // true | false	( default = false )
 	FetchOnly      bool   // true | false	( default = false )
-	Gut            bool   // true | false
+	Gut            bool   // true | false	( default = false )
 	ConfigPath     string // if no params are  specified, get the config from current dir
 }
 

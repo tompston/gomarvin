@@ -16,7 +16,8 @@ v0.7.0
 - Refactored the way env variables are loaded 
   - Instead of storing calling them all as strings from the settings, save them to the settings.Environment variable (+ convert to the expected type) when the main() func is executed
 - New convert package added, so that the `settings.SetEnvironmentConfig()` could convert the loaded env variables correctly.
-
+- Added a new flag (gut), which optionally can generate files in the modules dir which hold go struct -> typescript interfaces converters (for possible controller endpoints)
+- validate.ValidateStruct renamed to Struct to be more concise.
 
 TODOS ::
 
