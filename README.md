@@ -180,4 +180,8 @@ git branch BRANCH_NAME
 # switch to branch
 git checkout BRANCH_NAME
 
+# merge new branch to main branch
+git checkout main
+git merge v0.7.x
+
 -->
