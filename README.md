@@ -148,7 +148,7 @@ I'm still figuring out how to do stuff better, so if there's a new release where
   ```bash
   # run this after exporting the config file, assuming that
   # the gomarvin.json file is in the same dir
-  gomarvin -fetch-only="true" generate
+  gomarvin -fetch-only=true generate
   ```
 
 - If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. 
