@@ -26,11 +26,7 @@ from one config file.
 2.  Install gomarvin
 
 ```bash
-# go version >= 1.17
 go install github.com/tompston/gomarvin@latest
-
-# go version < 1.17
-go get github.com/tompston/gomarvin
 
 # or clone the repo and run go run main.go
 git clone https://github.com/tompston/gomarvin.git
