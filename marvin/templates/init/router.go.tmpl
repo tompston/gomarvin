@@ -1,11 +1,11 @@
 {{ $project_name := .ProjectInfo.Name -}}
 
-package app
+package server
 
 
 import (
-	res "{{$project_name}}/lib/response"
-	"{{$project_name}}/settings"
+	res "{{$project_name}}/pkg/response"
+	"{{$project_name}}/pkg/settings"
 
 	{{ if ( eq .ProjectInfo.Framework "gin") 	}}"github.com/gin-gonic/gin"{{ end }}
 	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}

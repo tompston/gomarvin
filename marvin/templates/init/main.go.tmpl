@@ -7,9 +7,9 @@
 package main
 
 import (
-	"{{$project_name}}/settings"
-	"{{$project_name}}/settings/database"
-	"{{$project_name}}/app"
+	"{{$project_name}}/pkg/settings"
+	"{{$project_name}}/pkg/settings/database"
+	"{{$project_name}}/pkg/server"
 	"fmt"
 	"log"
 
@@ -42,22 +42,22 @@ func main() {
 	}
 
 	address := fmt.Sprintf("localhost:%v", settings.Environment.Backend.Port)
-	server := app.Start()
+	app := server.Start()
 
 	{{- if ( eq .ProjectInfo.Framework "gin") }}
-	server.Run(address) // run the server
+	app.Run(address) // run the server
 	{{- end }}
 
 	{{- if ( eq .ProjectInfo.Framework "fiber") }}
-	server.Listen(address) // run the server
+	app.Listen(address) // run the server
 	{{- end }}
 
 	{{- if ( eq .ProjectInfo.Framework "echo") }}
-	server.Logger.Fatal(server.Start(address)) // run the server
+	app.Logger.Fatal(app.Start(address)) // run the server
 	{{- end }}
 
 	{{- if ( eq .ProjectInfo.Framework "chi") }}
-	http.ListenAndServe(address, server) // run the server
+	http.ListenAndServe(address, app) // run the server
 	{{- end }}
 	
 }
