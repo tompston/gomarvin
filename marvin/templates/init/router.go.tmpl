@@ -18,7 +18,7 @@ import (
 
 	{{ if .Modules -}} 
 		{{ range $module := .Modules -}}
-			{{ if $module.Endpoints }} "{{$project_name}}/modules/{{ ConvertToLowercase $module.Name}}_module"{{ end }}
+			{{ if $module.Endpoints }} "{{$project_name}}/internal/api/modules/{{ ConvertToLowercase $module.Name}}_module"{{ end }}
 		{{ end -}}
 	{{ end -}}
 )

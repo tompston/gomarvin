@@ -50,7 +50,6 @@ func GenerateModules(conf Config, cmd Flags) {
 						CreateModuleFile("templates/module/body.gen.go.tmpl", module_dir, data)
 						break
 					}
-					// break
 				}
 			}
 		}

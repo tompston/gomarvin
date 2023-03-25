@@ -1,14 +1,6 @@
 package marvin
 
 var init_project_dirs = [...]string{
-	// "/",
-	// "/settings/database/",
-	// "/lib/response/",
-	// "/lib/validate/",
-	// "/lib/convert/",
-	// "/app/",
-	// "/public/",
-	// -- new --
 	"/",
 	"/cmd/api/",
 	"/pkg/response/",
@@ -16,6 +8,7 @@ var init_project_dirs = [...]string{
 	"/pkg/convert/",
 	"/pkg/settings/",
 	"/pkg/settings/database/",
+	"/pkg/environment/",
 	"/pkg/server/",
 	"/public/",
 }
@@ -55,8 +48,8 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/validate.go.tmpl", output_dir: "/pkg/validate/"},
 	{template_path: "templates/init/router.go.tmpl", output_dir: "/pkg/server/"},
 	{template_path: "templates/init/server.go.tmpl", output_dir: "/pkg/server/"},
-	// convert
 	{template_path: "templates/init/convert.go.tmpl", output_dir: "/pkg/convert/"},
+	{template_path: "templates/init/setup.go.tmpl", output_dir: "/pkg/environment/"},
 }
 
 var optional_sql_templates = []Template{

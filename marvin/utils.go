@@ -25,9 +25,8 @@ func ModuleDirName(module_name string) string {
 	return strings.ToLower(fmt.Sprintf("%s%s", module_name, "_module"))
 }
 
-// "my_project" 	-> "my_project/modules"
 func ProjectModuleDirPath(project_name string) string {
-	return fmt.Sprintf("%s/%s", project_name, ModuleOutputDir)
+	return fmt.Sprintf("%s/internal/api/%s", project_name, ModuleOutputDir)
 }
 
 // ("my_Project", "Task") --> my_project/modules/task_module/
