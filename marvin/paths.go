@@ -27,7 +27,7 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/database.go.tmpl", output_dir: "/settings/database/"},
 	{template_path: "templates/init/response.go.tmpl", output_dir: "/lib/response/"},
 	{template_path: "templates/init/validate.go.tmpl", output_dir: "/lib/validate/"},
-	{template_path: "templates/init/placeholder.go.tmpl", output_dir: "/lib/utils/"},
+	// {template_path: "templates/init/placeholder.go.tmpl", output_dir: "/lib/utils/"},
 	{template_path: "templates/init/router.go.tmpl", output_dir: "/app/"},
 	{template_path: "templates/init/server.go.tmpl", output_dir: "/app/"},
 	// convert
