@@ -9,8 +9,9 @@ var init_project_dirs = [...]string{
 	"/pkg/settings/",
 	"/pkg/settings/database/",
 	"/pkg/environment/",
-	"/pkg/server/",
+	// "/pkg/server/",
 	"/public/",
+	"/internal/api/server/",
 }
 
 const typescript_fetch_template = "templates/optional/ts/gomarvin.gen.ts.tmpl"
@@ -46,8 +47,8 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/database.go.tmpl", output_dir: "/pkg/settings/database/"},
 	{template_path: "templates/init/response.go.tmpl", output_dir: "/pkg/response/"},
 	{template_path: "templates/init/validate.go.tmpl", output_dir: "/pkg/validate/"},
-	{template_path: "templates/init/router.go.tmpl", output_dir: "/pkg/server/"},
-	{template_path: "templates/init/server.go.tmpl", output_dir: "/pkg/server/"},
+	{template_path: "templates/init/router.go.tmpl", output_dir: "/internal/api/server/"},
+	{template_path: "templates/init/server.go.tmpl", output_dir: "/internal/api/server/"},
 	{template_path: "templates/init/convert.go.tmpl", output_dir: "/pkg/convert/"},
 	{template_path: "templates/init/setup.go.tmpl", output_dir: "/pkg/environment/"},
 }
