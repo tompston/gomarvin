@@ -7,9 +7,10 @@
 package main
 
 import (
+	"{{$project_name}}/pkg/environment"
 	"{{$project_name}}/pkg/settings"
-	"{{$project_name}}/pkg/settings/database"
 	"{{$project_name}}/pkg/server"
+	"{{$project_name}}/cmd"
 	"fmt"
 	"log"
 
@@ -19,25 +20,9 @@ import (
 )
 
 
-// setup the environment for the go app on the initialization:
-//   - read .env config file and store it in settings.Environment variable
-//   - store db connection in the database.dbConn variable
-func setupEnvironmet() error {
-	if err := settings.SetEnvironmentConfig(".env"); err != nil {
-		return err
-	}
-
-	if err := database.Connect(); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-
 func main() {
-
-	if err := setupEnvironmet(); err != nil {
+	args := cmd.GetArgs()
+	if err := environment.Setup(args); err != nil {
 		log.Fatal(err)
 	}
 
@@ -59,5 +44,4 @@ func main() {
 	{{- if ( eq .ProjectInfo.Framework "chi") }}
 	http.ListenAndServe(address, app) // run the server
 	{{- end }}
-	
 }
