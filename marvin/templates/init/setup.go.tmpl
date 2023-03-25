@@ -1,0 +1,21 @@
+{{ $project_name    := .ProjectInfo.Name -}}
+package environment
+
+import (
+	"{{ $project_name }}/cmd"
+	"{{ $project_name }}/pkg/settings"
+	"{{ $project_name }}/pkg/settings/database"
+)
+
+// Setup the environment for the go app on the initialization:
+//   - read .env config file and store it in settings.Environment variable
+//   - store db connection in the database.dbConn variable
+func Setup(args cmd.CliArgs) error {
+	if err := settings.SetEnvironmentConfig(args.Conf); err != nil {
+		return err
+	}
+	if err := database.Connect(); err != nil {
+		return err
+	}
+	return nil
+}

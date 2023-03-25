@@ -7,9 +7,9 @@ import (
 	res "{{$project_name}}/pkg/response"
 	"{{$project_name}}/pkg/settings"
 
-	{{ if ( eq .ProjectInfo.Framework "gin") 	}}"github.com/gin-gonic/gin"{{ end }}
-	{{ if ( eq .ProjectInfo.Framework "fiber") }}"github.com/gofiber/fiber/v2"{{ end }}
-	{{ if ( eq .ProjectInfo.Framework "echo") }}"github.com/labstack/echo/v4"{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "gin")  	}}"github.com/gin-gonic/gin"	{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "fiber") 	}}"github.com/gofiber/fiber/v2"	{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "echo") 	}}"github.com/labstack/echo/v4"	{{ end }}
 
 	{{ if ( eq .ProjectInfo.Framework "chi") }}
 	"github.com/go-chi/chi/v5"
