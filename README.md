@@ -72,14 +72,14 @@ Flags:
 
 ```js
 // import the generated file
-import * as gomarvin from "../../../chi_with_modules/public/gomarvin.gen" 
+import * as gomarvin from "../../../chi_with_modules/public/gomarvin.gen";
 // or just import a single fetch function
-import { GetUserById } from "../../../chi_with_modules/public/gomarvin.gen"
+import { GetUserById } from "../../../chi_with_modules/public/gomarvin.gen";
 
 // either use the default client created from
 // the settings of the config file, or create a new one
 // (useful when switching environments)
-const defaultClient = gomarvin.defaultClient
+const defaultClient = gomarvin.defaultClient;
 
 // api client when deployed
 const productionClient: gomarvin.Client = {
@@ -88,12 +88,12 @@ const productionClient: gomarvin.Client = {
   headers: {
     "Content-type": "application/json;charset=UTF-8",
   },
-}
+};
 
-const DEV_MODE = true
+const DEV_MODE = true;
 
 // switch to productionClient if DEV_MODE is false
-const client = DEV_MODE ? defaultClient : productionClient
+const client = DEV_MODE ? defaultClient : productionClient;
 
 // fetch GetUserById endpoint
 async function FetchGetUsersById() {
@@ -103,13 +103,17 @@ async function FetchGetUsersById() {
 
 // append optional string to the existing endpoint url
 async function FetchEndpointWithAppendedUrl() {
-  const res = await gomarvin.GetUserById(client, 10, { append_url: "?name=jim" });
+  const res = await gomarvin.GetUserById(client, 10, {
+    append_url: "?name=jim",
+  });
   console.log(res);
 }
 
 // define custom options for the fetch request
 async function FetchEndpointWithCustomOptions() {
-  const res = await gomarvin.GetUserById(client, 10, { options: { method: "POST" } });
+  const res = await gomarvin.GetUserById(client, 10, {
+    options: { method: "POST" },
+  });
   console.log(res);
 }
 
@@ -127,7 +131,7 @@ async function FetchWithAppendedUrlAndCustomOptions() {
 
 ### Disclaimer
 
-I'm still figuring out how to do stuff better, so if there's a new release where the `y` in `x.y.z`  the version ( tag ) is incremented, that means that there are breaking changes. The current versions work, but there's a lot of improvements that can be done to make stuff better.
+I'm still figuring out how to do stuff better, so if there's a new release where the `y` in `x.y.z` the version ( tag ) is incremented, that means that there are breaking changes. The current versions work, but there's a lot of improvements that can be done to make stuff better.
 
 ### Notes
 
@@ -142,16 +146,18 @@ I'm still figuring out how to do stuff better, so if there's a new release where
   ```
   gofmt -s -w .
   ```
+
 - Using the tool to generate fetch functions for pre-existing REST APIs
+
   - If you want to generate a client for an already existing REST API in a fast way, you can use the editor to document the needed values to codegen the fetch functions in a fast way
-  
+
   ```bash
   # run this after exporting the config file, assuming that
   # the gomarvin.json file is in the same dir
   gomarvin -fetch-only=true generate
   ```
 
-- If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet. 
+- If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet.
 
 ### Credits to used packages
 
@@ -159,7 +165,6 @@ _Not installed locally to avoid any dependencies._
 
 - [go-pluralize](https://github.com/gertd/go-pluralize)
 - [strcase](https://github.com/iancoleman/strcase)
-
 
 <!--
 
