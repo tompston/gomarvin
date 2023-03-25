@@ -168,15 +168,16 @@ _Not installed locally to avoid any dependencies._
 
 <!--
 
+
 # run a local example
 GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
 # release
 git add .
-git commit -m "gomarvin: release v0.8.0"
-git tag v0.8.0
-git push origin v0.8.0
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.8.0
+git commit -m "gomarvin: release v0.8.1"
+git tag v0.8.1
+git push origin v0.8.1
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.8.1
 
 
 # create a new branch
@@ -189,5 +190,6 @@ git checkout main
 git merge v0.8.x
 
 go run cmd/api/main.go 
+
 
 -->
