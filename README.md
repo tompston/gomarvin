@@ -168,7 +168,6 @@ _Not installed locally to avoid any dependencies._
 
 <!--
 
-
 # run a local example
 GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
 
@@ -180,7 +179,6 @@ git push origin v0.8.0
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.8.0
 
 
-
 # create a new branch
 git branch BRANCH_NAME
 # switch to branch
@@ -189,7 +187,6 @@ git checkout BRANCH_NAME
 # merge new branch to main branch
 git checkout main
 git merge v0.8.x
-
 
 go run cmd/api/main.go 
 
