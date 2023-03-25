@@ -1,5 +1,9 @@
 # Gomarvin changelog
 
+### v0.8.1
+
+- Converted the ProjectInfo GoVersion and ConfigVersion values to interfaces, so that the config files would be valid if they have either floats or strings that hold floats.
+
 ### v0.8.0
 
 Completely refactored the structure of the generated code.

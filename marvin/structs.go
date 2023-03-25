@@ -18,16 +18,19 @@ type Project struct {
 }
 
 type ProjectInfo struct {
-	GoVersion       float64 `json:"go_version"`
-	Name            string  `json:"name"`
-	Framework       string  `json:"framework"`
-	Port            int     `json:"port"`
-	APIPrefix       string  `json:"api_prefix"`
-	ConfigVersion   float64 `json:"config_version"`
-	DbType          string  `json:"db_type"`
-	IncludeSQL      bool    `json:"include_sql"`
-	IncludeFetch    bool    `json:"include_fetch"`
-	GomarvinVersion string  `json:"gomarvin_version"`
+	// as the go version can be 1.20, storing it as interface{}
+	// is the best way to handle it, because javascript toFixed()
+	// function returns a string.
+	GoVersion       interface{} `json:"go_version"`
+	ConfigVersion   interface{} `json:"config_version"`
+	Name            string      `json:"name"`
+	Framework       string      `json:"framework"`
+	Port            int         `json:"port"`
+	APIPrefix       string      `json:"api_prefix"`
+	DbType          string      `json:"db_type"`
+	IncludeSQL      bool        `json:"include_sql"`
+	IncludeFetch    bool        `json:"include_fetch"`
+	GomarvinVersion string      `json:"gomarvin_version"`
 }
 
 type Endpoints struct {

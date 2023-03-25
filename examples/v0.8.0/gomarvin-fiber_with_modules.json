@@ -1,6 +1,6 @@
 {
   "project_info": {
-    "go_version": 1.17,
+    "go_version": "1.17",
     "name": "fiber_with_modules",
     "framework": "fiber",
     "port": 4444,
