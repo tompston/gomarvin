@@ -190,4 +190,6 @@ git checkout main
 git merge v0.7.x
 
 
+go run cmd/api/main.go 
+
 -->

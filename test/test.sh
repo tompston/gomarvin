@@ -8,7 +8,7 @@
 # ./test/test.sh
 
 CURRENT_DIR=$PWD
-GOMARVIN_V='v0.7.0'
+GOMARVIN_V='v0.8.0'
 GOMARVIN_CONFIG_BASE="gomarvin-"
 GOMARVIN_CONFIG_DIR=${CURRENT_DIR}/examples/${GOMARVIN_V}/
 BUILD_DIR=./test/build/
@@ -28,7 +28,6 @@ EXAMPLES=(
   'fiber_with_modules'
 )
 
-# reflex -r '\.go' -s -- sh -c "go run main.go"
 
 # build binary to ./test/build/ and cd into the dir
 GOOS=darwin GOARCH=arm64 go build -o ${BUILD_DIR}gomarvin main.go 

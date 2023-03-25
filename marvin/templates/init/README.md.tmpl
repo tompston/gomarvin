@@ -3,6 +3,15 @@
 
 # {{ $PROJECT_NAME }}
 
+```bash
+# download the dependencies
+go mod tidy
+go mod download
+
+# run the server
+go run cmd/api/main.go
+```
+
 ### Init project structure
 
 ```bash
@@ -14,12 +23,12 @@
 ├── pkg
 │   ├── convert         # holds util functions for converting types ( used in the settings package )
 │   ├── environment     # holds functions which initialize the environment for the application
-│   ├── response        # holds predefined response function and messages
+│   ├── response        # holds a predefined response function and response messages
 │   ├── settings        # holds util functions for loading .env vars and storing them in the settings.Environment variable
 │   │   ├── database
 │   └── validate        # holds functions which check if passed down structs pass their validation tags
 └── public
-    └── gomarvin.gen.ts # optionally serve some of the generated files for easier accesibility for frontend people    
+    └── gomarvin.gen.ts # holds the generated typescript client
 ```
 
 #### Update on change
