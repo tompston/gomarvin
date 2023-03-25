@@ -3,43 +3,33 @@
 
 # {{ $PROJECT_NAME }}
 
-#### Init project structure
+### Init project structure
 
 ```bash
-├── main.go             # initialize the env and run the server
-├── app                 # holds the default config for server + all routes
-│── public              # optionally serve some of the generated files for easier accesibility for frontend people            
-├── settings            # holds util functions for loading .env vars and storing them in the settings.Environment variable
-│   └── database        # holds functions that creates db connection by using the settings.Environment variable
-└── lib
-    ├── response        # holds predefined response function and messages
-    └── validate        # holds functions for validating the sent json and payload structs
-    └── convert         # holds util functions for converting types ( used in the settings package )
-    └── utils           # holds a placeholder function that's used inside the controllers
+├── cmd                 # holds the entrypoint for the backend server
+├── internal            
+│   └── api            
+│       ├── modules     # holds the generated modules
+│       └── server      # holds all routes and the function which sets up the server
+├── pkg
+│   ├── convert         # holds util functions for converting types ( used in the settings package )
+│   ├── environment     # holds functions which initialize the environment for the application
+│   ├── response        # holds predefined response function and messages
+│   ├── settings        # holds util functions for loading .env vars and storing them in the settings.Environment variable
+│   │   ├── database
+│   └── validate        # holds functions which check if passed down structs pass their validation tags
+└── public
+    └── gomarvin.gen.ts # optionally serve some of the generated files for easier accesibility for frontend people    
 ```
 
 #### Update on change
 
 ```bash
 # https://github.com/cespare/reflex
-reflex -r '\.go' -s -- sh -c "go run main.go"
+reflex -r '\.go' -s -- sh -c "go run cmd/api/main.go"
 ```
 
-
-#### Docker commands ( Note : the Dockerfile can be improved)
-
-```bash
-# build the image
-docker build -t {{$PROJECT_NAME}} .
-# run and publish with the name of {{ $PROJECT_NAME }}
-docker run --publish {{ $GOLANG_PORT }}:{{ $GOLANG_PORT }} --name {{ $PROJECT_NAME }} {{ $PROJECT_NAME }}
-# stop
-docker stop {{ $PROJECT_NAME }}
-# remove 
-docker image rm {{ $PROJECT_NAME }}
-```
-
-#### Renaming generated sql files
+#### Renaming generated sql files from `.sql.gen.txt` to `.sql`
 
 ```bash
 # run from the root of the project
