@@ -26,8 +26,8 @@ from one config file.
 2.  Install gomarvin
 
 ```bash
+# install the binary
 go install github.com/tompston/gomarvin@latest
-
 # or clone the repo and run go run main.go
 git clone https://github.com/tompston/gomarvin.git
 ```
@@ -55,7 +55,7 @@ gomarvin -gut=true generate
 cd GENERATED_SERVER
 go mod tidy
 go mod download
-go run main.go
+go run cmd/api/main.go
 ```
 
 ## CLI

@@ -5,14 +5,14 @@
 Completely refactored the structure of the generated code.
 
 - The entry point of the generated app resides in the cmd/ folder.
-  - This is done so that, you could potentially have multiple entry points for the same app. For example, you could have a `cmd/api/main.go` entrypoint which starts the backend server and a `cmd/other-service` entrypoint which starts a different service. 
+  - This is done so that you could potentially have multiple entry points for different applications which share the same packages. For example, you could have a `cmd/api/main.go` entrypoint which starts the backend server and a `cmd/other-service/main.go` entrypoint which starts a different service. 
 - `pkg` and `internal` folders are now generated in the root of the project.
-  - `pkg` folder holds the generated code that is meant to be shared across multiple apps.
-  - `internal` folder holds the generated code that is should not be accessed by other packages.
+  - `pkg` folder holds the generated code that is meant to be shared across multiple places.
+  - `internal` folder holds the generated code that should not be accessed by other packages.
 - Removed the `lib` and `utils` folders.
   - Using `lib` and `utils` seems to be an anti-pattern in Go. Instead, the code should be grouped by the functionality it provides.
 - Created an `environment` package
-  - This package groups all of the functions that are executed when the app starts.
+  - This package groups all of the functions which setup the environment of the app when the application starts.
 
 
 ### v0.7.0
