@@ -18,7 +18,7 @@ import (
 
 
 	{{ if ( eq .ProjectInfo.DbType "mysql")}}
-	"{{$project_name}}/settings"
+	"{{$project_name}}/pkg/settings"
 	_ "github.com/go-sql-driver/mysql"
 	{{ end }}
 )
