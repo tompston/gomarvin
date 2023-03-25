@@ -11,7 +11,8 @@ import (
 // name of the folder in the project to which the new modules will be added
 var ModuleOutputDir = "modules"
 
-// if you pass a nested path of folders that do not exist, this function will also create those folders
+// if you pass a nested path of folders that do not exist, this function
+// will also create those folders
 func CreateDir(path string) (*os.File, error) {
 	if err := os.MkdirAll(filepath.Dir(path), 0770); err != nil {
 		return nil, err
@@ -22,11 +23,6 @@ func CreateDir(path string) (*os.File, error) {
 // "task" 	-> "task_module"
 func ModuleDirName(module_name string) string {
 	return strings.ToLower(fmt.Sprintf("%s%s", module_name, "_module"))
-}
-
-// "todo" 	-> "modules/todo_module"
-func ModuleDirPath(module_name string) string {
-	return fmt.Sprintf("%s/%s", "modules", ModuleDirName(module_name))
 }
 
 // "my_project" 	-> "my_project/modules"
