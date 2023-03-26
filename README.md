@@ -17,6 +17,10 @@ Generate:
 
 from one config file.
 
+### Disclaimer!
+
+I'm still figuring out how to do stuff better, so if there's a new release where the `y` in `x.y.z` the version ( tag ) is incremented, that means that there are breaking changes. The current versions work, but there's a lot of improvements that can be done to make stuff better.
+
 ## [Documentation](https://gomarvin.pages.dev/docs)
 
 ## Install
@@ -129,10 +133,6 @@ async function FetchWithAppendedUrlAndCustomOptions() {
 }
 ```
 
-### Disclaimer
-
-I'm still figuring out how to do stuff better, so if there's a new release where the `y` in `x.y.z` the version ( tag ) is incremented, that means that there are breaking changes. The current versions work, but there's a lot of improvements that can be done to make stuff better.
-
 ### Notes
 
 - Gin crashes by default. This is due to the way the framework handles routing.
@@ -189,7 +189,7 @@ git checkout BRANCH_NAME
 git checkout main
 git merge v0.8.x
 
-go run cmd/api/main.go 
+go run cmd/api/main.go
 
 
 -->
