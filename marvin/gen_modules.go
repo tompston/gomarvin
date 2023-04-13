@@ -22,7 +22,8 @@ func GenerateModules(conf Config, cmd Flags) {
 				Modules:     module,
 			}
 
-			module_dir := ModuleDir(project_name, module.Name)
+			api_prefix := ApiVersion(conf.ProjectInfo.APIPrefix)
+			module_dir := ModuleDir(project_name, module.Name, api_prefix)
 
 			// if the dir does not exist or regen is true
 			if !PathExists(module_dir) || cmd.DangerousRegen {

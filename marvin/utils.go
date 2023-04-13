@@ -25,13 +25,13 @@ func ModuleDirName(module_name string) string {
 	return strings.ToLower(fmt.Sprintf("%s%s", module_name, "_module"))
 }
 
-func ProjectModuleDirPath(project_name string) string {
-	return fmt.Sprintf("%s/internal/api/%s", project_name, ModuleOutputDir)
+func ProjectModuleDirPath(project_name, api_version string) string {
+	return fmt.Sprintf("%s/internal/api/%s/%s", project_name, api_version, ModuleOutputDir)
 }
 
 // ("my_Project", "Task") --> my_project/modules/task_module/
-func ModuleDir(project_name string, module_name string) string {
-	return fmt.Sprintf("%s/%s/", ProjectModuleDirPath(project_name), ModuleDirName(module_name))
+func ModuleDir(project_name, module_name, api_version string) string {
+	return fmt.Sprintf("%s/%s/", ProjectModuleDirPath(project_name, api_version), ModuleDirName(module_name))
 }
 
 // pass in the relative path to the dir you want to check. If the dir exists, return true

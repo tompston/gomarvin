@@ -14,8 +14,6 @@ var init_project_dirs = [...]string{
 	"/pkg/settings/",
 	"/pkg/settings/database/",
 	"/pkg/environment/",
-	// -- internal dirs
-	"/internal/api/server/",
 }
 
 const typescript_fetch_template = "templates/optional/client/gomarvin.gen.ts.tmpl"

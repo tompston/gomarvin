@@ -94,6 +94,7 @@ var template_functions = template.FuncMap{
 	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
 	// other util functions
 	"TypescriptField": TypescriptField,
+	"ApiVersion":      ApiVersion,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"
