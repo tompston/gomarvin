@@ -15,12 +15,14 @@ func GenerateInit(conf Config, cmd Flags) {
 		GenerateTemplates(conf, init_project_templates) // then generate init files
 
 		// go run main.go -dangerous-regen=true generate
-		// if the api dir for the specified version does not exist or regen is true,
+		// if the api/vx/server/ dir for the specified version does not exist or regen is true,
 		// create it in the projec_name/internal/api/ dir
-		api_version_dir := fmt.Sprintf("%s/internal/api/%s/", project_path, ApiVersion(conf.ProjectInfo.APIPrefix))
-		fmt.Printf("api_version_dir: %v\n", api_version_dir)
+		api_v := ApiVersion(conf.ProjectInfo.APIPrefix)
+		api_version_dir := fmt.Sprintf("%s/internal/api/%s/server/", project_path, api_v)
+		// fmt.Printf("api_version_dir: %v\n", api_version_dir)
 		if !PathExists(api_version_dir) || cmd.DangerousRegen {
 			CreateDir(api_version_dir)
+			GenerateTemplates(conf, initModuleTemplates(api_v))
 		}
 
 		RenameToDotFiles(conf)
