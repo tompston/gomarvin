@@ -59,3 +59,44 @@ defaultClient = Client(
     }
 )
 
+{{- if $modules -}}
+  {{- range $module := $modules -}}
+    {{- if $module.Endpoints }}
+      {{- range $endpoint := $module.Endpoints }}
+        {{- if $endpoint.Body }}
+@dataclass
+class {{ $endpoint.ControllerName }}Body:
+    """
+    ### Body for the {{$endpoint.ControllerName}} endpoint
+
+    {{ range $body_field := $endpoint.Body -}}
+    @field {{$body_field.Field}} `{{$body_field.Validate}}`
+    {{ end -}}
+    """
+  {{- range $body_field := $endpoint.Body }}
+  {{ if 
+( eq $body_field.Type  "string" )    }}  {{ TypescriptField $body_field.Field $body_field.Validate }}: str  {{ end -}}
+  {{- if or  
+      ( eq $body_field.Type  "int"     ) 
+      ( eq $body_field.Type  "int64"   ) 
+      ( eq $body_field.Type  "int32"   ) 
+      ( eq $body_field.Type  "int16"   ) 
+      ( eq $body_field.Type  "int8"    ) 
+      ( eq $body_field.Type  "uint"    ) 
+      ( eq $body_field.Type  "uint64"  ) 
+      ( eq $body_field.Type  "uint32"  ) 
+      ( eq $body_field.Type  "uint16"  ) 
+      ( eq $body_field.Type  "uint8"   ) -}} 
+            {{ TypescriptField $body_field.Field $body_field.Validate }}: int {{ end -}}
+    {{- if or  
+      ( eq $body_field.Type  "float64" )
+      ( eq $body_field.Type  "float32" )    -}} 
+    {{ TypescriptField $body_field.Field $body_field.Validate }}: float {{ end -}}
+  {{ if (eq $body_field.Type  "time.Time" )    -}} {{ TypescriptField $body_field.Field $body_field.Validate }}: string {{ end -}}
+  {{ if (eq $body_field.Type  "bool"      )    -}} {{ TypescriptField $body_field.Field $body_field.Validate }}: bool {{ end -}}
+  {{ end }}
+                {{ end -}}
+            {{- end -}}
+        {{- end -}}
+    {{ end -}}
+{{ end -}}
