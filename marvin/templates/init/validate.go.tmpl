@@ -77,13 +77,13 @@ func Struct(i interface{}) error {
 
 
 {{ if ( eq .ProjectInfo.Framework "chi") }}
-// Payload returns an error if the body of the response could not be decoded
+// RequestBody returns an error if the body of the response could not be decoded
 // or the validate tags for the input interface did not pass validation.
-func Payload(r *http.Request, payload interface{}) error {
-	if err := json.NewDecoder(r.Body).Decode(payload); err != nil {
+func RequestBody(r *http.Request, body interface{}) error {
+	if err := json.NewDecoder(r.Body).Decode(body); err != nil {
 		return err
 	}
-	if err := Struct(payload); err != nil {
+	if err := Struct(body); err != nil {
 		return err
 	}
 	return nil
@@ -95,13 +95,13 @@ func Payload(r *http.Request, payload interface{}) error {
 
 
 {{ if ( eq .ProjectInfo.Framework "fiber") }}
-// Payload returns an error if the body of the response could not be decoded
+// RequestBody returns an error if the body of the response could not be decoded
 // or the validate tags for the input interface did not pass validation.
-func Payload(c *fiber.Ctx, payload interface{}) error {
-	if err := c.BodyParser(payload); err != nil {
+func RequestBody(c *fiber.Ctx, body interface{}) error {
+	if err := c.BodyParser(body); err != nil {
 		return err
 	}
-	if err := Struct(payload); err != nil {
+	if err := Struct(body); err != nil {
 		return err
 	}
 	return nil
@@ -113,13 +113,13 @@ func Payload(c *fiber.Ctx, payload interface{}) error {
 
 
 {{ if ( eq .ProjectInfo.Framework "echo") }}
-// Payload returns an error if the body of the response could not be decoded
+// RequestBody returns an error if the body of the response could not be decoded
 // or the validate tags for the input interface did not pass validation.
-func Payload(c echo.Context, payload interface{}) error {
-	if err := c.Bind(payload); err != nil {
+func RequestBody(c echo.Context, body interface{}) error {
+	if err := c.Bind(body); err != nil {
 		return err
 	}
-	if err := Struct(payload); err != nil {
+	if err := Struct(body); err != nil {
 		return err
 	}
 	return nil
@@ -130,13 +130,13 @@ func Payload(c echo.Context, payload interface{}) error {
 
 
 {{ if ( eq .ProjectInfo.Framework "gin") }}
-// Payload returns an error if the body of the response could not be decoded
+// RequestBody returns an error if the body of the response could not be decoded
 // or the validate tags for the input interface did not pass validation.
-func Payload(c *gin.Context, payload interface{}) error {
-	if err := c.ShouldBindJSON(payload); err != nil {
+func RequestBody(c *gin.Context, body interface{}) error {
+	if err := c.ShouldBindJSON(body); err != nil {
 		return err
 	}
-	if err := Struct(payload); err != nil {
+	if err := Struct(body); err != nil {
 		return err
 	}
 	return nil

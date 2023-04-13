@@ -92,7 +92,7 @@ func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 	// validate the sent body
 	payload := new({{$endpoint.ControllerName}}Body)
-	if err := validate.Payload(c, payload); err != nil {
+	if err := validate.RequestBody(c, payload); err != nil {
 		res.Response(c, 400, err, res.FailedPayloadValidationMessage)
 		return
 	}
@@ -163,7 +163,7 @@ func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 
 	// validate the sent body
 	payload := new({{$endpoint.ControllerName}}Body)
-	if err := validate.Payload(c, payload); err != nil {
+	if err := validate.RequestBody(c, payload); err != nil {
 		return res.Response(c, 400, err, res.FailedPayloadValidationMessage)
 	}
 
@@ -231,7 +231,7 @@ func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 	
 	// validate the sent body
 	payload := new({{$endpoint.ControllerName}}Body)
-	if err := validate.Payload(c, payload); err != nil {
+	if err := validate.RequestBody(c, payload); err != nil {
 		return res.Response(c, 400, err, res.FailedPayloadValidationMessage)
 	}
 	
@@ -297,7 +297,7 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 
 	// validate the sent body
 	payload := new({{$endpoint.ControllerName}}Body)
-	if err := validate.Payload(r, payload); err != nil {
+	if err := validate.RequestBody(r, payload); err != nil {
 		res.Response(w, 400, err, res.FailedPayloadValidationMessage)
 		return
 	}
