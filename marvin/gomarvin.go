@@ -2,7 +2,10 @@ package marvin
 
 import (
 	"fmt"
+	"log"
 	"os/exec"
+	"strconv"
+	"strings"
 )
 
 func Run(flags *Flags, args []string) {
@@ -14,13 +17,15 @@ func Run(flags *Flags, args []string) {
 
 	// if "generate" arg is provided in the cli args, generate the project
 	if stringExistsInSlice("generate", args) {
-
-		// fmt.Println("flags: ", flags.ConfigPath)
-
 		// if gomarvin.json or a custom path to an existing config file is provided
 		if PathExists(flags.ConfigPath) {
 
 			conf := ReadConfig(flags.ConfigPath) // read json config file
+
+			// If the api_prefix value in the json file is incorrect,
+			// throw an error and exit
+			api_version := ApiVersionInterger(conf.ProjectInfo.APIPrefix)
+			fmt.Printf("api_version: %v\n", api_version)
 
 			// if fetch_only is set to default value ("false"), generate the whole project
 			if !flags.FetchOnly {
@@ -28,7 +33,6 @@ func Run(flags *Flags, args []string) {
 				GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist
 				GenerateOptional(conf, *flags) // generate things that are optional
 				FormatAfterGen()               // run gofmt to format the project in the dir
-				// GenerateSeeder(conf, *flags)
 
 			} else if flags.FetchOnly {
 				GenerateOnlyFetchFunctions(conf, *flags)
@@ -61,7 +65,7 @@ const CREATED_MSG = "\033[32m * CREATED\033[0m"
 var gomarvin_info = `Usage:
   gomarvin generate
 
-Version: 0.8.0
+Version: 0.9.0
 
 Online Editor:
   https://gomarvin.pages.dev
@@ -80,3 +84,26 @@ Flags:
 	generate additional file in the modules dir which concats all of the 
 	functions that convert possible response structs to typescript interfaces
 	(default "false")`
+
+// ApiVersion returns the last element of the api_version string
+//
+// Example:
+//
+//	ApiVersion("/api/v1") -> "v1"
+//	ApiVersion("/api/v2") -> "v2"
+func ApiVersion(api_version string) string {
+	split := strings.Split(api_version, "/")
+	api_version = split[len(split)-1]
+	return api_version
+}
+
+func ApiVersionInterger(api_version string) int {
+	api_v := ApiVersion(api_version)
+	v := api_v[1:]
+	i, err := strconv.Atoi(v)
+	if err != nil {
+		log.Fatalf("the value after the last / should have the form of [v + int] in api_prefix value!: %v", err)
+	}
+
+	return i
+}
