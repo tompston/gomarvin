@@ -1,5 +1,7 @@
 .DS_Store
 
+tmp
+
 # ignore test builds and the build binary
 test/build/*/
 test/build/gomarvin
@@ -7,6 +9,7 @@ gomarvin
 gomarvin.gen.ts
 gomarvin.json
 
+my_server
 chi_with_modules
 gin_with_modules
 fiber_with_modules
