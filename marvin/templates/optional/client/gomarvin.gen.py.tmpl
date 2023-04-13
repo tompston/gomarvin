@@ -105,7 +105,7 @@ class {{ $endpoint.ControllerName }}Body:
 {{- if $modules -}}
   {{- range $module := $modules -}}
     {{- if $module.Endpoints }}
-class {{ $module.Name }}Endpoints:
+class {{ $module.Name }}Endpoint:
     def __init__(self, client: Client):
         self.client = client
       {{- range $endpoint := $module.Endpoints }}

@@ -3,6 +3,7 @@
 ### v0.9.0
 
 - Renamed `public` dir to `client` dir. This is done to make it more clear that the `client` dir would hold clients for the generated api.
+- Controllers have a comment which shows the route of the endpoint.
 
 ### v0.8.1
 

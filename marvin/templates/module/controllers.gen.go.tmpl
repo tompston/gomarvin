@@ -42,13 +42,6 @@ import (
 
 )
 
-// Placeholder function to be replaced in the controllers after codegen. 
-// Usually replaced with the function that returns the data from the
-// database, if everything goes ok.
-func placeholderFunc() (struct{}, error) {
-	var placeholder struct{}
-	return placeholder, nil
-}
 
 {{- if ( eq .ProjectInfo.Framework "chi") }}
 	const (
@@ -92,6 +85,7 @@ func Router__(app *gin.RouterGroup) {
 }
 
 {{range $endpoint := $endpoints }}
+// {{ $endpoint.Method }} URL{{ $endpoint.URL }}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
 func __{{ $endpoint.ControllerName }}(c *gin.Context) {
 
 	{{ if $endpoint.Body -}} 
@@ -162,6 +156,7 @@ func Router__(api fiber.Router) {
 }
 
 {{range $endpoint := $endpoints }}
+// {{ $endpoint.Method }} URL{{ $endpoint.URL }}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
 func __{{ $endpoint.ControllerName }}(c *fiber.Ctx) error {
 
 	{{ if $endpoint.Body -}} 
@@ -229,6 +224,7 @@ func Router__(app *echo.Group) {
 }
 
 {{range $endpoint := $endpoints }}
+// {{ $endpoint.Method }} URL{{ $endpoint.URL }}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
 func __{{ $endpoint.ControllerName }}(c echo.Context) error {
 
 	{{ if $endpoint.Body -}} 
@@ -294,6 +290,7 @@ func Router__(api *chi.Mux) {
 }
 
 {{range $endpoint := $endpoints }}
+// {{ $endpoint.Method }} URL{{ $endpoint.URL }}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
 func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 
 	{{ if $endpoint.Body -}} 
@@ -346,3 +343,11 @@ func __{{ $endpoint.ControllerName }}(w http.ResponseWriter, r *http.Request) {
 }
 {{ end }}
 {{- end }}
+
+
+// Placeholder function to be replaced in the controllers after codegen. 
+// Usually replaced with the function which returns the data from the db.
+func placeholderFunc() (struct{}, error) {
+	var placeholder struct{}
+	return placeholder, nil
+}
