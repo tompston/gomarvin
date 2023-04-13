@@ -100,3 +100,34 @@ class {{ $endpoint.ControllerName }}Body:
         {{- end -}}
     {{ end -}}
 {{ end -}}
+
+
+
+
+{{- if $modules -}}
+  {{- range $module := $modules -}}
+    {{- if $module.Endpoints }}
+class {{ $module.Name }}Endpoints:
+    def __init__(self, client: Client):
+        self.client = client
+      {{- range $endpoint := $module.Endpoints }}
+
+    def {{ $endpoint.ControllerName }}(self, 
+    {{- if $endpoint.URLParams -}}
+        {{- range $url_param := $endpoint.URLParams }}
+            {{- if (eq $url_param.Type  "string" ) -}} {{$url_param.Field}}: str, {{ end -}}
+            {{- if (eq $url_param.Type  "int" )    -}} {{$url_param.Field}}: int, {{ end -}}
+        {{- end }}
+    {{- end -}}
+    {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
+    {{- if $endpoint.Body -}}, opt: OptionalParams = OptionalParams() {{ else }} opt: OptionalParams = OptionalParams() {{- end -}}) -> requests.Response:
+    appended_url = opt.append_url if opt.append_url else ""
+    url = f"{self.client.host_url}{self.client.api_prefix}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}${appended_url}"
+    if opt.options:
+        return requests.request(**opt.options, url=url)
+    return requests.request("{{$endpoint.Method}}",url , headers=self.client.headers)
+    
+      {{- end }}
+    {{ end -}}
+  {{ end -}}
+{{ end  }}
