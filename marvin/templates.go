@@ -16,7 +16,7 @@ import (
 //go:embed templates/init/*
 //go:embed templates/module/*
 //go:embed templates/optional/sql/*
-//go:embed templates/optional/ts/*
+//go:embed templates/optional/client/*
 
 var templates embed.FS
 

@@ -3,7 +3,7 @@ package marvin
 var init_project_dirs = [...]string{
 	// -- root dirs
 	"/",
-	"/public/",
+	"/client/",
 	"/cmd/api/",
 	// -- pkg dirs
 	"/pkg/response/",
@@ -16,7 +16,8 @@ var init_project_dirs = [...]string{
 	"/internal/api/server/",
 }
 
-const typescript_fetch_template = "templates/optional/ts/gomarvin.gen.ts.tmpl"
+const typescript_fetch_template = "templates/optional/client/gomarvin.gen.ts.tmpl"
+const python_fetch_template = "templates/optional/client/gomarvin.gen.py.tmpl"
 
 // const typescript_seed_template = "templates/optional/ts/seeder.gen.ts.tmpl"
 

@@ -1,5 +1,9 @@
 # Gomarvin changelog
 
+### v0.9.0
+
+- Renamed `public` dir to `client` dir. This is done to make it more clear that the `client` dir would hold clients for the generated api.
+
 ### v0.8.1
 
 - Converted the ProjectInfo GoVersion and ConfigVersion values to interfaces, so that the config files would be valid if they have either floats or strings that hold floats.
