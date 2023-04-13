@@ -120,7 +120,21 @@ class {{ $module.Name }}Endpoints:
         {{- end }}
     {{- end -}}
     {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
-    {{- if $endpoint.Body -}}, opt: OptionalParams = OptionalParams() {{ else }} opt: OptionalParams = OptionalParams() {{- end -}}) -> requests.Response:
+    {{- if $endpoint.Body -}}, opt: OptionalParams = OptionalParams() {{ else }}opt: OptionalParams = OptionalParams() {{- end -}}) -> requests.Response:
+        """
+        ### {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
+        
+        Fetch {{$endpoint.ControllerName}} endpoint and return the response
+
+         {{- if $endpoint.Body }}
+         * @param `{{ $endpoint.ControllerName}}Body` body  - see {{$endpoint.ControllerName}}Body class for possible validation fields
+        {{- end }}
+        {{- if $endpoint.URLParams }}
+        {{ range $url_param := $endpoint.URLParams }}
+        {{- if (eq $url_param.Type  "string" ) }} * @param {{ WrapInCurlyBraces "string"}} {{$url_param.Field}} url param for the endpoint {{ end }}
+        {{- if (eq $url_param.Type  "int" )    }} * @param {{ WrapInCurlyBraces "number"}} {{$url_param.Field}} url param for the endpoint {{ end }}
+        {{ end }}{{ end }}
+        """
         appended_url = opt.append_url if opt.append_url else ""
         url = f"{self.client.host_url}{self.client.api_prefix}{{ $endpoint.URL }}{{- range $url_param := $endpoint.URLParams }}/{{ WrapInCurlyBraces $url_param.Field }}{{- end }}{appended_url}"
         if opt.options:
