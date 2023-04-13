@@ -121,12 +121,11 @@ class {{ $module.Name }}Endpoints:
     {{- end -}}
     {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
     {{- if $endpoint.Body -}}, opt: OptionalParams = OptionalParams() {{ else }} opt: OptionalParams = OptionalParams() {{- end -}}) -> requests.Response:
-    appended_url = opt.append_url if opt.append_url else ""
-    url = f"{self.client.host_url}{self.client.api_prefix}{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/${{ WrapInCurlyBraces $url_param.Field}}{{- end }}${appended_url}"
-    if opt.options:
-        return requests.request(**opt.options, url=url)
-    return requests.request("{{$endpoint.Method}}",url , headers=self.client.headers)
-    
+        appended_url = opt.append_url if opt.append_url else ""
+        url = f"{self.client.host_url}{self.client.api_prefix}{{ $endpoint.URL }}{{- range $url_param := $endpoint.URLParams }}/{{ WrapInCurlyBraces $url_param.Field }}{{- end }}{appended_url}"
+        if opt.options:
+            return requests.request(**opt.options, url=url)
+        return requests.request("{{$endpoint.Method}}",url, headers=self.client.headers {{- if $endpoint.Body -}}, json=body {{- end -}} )
       {{- end }}
     {{ end -}}
   {{ end -}}
