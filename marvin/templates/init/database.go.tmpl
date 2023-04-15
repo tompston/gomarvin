@@ -36,40 +36,36 @@ func DsnString(host, user, pass, name string, port int, ssl, timezone string) st
 
 
 
-// GetDbConn creates a database connection without using the global db variable.
+// NewDbConn creates a database connection without using the global db variable.
 // 
 // Example:
-// 	db, err := database.GetDbConn(dsn_string)
+// 	db, err := database.NewDbConn(dsn_string)
 // 	if err != nil {
 //		fmt.Println(err) 
 //	}
 //	defer db.Close()
-func GetDbConn(dsn_string string) (*sql.DB, error) {
-
-	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", dsn_string) {{ end }}
-	{{ if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", dsn_string) {{ end }}
-	{{ if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", dsn_string){{ end }}
-
+func NewDbConn(dsn_string string) (*sql.DB, error) {
+	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", dsn_string) {{ end }}
+	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", dsn_string) {{ end }}
+	{{- if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", dsn_string){{ end }}
 	if err != nil {
 		return nil, err
 	}
+
+	if err := db.Ping(); err != nil {
+        return nil, fmt.Errorf("error pinging database: %v", err)
+    }
+
 	return db, err
 }
 
-// Connect connects to the database, and sets the database.dbConn 
+// Connect connects to the database, and sets the database.dbConn
 // variable to hold the connection to the db.
 func Connect(dsn_string string) error {
-	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", dsn_string){{- end }}
-	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", dsn_string){{- end }}
-	{{- if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", dsn_string){{- end }}
+	db, err := NewDbConn(dsn_string)
 	if err != nil {
 		return err
 	}
-
-	// Ping the database to verify the connection
-    if err := db.Ping(); err != nil {
-        return fmt.Errorf("error pinging database: %v", err)
-    }
 
 	// assign *sql.DB to the global variable
 	dbConn = db
