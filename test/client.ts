@@ -22,6 +22,12 @@ const response_ok_with_links = {
 
 const client = gomarvin.defaultClient;
 
+const no_headers_client: gomarvin.Client = {
+  host_url: "http://localhost:4444",
+  api_prefix: "/api/v1",
+  headers: {},
+};
+
 // @ts-ignore
 Deno.test("Home view works", async () => {
   const data = await (await fetch("http://localhost:4444/")).json();
@@ -154,6 +160,80 @@ Deno.test(
 );
 
 // @ts-ignore
+Deno.test("Body type - type validation", async () => {
+  // @ts-ignore
+  const data = await (await _t.BodyTypes(client, null)).json();
+  assertEquals(data, {
+    status: 400,
+    message: "Payload validation failed!",
+    data: {
+      errors: [
+        {
+          failed_field: "String",
+          message: "String is required",
+        },
+        {
+          failed_field: "Int",
+          message: "Int is required",
+        },
+        {
+          failed_field: "IntSixtyfour",
+          message: "IntSixtyfour is required",
+        },
+        {
+          failed_field: "IntThirtytwo",
+          message: "IntThirtytwo is required",
+        },
+        {
+          failed_field: "IntSixteen",
+          message: "IntSixteen is required",
+        },
+        {
+          failed_field: "IntEight",
+          message: "IntEight is required",
+        },
+        {
+          failed_field: "FloatSixtyfour",
+          message: "FloatSixtyfour is required",
+        },
+        {
+          failed_field: "FloatThirtytwo",
+          message: "FloatThirtytwo is required",
+        },
+        {
+          failed_field: "TimeTime",
+          message: "TimeTime is required",
+        },
+        {
+          failed_field: "Bool",
+          message: "Bool is required",
+        },
+        {
+          failed_field: "Uint",
+          message: "Uint is required",
+        },
+        {
+          failed_field: "UintSixtyfour",
+          message: "UintSixtyfour is required",
+        },
+        {
+          failed_field: "UintThirtytwo",
+          message: "UintThirtytwo is required",
+        },
+        {
+          failed_field: "UintSixteen",
+          message: "UintSixteen is required",
+        },
+        {
+          failed_field: "UintEight",
+          message: "UintEight is required",
+        },
+      ],
+    },
+  });
+});
+
+// @ts-ignore
 Deno.test("Url With string param", async () => {
   const data = await (await _t.UrlWithString(client, "qwe")).json();
   assertEquals(data, response_ok);
@@ -241,4 +321,27 @@ Deno.test("Can append a string to the fetch url", async () => {
   const data = await res.json();
   // check if fetched url includes ?name=jim
   assert(res.url.includes("?name=jim"));
+});
+
+// @ts-ignore
+Deno.test("Send an empty body with no headers", async () => {
+  // Max validation fails
+  const res = await gomarvin.CreateUser(
+    no_headers_client,
+    {
+      username: "test",
+      email: "qwe@qwe.com",
+      password: "short",
+    },
+    { options: { body: "", method: "POST" } }
+  );
+  const data = await res.json();
+  assertEquals(data, {
+    status: 400,
+    message: "Payload validation failed!",
+    data: {
+      code: 422,
+      message: "Unprocessable Entity",
+    },
+  });
 });

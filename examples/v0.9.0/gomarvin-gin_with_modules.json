@@ -83,7 +83,7 @@
        "endpoints": [
           {
              "url": "/test",
-             "method": "GET",
+             "method": "POST",
              "response_type": "default",
              "controller_name": "BodyTypes",
              "url_params": [],
