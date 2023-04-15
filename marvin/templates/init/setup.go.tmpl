@@ -16,8 +16,33 @@ func Setup(args cmd.CliArgs) error {
 	if err := settings.SetEnvironmentConfig(args.Conf); err != nil {
 		return err
 	}
-	if err := database.Connect(); err != nil {
+
+	{{ if ( eq .ProjectInfo.DbType "postgres") }}
+	db := settings.Environment.Database
+	dsn_string := database.DsnString(db.Host, db.User, db.Pass, db.Name, db.Port, db.SSL, db.Timezone)
+	if err := database.Connect(dsn_string); err != nil {
 		return err
 	}
+	{{ end }}
+
+
+	{{ if ( eq .ProjectInfo.DbType "mysql") }}
+	db := settings.Environment.Database
+	dsn_string := database.DsnString(db.User, db.Pass, db.Name)
+	if err := database.Connect(dsn_string); err != nil {
+		return err
+	}
+	{{ end }}
+
+
+	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
+	db := settings.Environment.Database
+	dsn_string := database.DsnString("test.db")
+	if err := database.Connect(dsn_string); err != nil {
+		return err
+	}
+	{{ end }}
+
+
 	return nil
 }

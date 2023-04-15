@@ -6,19 +6,9 @@ import (
 	"database/sql"
 	"fmt"
 
-	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
-	_ "github.com/mattn/go-sqlite3"
-	{{ end }}
-
-
-	{{ if ( eq .ProjectInfo.DbType "postgres")}}
-	 _ "github.com/lib/pq" 	
-	{{ end }}
-
-
-	{{ if ( eq .ProjectInfo.DbType "mysql")}}
-	_ "github.com/go-sql-driver/mysql"
-	{{ end }}
+	{{ if ( eq .ProjectInfo.DbType "mysql")		}}_ "github.com/go-sql-driver/mysql"{{ end }}
+	{{ if ( eq .ProjectInfo.DbType "sqlite") 	}}_ "github.com/mattn/go-sqlite3"{{ end }}
+	{{ if ( eq .ProjectInfo.DbType "postgres")	}}_ "github.com/lib/pq" {{ end }}
 )
 
 // dbConn variable holds the connection to the database,
@@ -29,20 +19,17 @@ var dbConn *sql.DB
 {{- if ( eq .ProjectInfo.DbType "mysql") }}
 // DsnString returns a string that is used to connect to the database
 func DsnString(user, pass, name string) string {
-	return fmt.Sprintf("%s:%s@/%s", user, pass,name)
+	return fmt.Sprintf("%s:%s@/%s", user, pass, name)
 }
 {{ end }}
 
 
-
-
 {{- if ( eq .ProjectInfo.DbType "postgres") }}
 // DsnString returns a string that is used to connect to the database
-func DsnString(host, user, pass, name, port, ssl, timezone string) string {
+func DsnString(host, user, pass, name string, port int, ssl, timezone string) string {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%v sslmode=%s TimeZone=%s",
 		host, user, pass, name, port, ssl, timezone)
-
 	return dsn
 }
 {{ end }}
@@ -52,7 +39,7 @@ func DsnString(host, user, pass, name, port, ssl, timezone string) string {
 // GetDbConn creates a database connection without using the global db variable.
 // 
 // Example:
-// 	db, err := database.GetDbConn()
+// 	db, err := database.GetDbConn(dsn_string)
 // 	if err != nil {
 //		fmt.Println(err) 
 //	}
@@ -60,7 +47,7 @@ func DsnString(host, user, pass, name, port, ssl, timezone string) string {
 func GetDbConn(dsn_string string) (*sql.DB, error) {
 
 	{{ if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", dsn_string) {{ end }}
-	{{ if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db") {{ end }}
+	{{ if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", dsn_string) {{ end }}
 	{{ if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", dsn_string){{ end }}
 
 	if err != nil {
@@ -69,11 +56,11 @@ func GetDbConn(dsn_string string) (*sql.DB, error) {
 	return db, err
 }
 
-// Connect connects to the database, and sets the
-// database.dbConn variable to hold the connection to the db.
+// Connect connects to the database, and sets the database.dbConn 
+// variable to hold the connection to the db.
 func Connect(dsn_string string) error {
 	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", dsn_string){{- end }}
-	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db"){{- end }}
+	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", dsn_string){{- end }}
 	{{- if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", dsn_string){{- end }}
 	if err != nil {
 		return err
