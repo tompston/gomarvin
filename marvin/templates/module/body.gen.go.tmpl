@@ -27,7 +27,7 @@ import (
 	{{ if $endpoint.Body -}} 
 type {{$endpoint.ControllerName}}Body struct {
 		{{- range $body_field := $endpoint.Body }}
-		    {{ ConvertToCamelCase $body_field.Field }}  	{{ $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
+		    {{ ConvertToCamelCase $body_field.Field }}  	{{ BodyTypeToGoStructType $body_field.Type }} 	`json:"{{$body_field.Field}}" validate:"{{$body_field.Validate}}"`
 	    {{- end }}
 }
 	{{ end -}}

@@ -89,6 +89,15 @@ func PythonDataclasstField(field_name, validate_field string) string {
 	return fmt.Sprintf("%v", field_name)
 }
 
+func BodyTypeToGoStructType(body_type string) string {
+	switch body_type {
+	case "any":
+		return "interface{}"
+	default:
+		return body_type
+	}
+}
+
 var template_functions = template.FuncMap{
 	// name the template function the same as the imported convert function for predictability
 	"ConvertToTitle":                      conv.ConvertToTitle,
@@ -102,9 +111,10 @@ var template_functions = template.FuncMap{
 	"WrapInCurlyBracesWithAppendedString": conv.WrapInCurlyBracesWithAppendedString,
 	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
 	// other util functions
-	"TypescriptField":       TypescriptField,
-	"PythonDataclasstField": PythonDataclasstField,
-	"ApiVersion":            ApiVersion,
+	"TypescriptField":        TypescriptField,
+	"PythonDataclasstField":  PythonDataclasstField,
+	"ApiVersion":             ApiVersion,
+	"BodyTypeToGoStructType": BodyTypeToGoStructType,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"
