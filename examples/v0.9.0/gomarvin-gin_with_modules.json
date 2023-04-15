@@ -1,0 +1,366 @@
+{
+  "project_info": {
+    "go_version": 1.17,
+    "name": "gin_with_modules",
+    "framework": "gin",
+    "port": 4444,
+    "api_prefix": "/api/v1",
+    "config_version": 0.1,
+    "db_type": "postgres",
+    "include_sql": true,
+    "include_fetch": true,
+    "gomarvin_version": "v0.9.x"
+  },
+  "modules": [
+    {
+       "name": "User",
+       "endpoints": [
+          {
+             "url": "/user",
+             "method": "GET",
+             "response_type": "with_pagination",
+             "controller_name": "GetUsers",
+             "url_params": [],
+             "body": []
+          },
+          {
+             "url": "/user",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "GetUserById",
+             "url_params": [
+                {
+                   "field": "id",
+                   "type": "int"
+                }
+             ],
+             "body": []
+          },
+          {
+             "url": "/user/register",
+             "method": "POST",
+             "response_type": "default",
+             "controller_name": "CreateUser",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required,min=2,max=140",
+                   "field": "username",
+                   "type": "string"
+                },
+                {
+                   "validate": "required,email",
+                   "field": "email",
+                   "type": "string"
+                },
+                {
+                   "validate": "required,min=10,max=300",
+                   "field": "password",
+                   "type": "string"
+                }
+             ]
+          },
+          {
+             "url": "/user",
+             "method": "DELETE",
+             "response_type": "default",
+             "controller_name": "DeleteUser",
+             "url_params": [],
+             "body": []
+          },
+          {
+             "url": "/user",
+             "method": "PUT",
+             "response_type": "default",
+             "controller_name": "UpdateUser",
+             "url_params": [],
+             "body": []
+          }
+       ]
+    },
+    {
+       "name": "Test",
+       "endpoints": [
+          {
+             "url": "/test",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "BodyTypes",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required",
+                   "field": "string",
+                   "type": "string"
+                },
+                {
+                   "validate": "required",
+                   "field": "int",
+                   "type": "int"
+                },
+                {
+                   "validate": "required",
+                   "field": "int_sixtyfour",
+                   "type": "int64"
+                },
+                {
+                   "validate": "required",
+                   "field": "int_thirtytwo",
+                   "type": "int32"
+                },
+                {
+                   "validate": "required",
+                   "field": "int_sixteen",
+                   "type": "int16"
+                },
+                {
+                   "validate": "required",
+                   "field": "int_eight",
+                   "type": "int8"
+                },
+                {
+                   "validate": "required",
+                   "field": "float_sixtyfour",
+                   "type": "float64"
+                },
+                {
+                   "validate": "required",
+                   "field": "float_thirtytwo",
+                   "type": "float32"
+                },
+                {
+                   "validate": "required",
+                   "field": "time_time",
+                   "type": "time.Time"
+                },
+                {
+                   "validate": "required",
+                   "field": "bool",
+                   "type": "bool"
+                },
+                {
+                   "validate": "required",
+                   "field": "uint",
+                   "type": "uint"
+                },
+                {
+                   "validate": "required",
+                   "field": "uint_sixtyfour",
+                   "type": "uint64"
+                },
+                {
+                   "validate": "required",
+                   "field": "uint_thirtytwo",
+                   "type": "uint32"
+                },
+                {
+                   "validate": "required",
+                   "field": "uint_sixteen",
+                   "type": "uint16"
+                },
+                {
+                   "validate": "required",
+                   "field": "uint_eight",
+                   "type": "uint8"
+                }
+             ]
+          },
+          {
+             "url": "/test-str",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "UrlWithString",
+             "url_params": [
+                {
+                   "field": "something",
+                   "type": "string"
+                }
+             ],
+             "body": []
+          },
+          {
+             "url": "/test-int",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "UrlWithInt",
+             "url_params": [
+                {
+                   "field": "something",
+                   "type": "int"
+                }
+             ],
+             "body": []
+          },
+          {
+             "url": "/test",
+             "method": "POST",
+             "response_type": "default",
+             "controller_name": "CreateTest",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required",
+                   "field": "change_me",
+                   "type": "string"
+                }
+             ]
+          },
+          {
+             "url": "/test/email",
+             "method": "POST",
+             "response_type": "default",
+             "controller_name": "EmailValidation",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required,email",
+                   "field": "email",
+                   "type": "string"
+                }
+             ]
+          },
+          {
+             "url": "/test/min",
+             "method": "POST",
+             "response_type": "default",
+             "controller_name": "MinValidation",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required,min=10",
+                   "field": "min_ten",
+                   "type": "string"
+                }
+             ]
+          },
+          {
+             "url": "/test/max",
+             "method": "POST",
+             "response_type": "default",
+             "controller_name": "MaxValidation",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required,max=10",
+                   "field": "max_ten",
+                   "type": "string"
+                }
+             ]
+          },
+          {
+             "url": "/test/undefined",
+             "method": "POST",
+             "response_type": "default",
+             "controller_name": "UndefinedValidation",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required,rgba",
+                   "field": "undefined_validation_field",
+                   "type": "string"
+                }
+             ]
+          },
+          {
+             "url": "/test-optional-body-field",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "OptionalBodyField",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "",
+                   "field": "optional_field",
+                   "type": "string"
+                }
+             ]
+          },
+          {
+             "url": "/test-url-params",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "MultipleUrlParams",
+             "url_params": [
+                {
+                   "field": "first_param",
+                   "type": "string"
+                },
+                {
+                   "field": "second_param",
+                   "type": "string"
+                }
+             ],
+             "body": []
+          },
+          {
+             "url": "/test-body-any-type",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "BodyWithAnyType",
+             "url_params": [],
+             "body": [
+                {
+                   "validate": "required",
+                   "field": "this_is_any",
+                   "type": "any"
+                }
+             ]
+          }
+       ]
+    },
+    {
+       "name": "Empty",
+       "endpoints": []
+    },
+    {
+       "name": "Crud",
+       "endpoints": [
+          {
+             "url": "/crud",
+             "method": "GET",
+             "response_type": "with_pagination",
+             "controller_name": "GetCruds",
+             "url_params": [],
+             "body": []
+          },
+          {
+             "url": "/crud",
+             "method": "GET",
+             "response_type": "default",
+             "controller_name": "GetCrud",
+             "url_params": [
+                {
+                   "field": "id",
+                   "type": "int"
+                }
+             ],
+             "body": []
+          },
+          {
+             "url": "/crud",
+             "method": "POST",
+             "response_type": "default",
+             "controller_name": "CreateCrud",
+             "url_params": [],
+             "body": []
+          },
+          {
+             "url": "/crud",
+             "method": "DELETE",
+             "response_type": "default",
+             "controller_name": "DeleteCrud",
+             "url_params": [],
+             "body": []
+          },
+          {
+             "url": "/crud",
+             "method": "PUT",
+             "response_type": "default",
+             "controller_name": "UpdateCrud",
+             "url_params": [],
+             "body": []
+          }
+       ]
+    }
+ ]
+}
