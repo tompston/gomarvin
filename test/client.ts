@@ -231,3 +231,14 @@ Deno.test("Max validation fails when needed", async () => {
   const t7 = await (await _t.MaxValidation(client, { max_ten: "qwe" })).json();
   assertEquals(t7, response_ok);
 });
+
+// @ts-ignore
+Deno.test("Can append a string to the fetch url", async () => {
+  // Max validation fails
+  const res = await gomarvin.GetUserById(client, 10, {
+    append_url: "?name=jim",
+  });
+  const data = await res.json();
+  // check if fetched url includes ?name=jim
+  assert(res.url.includes("?name=jim"));
+});
