@@ -14,6 +14,10 @@ response_ok_with_links = {'status': 200,
 def test_get_users():
     data = gomarvin.UserEndpoints(client).GetUsers(append_url="?name=jim")
     assert data.status_code == 200 and data.json() == response_ok_with_links
+
+    # check if url includes the append_url in the string 
+    assert "?name=jim" in data.url
+    
     print("PASS")
 
 

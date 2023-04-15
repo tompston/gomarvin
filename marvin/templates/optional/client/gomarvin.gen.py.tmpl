@@ -41,15 +41,6 @@ class ApiResponse:
     links: Optional[Dict[str, str]] = None
 
 
-@dataclass
-class OptionalParams:
-    """
-    Optional interface used in the fetch request with optional parameters.
-    """
-    options: Optional[Dict[str, any]] = None
-    append_url: Optional[str] = None
-
-
 defaultClient = Client(
     host_url="http://localhost:{{$project_info.Port}}",
     api_prefix="{{$project_info.APIPrefix}}",
@@ -57,6 +48,7 @@ defaultClient = Client(
         "Content-type": "application/json;charset=UTF-8",
     }
 )
+
 
 {{- if $modules -}}
   {{- range $module := $modules -}}
@@ -125,7 +117,7 @@ class {{ $module.Name }}Endpoints:
         {{- end }}
     {{- end -}}
     {{- if $endpoint.Body -}} body: {{$endpoint.ControllerName}}Body {{- end -}} 
-    {{- if $endpoint.Body -}}, opt: OptionalParams = OptionalParams() {{ else }}opt: OptionalParams = OptionalParams() {{- end -}}) -> requests.Response:
+    {{- if $endpoint.Body -}}, options: Optional[Dict[str, any]] = None ,append_url: Optional[str] = None {{ else }} options: Optional[Dict[str, any]] = None ,append_url: Optional[str] = None {{- end -}}) -> requests.Response:
         """
         ### {{$endpoint.Method}} URL{{$endpoint.URL}}{{- range $url_param := $endpoint.URLParams }}/[{{ $url_param.Field}}:{{ $url_param.Type }}]{{- end }}
         
@@ -134,17 +126,19 @@ class {{ $module.Name }}Endpoints:
          {{- if $endpoint.Body }}
          * @param `{{ $endpoint.ControllerName}}Body` body  - see {{$endpoint.ControllerName}}Body class for possible validation fields
         {{- end }}
+         * @param `Dict[str, any]` options - optional request options (useful when need to override the default headers)
+         * @param `str` append_url - optional url to append to the endpoint url
         {{- if $endpoint.URLParams }}
         {{ range $url_param := $endpoint.URLParams }}
         {{- if (eq $url_param.Type  "string" ) }} * @param {{ WrapInCurlyBraces "string"}} {{$url_param.Field}} url param for the endpoint {{ end }}
         {{- if (eq $url_param.Type  "int" )    }} * @param {{ WrapInCurlyBraces "number"}} {{$url_param.Field}} url param for the endpoint {{ end }}
         {{ end }}{{ end }}
         """
-        appended_url = opt.append_url if opt.append_url else ""
+        appended_url = append_url if append_url else ""
         url = f"{self.client.host_url}{self.client.api_prefix}{{ $endpoint.URL }}{{- range $url_param := $endpoint.URLParams }}/{{ WrapInCurlyBraces $url_param.Field }}{{- end }}{appended_url}"
-        if opt.options:
-            return requests.request(**opt.options, url=url)
-        return requests.request("{{$endpoint.Method}}",url, headers=self.client.headers {{- if $endpoint.Body -}}, json=body {{- end -}} )
+        if options:
+            return requests.request(**options, url=url)
+        return requests.request("{{$endpoint.Method}}",url, headers=self.client.headers {{- if $endpoint.Body -}}, json=body.__dict__ {{- end -}} )
       {{- end }}
     {{ end -}}
   {{ end -}}

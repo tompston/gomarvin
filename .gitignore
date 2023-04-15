@@ -8,7 +8,9 @@ test/build/gomarvin
 gomarvin
 gomarvin.gen.ts
 gomarvin.gen.py
+gomarvin.py
 gomarvin.json
+__pycache__
 
 my_server
 chi_with_modules
