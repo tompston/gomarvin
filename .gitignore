@@ -7,6 +7,7 @@ test/build/*/
 test/build/gomarvin
 gomarvin
 gomarvin.gen.ts
+gomarvin.gen.py
 gomarvin.json
 
 my_server
