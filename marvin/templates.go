@@ -80,6 +80,15 @@ func TypescriptField(field_name, validate_field string) string {
 	return fmt.Sprintf("%v?", field_name)
 }
 
+// if the validate string includes a validate property, return the default field.
+// Else return the field as an optional param.
+func PythonDataclasstField(field_name, validate_field string) string {
+	if includesRequired(validate_field) {
+		return field_name
+	}
+	return fmt.Sprintf("%v", field_name)
+}
+
 var template_functions = template.FuncMap{
 	// name the template function the same as the imported convert function for predictability
 	"ConvertToTitle":                      conv.ConvertToTitle,
@@ -93,8 +102,9 @@ var template_functions = template.FuncMap{
 	"WrapInCurlyBracesWithAppendedString": conv.WrapInCurlyBracesWithAppendedString,
 	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
 	// other util functions
-	"TypescriptField": TypescriptField,
-	"ApiVersion":      ApiVersion,
+	"TypescriptField":       TypescriptField,
+	"PythonDataclasstField": PythonDataclasstField,
+	"ApiVersion":            ApiVersion,
 }
 
 const REPLACABLE_TEMPLATE_NAME = "__module__"

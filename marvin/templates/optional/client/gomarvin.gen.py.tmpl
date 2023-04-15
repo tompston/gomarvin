@@ -74,8 +74,8 @@ class {{ $endpoint.ControllerName }}Body:
     """
   {{- range $body_field := $endpoint.Body }}
   {{ if 
-( eq $body_field.Type  "string" )    }}  {{ TypescriptField $body_field.Field $body_field.Validate }}: str  {{ end -}}
-  {{- if or  
+      ( eq $body_field.Type  "string" )    }}  {{ PythonDataclasstField $body_field.Field $body_field.Validate }}: str  {{ end -}}
+  {{ if or  
       ( eq $body_field.Type  "int"     ) 
       ( eq $body_field.Type  "int64"   ) 
       ( eq $body_field.Type  "int32"   ) 
@@ -85,14 +85,16 @@ class {{ $endpoint.ControllerName }}Body:
       ( eq $body_field.Type  "uint64"  ) 
       ( eq $body_field.Type  "uint32"  ) 
       ( eq $body_field.Type  "uint16"  ) 
-      ( eq $body_field.Type  "uint8"   ) -}} 
-            {{ TypescriptField $body_field.Field $body_field.Validate }}: int {{ end -}}
-    {{- if or  
+      ( eq $body_field.Type  "uint8"   )  }}  {{ PythonDataclasstField $body_field.Field $body_field.Validate }}: int {{ end -}}
+  {{ if or  
       ( eq $body_field.Type  "float64" )
-      ( eq $body_field.Type  "float32" )    -}} 
-    {{ TypescriptField $body_field.Field $body_field.Validate }}: float {{ end -}}
-  {{ if (eq $body_field.Type  "time.Time" )    -}} {{ TypescriptField $body_field.Field $body_field.Validate }}: string {{ end -}}
-  {{ if (eq $body_field.Type  "bool"      )    -}} {{ TypescriptField $body_field.Field $body_field.Validate }}: bool {{ end -}}
+      ( eq $body_field.Type  "float32" )  }}  {{ PythonDataclasstField $body_field.Field $body_field.Validate }}: float {{ end -}}
+  {{ if 
+      ( eq $body_field.Type  "time.Time" ) }}  {{ PythonDataclasstField $body_field.Field $body_field.Validate }}: str {{ end -}}
+  {{ if 
+      ( eq $body_field.Type  "bool"      ) }}  {{ PythonDataclasstField $body_field.Field $body_field.Validate }}: bool {{ end -}}
+  {{ if 
+      ( eq $body_field.Type  "any"      )  }}  {{ PythonDataclasstField $body_field.Field $body_field.Validate }}: any {{ end -}}
   {{ end }}
                 {{ end -}}
             {{- end -}}
@@ -105,7 +107,12 @@ class {{ $endpoint.ControllerName }}Body:
 {{- if $modules -}}
   {{- range $module := $modules -}}
     {{- if $module.Endpoints }}
-class {{ $module.Name }}Endpoint:
+
+class {{ $module.Name }}Endpoints:
+    """
+    Fetch functions for the {{ $module.Name }} endpoints module
+    """
+
     def __init__(self, client: Client):
         self.client = client
       {{- range $endpoint := $module.Endpoints }}

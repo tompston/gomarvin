@@ -22,11 +22,16 @@ EXAMPLES=(
   # 'fiber'
   # 'echo'
   # 'chi'
-  'gin_with_modules'
-  'echo_with_modules'
-  'chi_with_modules'
+  # 'gin_with_modules'
+  # 'echo_with_modules'
+  # 'chi_with_modules'
   'fiber_with_modules'
 )
+
+# delete the build dir before generating the project
+rm -rf ${BUILD_DIR}
+# create a fresh build dir
+mkdir ${BUILD_DIR}
 
 
 # build binary to ./test/build/ and cd into the dir
@@ -57,7 +62,7 @@ for example in "${EXAMPLES[@]}"; do
     #     # kill -9 $(lsof -t -i:4444)
     #     # code .                  # open in vscdoe
     # fi
-    
+
     cd ..               # go back to build dir to run the binary again
 
 done

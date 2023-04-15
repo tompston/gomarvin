@@ -31,7 +31,6 @@ var dbConn *sql.DB
 {{- if ( eq .ProjectInfo.DbType "mysql") }}
 // create the dsn string from variables that are specified in the .env file
 func DsnString() string {
-	
 	db := settings.Environment.Database
 
 	dsn := fmt.Sprintf("%s:%s@/%s", 
@@ -50,7 +49,6 @@ func DsnString() string {
 {{- if ( eq .ProjectInfo.DbType "postgres") }}
 // create the dsn string from variables that are specified in the .env file
 func DsnString() string {
-
 	db := settings.Environment.Database
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%v sslmode=%s TimeZone=%s", 
@@ -91,7 +89,6 @@ func GetDbConn() (*sql.DB, error) {
 // Connect connects to the database, and sets the
 // database.dbConn variable to hold the connection to the db.
 func Connect() error {
-
 	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", DsnString()){{- end }}
 	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", "test.db"){{- end }}
 	{{- if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", DsnString()){{- end }}

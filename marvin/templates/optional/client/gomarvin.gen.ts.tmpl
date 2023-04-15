@@ -110,6 +110,7 @@ export interface {{ $endpoint.ControllerName }}Body  {
       ( eq $body_field.Type  "float32" )    -}} 
   {{ TypescriptField $body_field.Field $body_field.Validate }}: number {{ end -}}
   {{ if (eq $body_field.Type  "time.Time" )    -}} {{ TypescriptField $body_field.Field $body_field.Validate }}: any {{ end -}}
+  {{ if (eq $body_field.Type  "any" )          -}} {{ TypescriptField $body_field.Field $body_field.Validate }}: any {{ end -}}
   {{ if (eq $body_field.Type  "bool"      )    -}} {{ TypescriptField $body_field.Field $body_field.Validate }}: boolean {{ end -}}
   {{ end }}
 }
