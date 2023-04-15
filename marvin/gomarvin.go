@@ -27,16 +27,10 @@ func Run(flags *Flags, args []string) {
 			api_version := ApiVersionInterger(conf.ProjectInfo.APIPrefix)
 			fmt.Printf("api_version: %v\n", api_version)
 
-			// if fetch_only is set to default value ("false"), generate the whole project
-			if !flags.FetchOnly {
-				GenerateInit(conf, *flags)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
-				GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist
-				GenerateOptional(conf, *flags) // generate things that are optional
-				FormatAfterGen()               // run gofmt to format the project in the dir
-
-			} else if flags.FetchOnly {
-				GenerateOnlyFetchFunctions(conf, *flags)
-			}
+			GenerateInit(conf, *flags)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
+			GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist
+			GenerateOptional(conf, *flags) // generate things that are optional
+			FormatAfterGen()               // run gofmt to format the project in the dir
 
 		} else {
 			fmt.Println("* ERROR :: Could not find the config file!")
@@ -76,9 +70,6 @@ Flags:
 	(default "gomarvin.json")
   -dangerous-regen	
   	Regenerate everything. If set to true, all previous changes will be lost 
-	(default "false")
-  -fetch-only		
-  	generate only the typescript file that holds fetch function 
 	(default "false")
   -gut
 	generate additional file in the modules dir which concats all of the 

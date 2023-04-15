@@ -45,10 +45,6 @@ gomarvin generate
 # run this if custom config file name or path
 gomarvin -config="PATH_TO_CONFIG" generate
 
-# or generate only the typescript API client file. Useful if you want to generate fetch
-# functions for a pre-existing REST API in a fast way.
-gomarvin -fetch-only=true generate
-
 # optionally generate the golang struct -> typescript interface converters
 gomarvin -gut=true generate
 ```
@@ -68,8 +64,7 @@ go run cmd/api/main.go
 Flags:
   -config		Specify path to the gomarvin config file (default "gomarvin.json")
   -dangerous-regen	Regenerate everything. If set to true, init server will be regenerated and all previous changes will be lost (default "false")
-  -fetch-only		generate only the typescript file that holds fetch function (default "false")`
-  -gut          generate additional file in the modules dir which concats all of the functions that convert possible response structs to typescript interfaces
+  -gut            generate additional file in the modules dir which concats all of the functions that convert possible response structs to typescript interfaces
 ```
 
 ### Generated Typescript fetch functions usage example
@@ -150,12 +145,6 @@ async function FetchWithAppendedUrlAndCustomOptions() {
 - Using the tool to generate fetch functions for pre-existing REST APIs
 
   - If you want to generate a client for an already existing REST API in a fast way, you can use the editor to document the needed values to codegen the fetch functions in a fast way
-
-  ```bash
-  # run this after exporting the config file, assuming that
-  # the gomarvin.json file is in the same dir
-  gomarvin -fetch-only=true generate
-  ```
 
 - If there are errors after creating a new config file, submit an issue. There might be some edge cases that have not been tested yet.
 

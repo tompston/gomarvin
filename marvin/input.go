@@ -10,7 +10,6 @@ import (
 // https://golangdocs.com/command-line-arguments-in-golang
 type Flags struct {
 	DangerousRegen bool   // ( default = false )
-	FetchOnly      bool   // ( default = false )
 	Gut            bool   // ( default = false )
 	ConfigPath     string // if no params are  specified, get the config from current dir ( default = "./gomarvin.json" )
 }

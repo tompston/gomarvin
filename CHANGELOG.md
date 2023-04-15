@@ -5,6 +5,7 @@
 - Renamed `public` dir to `client` dir. This is done to make it more clear that the `client` dir would hold clients for the generated api.
 - Controllers have a comment which shows the route of the endpoint.
 - `validate.Payload` is renamed to `validate.RequestBody`. The reason behind this is that the `Payload` name indicates that it's the main thing which is being sent to the server, but in reality, it's just the body of the request. RequestBody is a more precise name, as its very hard to misinterpret what the function does.
+- Removed the -fetch-only flag.
 
 ### v0.8.1
 
