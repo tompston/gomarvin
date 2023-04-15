@@ -22,7 +22,7 @@ EXAMPLES=(
   # 'fiber'
   # 'echo'
   # 'chi'
-  'gin_with_modules'
+  # 'gin_with_modules'
   'echo_with_modules'
   'chi_with_modules'
   'fiber_with_modules'
@@ -35,7 +35,7 @@ mkdir ${BUILD_DIR}
 
 
 # build binary to ./test/build/ and cd into the dir
-GOOS=darwin GOARCH=arm64 go build -o ${BUILD_DIR}gomarvin main.go 
+GOOS=darwin GOARCH=arm64 go build -o ${BUILD_DIR}gomarvin main.go
 cd ${BUILD_DIR}
 
 for example in "${EXAMPLES[@]}"; do
@@ -45,18 +45,19 @@ for example in "${EXAMPLES[@]}"; do
 
     # generate the project
     ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -gut=true -config=${CONFIG_PATH} generate
-    # ./gomarvin -config=${CONFIG_PATH} generate
+
+    # copy the ts client to test/build dir, so that it could be called from client.ts test file
+    TS_CLIENT=${PWD}/${example}/client/gomarvin.gen.ts
+    cp ${TS_CLIENT} ./
 
     cd ${example}           # cd into the generated dir
     go mod tidy             # tidy things
     go mod download         # download dependencies at first
     code .
     
-
     # run postman tests on servers that hold the testable endpoints
-    # TODO : figure out how to echo only summary
     # if [[ ${example} == *"with_modules"* ]]; then
-    #     echo "--- Running postman tests for ${example} !"
+    #     echo "--- Running postman tests for ${example}"
     #     # nohup go run main.go &  
     #     # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
     #     # kill -9 $(lsof -t -i:4444)
