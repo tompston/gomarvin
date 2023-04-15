@@ -5,7 +5,6 @@ import gomarvin as gomarvin
 client = gomarvin.defaultClient
 
 
-
 response_ok = {'status': 200, 'message': '', 'data': {}}
 
 response_ok_with_links = {'status': 200,
@@ -13,14 +12,40 @@ response_ok_with_links = {'status': 200,
 
 
 def test_get_users():
-    params = gomarvin.OptionalParams(append_url="?name=jim")
-    get_users = gomarvin.UserEndpoints(client).GetUsers(opt=params)
-    print(get_users.json())
-    print(get_users.url)
-    assert get_users.status_code == 200
-    assert get_users.json() == response_ok_with_links
+    data = gomarvin.UserEndpoints(client).GetUsers(append_url="?name=jim")
+    assert data.status_code == 200 and data.json() == response_ok_with_links
+    print("PASS")
 
 
-# def my_function(param1: str, param2: Optional[int] = None, param3: Optional[float] = None):
-#     # Function code here
-#     pass
+test_get_users()
+
+
+def test_get_user():
+    data = gomarvin.UserEndpoints(client).GetUserById(1)
+    assert data.status_code == 200 and data.json() == response_ok
+    print("PASS")
+
+
+test_get_user()
+
+
+def test_create_user_passing_validation():
+    body = gomarvin.CreateUserBody(
+        username="jim", password="very-long-password", email="jim@email.com")
+    data = gomarvin.UserEndpoints(client).CreateUser(body=body)
+    assert data.status_code == 200 and data.json() == response_ok
+    print("PASS")
+
+
+test_create_user_passing_validation()
+
+
+def test_create_user_failing_validation():
+    body = gomarvin.CreateUserBody(
+        username="jim", password="short", email="jim@email.com")
+    data = gomarvin.UserEndpoints(client).CreateUser(body=body)
+    assert data.status_code != 200
+    print("PASS")
+
+
+test_create_user_failing_validation()

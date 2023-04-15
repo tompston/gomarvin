@@ -51,7 +51,7 @@ for example in "${EXAMPLES[@]}"; do
 
   # copy the python client to test/build dir, so that it could be called from client.ts test file
   PY_CLIENT=${PWD}/${example}/client/gomarvin.gen.py
-  cp ${PY_CLIENT} ../
+  cp ${PY_CLIENT} ../gomarvin.py
 
   cd ${example}   # cd into the generated dir
   go mod tidy     # tidy things
