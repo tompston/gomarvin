@@ -50,8 +50,8 @@ for example in "${EXAMPLES[@]}"; do
   cp ${TS_CLIENT} ./
 
   # copy the python client to test/build dir, so that it could be called from client.ts test file
-  TS_CLIENT=${PWD}/${example}/client/gomarvin.gen.py
-  cp ${TS_CLIENT} ./
+  PY_CLIENT=${PWD}/${example}/client/gomarvin.gen.py
+  cp ${PY_CLIENT} ../
 
   cd ${example}   # cd into the generated dir
   go mod tidy     # tidy things
