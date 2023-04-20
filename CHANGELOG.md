@@ -7,6 +7,9 @@
 - `validate.Payload` is renamed to `validate.RequestBody`. The reason behind this is that the `Payload` name indicates that it's the main thing which is being sent to the server, but in reality, it's just the body of the request. RequestBody is a more precise name, as its very hard to misinterpret what the function does.
 - Removed the -fetch-only flag.
 - refactored `database` pacakage to not use the `settings` package (avoid using the global state)
+- Removed all of the functions / variables which use global state. 
+
+
 ### v0.8.1
 
 - Converted the ProjectInfo GoVersion and ConfigVersion values to interfaces, so that the config files would be valid if they have either floats or strings that hold floats.
