@@ -13,6 +13,28 @@ if [ "$#" -ne 1 ]; then
   exit 1
 fi
 
+
+# Util function to check if running the generator again
+# wont overwrite the initially generated file
+# which should not be updated after the initial generation.
+check_file_update() {
+  local file_path="$1"
+  local new_line="// this is appended by the test script"
+  echo $new_line >> $file_path # append a new line to the file
+  local file_pre_gen=$(cat $file_path)
+  local file_pre_gen_no_ws=$(echo "$file_pre_gen" | tr -d '[:space:]')
+  # run the generator again
+  ./gomarvin -gut=true -config=${CONFIG_PATH} generate
+  local file_post_gen=$(cat $file_path)
+  local file_post_gen_no_ws=$(echo "$file_post_gen" | tr -d '[:space:]')
+  if [ "$file_pre_gen_no_ws" == "$file_post_gen_no_ws" ]; then
+    echo "The updated file contents match the contents in memory."
+  else
+    echo "The updated file contents do not match the contents in memory."
+    exit 1
+  fi
+}
+
 expected_version="$1"
 
 CURRENT_DIR=$PWD
@@ -51,7 +73,11 @@ for example in "${EXAMPLES[@]}"; do
   CONFIG_PATH="${GOMARVIN_CONFIG_DIR}${GOMARVIN_CONFIG_FILE}"
 
   # generate the project
-  ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -gut=true -config=${CONFIG_PATH} generate
+  ./gomarvin -gut=true -config=${CONFIG_PATH} generate
+
+  # -------
+  # Test block
+  # -------
 
   # Search for the version string in the output
   output=$(./gomarvin)
@@ -62,6 +88,10 @@ for example in "${EXAMPLES[@]}"; do
     echo "Test failed. Expected version: $expected_version, Found version: $version_string"
     exit 1
   fi
+
+  check_file_update ${PWD}/${example}/pkg/app/app.go
+  check_file_update ${PWD}/${example}/pkg/settings/settings.go
+  check_file_update ${PWD}/${example}/cmd/api/main.go
 
   # copy the ts client to test/build dir, so that it could be called from client.ts test file
   TS_CLIENT=${PWD}/${example}/client/gomarvin.ts
@@ -88,3 +118,4 @@ for example in "${EXAMPLES[@]}"; do
   cd .. # go back to build dir to run the binary again
 
 done
+
