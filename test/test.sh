@@ -5,7 +5,15 @@
 
 # from the root
 # chmod u+x ./test/test.sh
-# ./test/test.sh
+# ./test/test.sh 0.9.0
+
+# Check if an argument is provided
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <version>"
+  exit 1
+fi
+
+expected_version="$1"
 
 CURRENT_DIR=$PWD
 GOMARVIN_V='v0.9.0'
@@ -44,6 +52,16 @@ for example in "${EXAMPLES[@]}"; do
 
   # generate the project
   ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -gut=true -config=${CONFIG_PATH} generate
+
+  # Search for the version string in the output
+  output=$(./gomarvin)
+  version_string=$(echo "$output" | awk -F"Version: " '/Version: /{print $2}')
+  if [ "$version_string" == "$expected_version" ]; then
+    echo "Test passed. Version: $version_string"
+  else
+    echo "Test failed. Expected version: $expected_version, Found version: $version_string"
+    exit 1
+  fi
 
   # copy the ts client to test/build dir, so that it could be called from client.ts test file
   TS_CLIENT=${PWD}/${example}/client/gomarvin.ts
