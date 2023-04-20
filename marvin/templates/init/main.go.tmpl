@@ -29,22 +29,22 @@ func main() {
 	defer app.Exit(context.TODO())
 
 
-	address := fmt.Sprintf("localhost:%v", settings.Environment.Backend.Port)
-	app := server.Start()
+	address := fmt.Sprintf("localhost:%v", settings.BACKEND_PORT)
+	server := server.Start()
 
 	{{- if ( eq .ProjectInfo.Framework "gin") }}
-	app.Run(address) // run the server
+	server.Run(address) // run the server
 	{{- end }}
 
 	{{- if ( eq .ProjectInfo.Framework "fiber") }}
-	app.Listen(address) // run the server
+	server.Listen(address) // run the server
 	{{- end }}
 
 	{{- if ( eq .ProjectInfo.Framework "echo") }}
-	app.Logger.Fatal(app.Start(address)) // run the server
+	server.Logger.Fatal(server.Start(address)) // run the server
 	{{- end }}
 
 	{{- if ( eq .ProjectInfo.Framework "chi") }}
-	http.ListenAndServe(address, app) // run the server
+	http.ListenAndServe(address, server) // run the server
 	{{- end }}
 }

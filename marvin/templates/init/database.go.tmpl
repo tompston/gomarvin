@@ -11,10 +11,6 @@ import (
 	{{ if ( eq .ProjectInfo.DbType "postgres")	}}_ "github.com/lib/pq" {{ end }}
 )
 
-// dbConn variable holds the connection to the database,
-// if the Connect function is executed.
-var dbConn *sql.DB
-
 
 {{- if ( eq .ProjectInfo.DbType "mysql") }}
 // DsnString returns a string that is used to connect to the database
@@ -36,7 +32,7 @@ func DsnString(host, user, pass, name string, port int, ssl, timezone string) st
 
 
 
-// NewDbConn creates a database connection without using the global db variable.
+// NewDbConn create and returns a new database connection.
 // 
 // Example:
 // 	db, err := database.NewDbConn(dsn_string)
@@ -57,25 +53,4 @@ func NewDbConn(dsn_string string) (*sql.DB, error) {
     }
 
 	return db, err
-}
-
-// Connect connects to the database, and sets the database.dbConn
-// variable to hold the connection to the db.
-func Connect(dsn_string string) error {
-	db, err := NewDbConn(dsn_string)
-	if err != nil {
-		return err
-	}
-
-	// assign *sql.DB to the global variable
-	dbConn = db
-
-	return nil
-}
-
-
-// DbConn returns a database connection that is initialized
-// when the app is started
-func DbConn() *sql.DB {
-    return dbConn
 }

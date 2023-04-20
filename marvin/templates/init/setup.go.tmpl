@@ -76,7 +76,7 @@ func NewApp(ctx context.Context, cli_args ...cli.Args) (*App, error) {
 func (a *App) Exit(ctx context.Context) error {
 	// Close the MongoDB connection
 	if err := a.Db().Close(); err != nil {
-		return fmt.Errorf("failed to close mongodb conn: %v", err)
+		return fmt.Errorf("failed to close db conn: %v", err)
 	}
 	return nil
 }
