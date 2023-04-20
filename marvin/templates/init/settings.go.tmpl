@@ -1,12 +1,10 @@
 package settings
 
-import (
-	"fmt"
-)
-
-var (
-	// Go .env vars
-	Environment EnvConfig
-	// New variables based on .env values
-	BASE_URL	= fmt.Sprintf("%s%s", Environment.Backend.HostURL, Environment.Backend.APIPath) // host + api prefix path
+const (
+    // Placeholder state for the application
+    DEBUG_MODE  = true
+     // Placeholder state for the api server (variable read from the gomarvin config file on initial run)
+    API_PATH    = "{{ .ProjectInfo.APIPrefix }}"
+    // Placeholder state for the api server (variable read from the gomarvin config file on initial run)
+    BACKEND_PORT = ":{{ .ProjectInfo.Port }}"
 )

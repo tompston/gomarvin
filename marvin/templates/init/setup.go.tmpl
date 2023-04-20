@@ -4,45 +4,79 @@
 package environment
 
 import (
-	"{{ $project_name }}/cmd"
+	"context"
+	"database/sql"
+	"{{ $project_name }}/pkg/cli"
 	"{{ $project_name }}/pkg/settings"
 	"{{ $project_name }}/pkg/settings/database"
+	"fmt"
 )
 
-// Setup the environment for the go app on the initialization:
-//   - read .env config file and store it in settings.Environment variable
-//   - store db connection in the database.dbConn variable
-func Setup(args cmd.CliArgs) error {
-	if err := settings.SetEnvironmentConfig(args.Conf); err != nil {
-		return err
+type App struct {
+	conf *settings.EnvConfig // conf is the environment configuration
+	db   *sql.DB			 // db is the database connection
+}
+
+// Conf returns the environment configuration.
+func (a *App) Conf() *settings.EnvConfig {
+	return a.conf
+}
+
+// Db returns the database connection.
+func (a *App) Db() *sql.DB {
+	return a.db
+}
+
+// NewApp setups the environment for the go app on the initialization 
+// and returns the App struct which contains the read environment 
+// configuration and the database connection.
+func NewApp(ctx context.Context, cli_args ...cli.Args) (*App, error) {
+	args := cli.NewArgs(cli_args...)
+
+	conf, err := settings.NewEnvConfig(args.Conf)
+	if err != nil {
+		return nil, fmt.Errorf("error loading .env file, %v", err)
 	}
 
+
 	{{ if ( eq .ProjectInfo.DbType "postgres") }}
-	db := settings.Environment.Database
-	dsn_string := database.DsnString(db.Host, db.User, db.Pass, db.Name, db.Port, db.SSL, db.Timezone)
-	if err := database.Connect(dsn_string); err != nil {
-		return err
+	db_conf := conf.Database
+	dsn_string := database.DsnString(db_conf.Host, db_conf.User, db_conf.Pass, db_conf.Name, db_conf.Port, db_conf.SSL, db_conf.Timezone)
+	db, err := database.NewDbConn(dsn_string)
+	if err != nil {
+		return nil, fmt.Errorf("error creating database connection, %v", err)
 	}
 	{{ end }}
 
 
 	{{ if ( eq .ProjectInfo.DbType "mysql") }}
-	db := settings.Environment.Database
-	dsn_string := database.DsnString(db.User, db.Pass, db.Name)
-	if err := database.Connect(dsn_string); err != nil {
-		return err
+	db_conf := conf.Database
+	dsn_string := database.DsnString(db_conf.User, db_conf.Pass, db_conf.Name)
+	db, err := database.NewDbConn(dsn_string)
+	if err != nil {
+		return nil, fmt.Errorf("error creating database connection, %v", err)
 	}
 	{{ end }}
 
 
 	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
-	db := settings.Environment.Database
+	db_conf := settings.Environment.Database
 	dsn_string := database.DsnString("test.db")
-	if err := database.Connect(dsn_string); err != nil {
-		return err
+	db, err := database.NewDbConn(dsn_string)
+	if err != nil {
+		return nil, fmt.Errorf("error creating database connection, %v", err)
 	}
 	{{ end }}
 
+	return &App{conf, db}, nil
+}
 
+// Exit function groups all the exit functions of the app (e.g. closing the database connection)
+// and returns an error if any of the exit functions fail.
+func (a *App) Exit(ctx context.Context) error {
+	// Close the MongoDB connection
+	if err := a.Db().Close(); err != nil {
+		return fmt.Errorf("failed to close mongodb conn: %v", err)
+	}
 	return nil
 }

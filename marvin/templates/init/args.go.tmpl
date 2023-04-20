@@ -1,25 +1,35 @@
-package cmd
+package cli
 
-import (
-	"flag"
-)
+import "flag"
 
-// CliArgs is a struct that holds the command line arguments
+// Args is a struct that holds the command line arguments
 // that might be passed to the application
-type CliArgs struct {
+type Args struct {
 	Conf string // path to config file
 }
 
-// GetArgs returns the command line arguments. If no arguments are passed it 
-// will return the default values. If arguments to the function are passed, 
+// setArgs returns the command line arguments. If no arguments are passed it
+// will return the default values. If arguments to the function are passed,
 // it will return those arguments and ignore the command line arguments.
-func GetArgs(cli ...CliArgs) CliArgs {
+func setArgs(cli ...Args) Args {
 	if len(cli) == 1 {
 		return cli[0]
 	} else {
-		var args CliArgs
+		var args Args
 		flag.StringVar(&args.Conf, "conf", ".env", "path to the config file")
 		flag.Parse()
 		return args
 	}
+}
+
+// NewArgs sets the arguments based on the input of the function. If no args are provided,
+// the default values are used. If args are provided, they are used.
+func NewArgs(cli_args ...Args) Args {
+	var args Args
+	if len(cli_args) == 0 {
+		args = setArgs()
+	} else {
+		args = setArgs(cli_args[0])
+	}
+	return args
 }

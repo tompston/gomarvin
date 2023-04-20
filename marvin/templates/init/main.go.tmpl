@@ -8,10 +8,10 @@
 package main
 
 import (
+	"context"
 	"{{$project_name}}/internal/api/{{ $api_v }}/server"
 	"{{$project_name}}/pkg/environment"
 	"{{$project_name}}/pkg/settings"
-	"{{$project_name}}/cmd"
 	"fmt"
 	"log"
 
@@ -22,10 +22,12 @@ import (
 
 
 func main() {
-	args := cmd.GetArgs()
-	if err := environment.Setup(args); err != nil {
+	app, err := environment.NewApp(context.TODO())
+	if err != nil {
 		log.Fatal(err)
 	}
+	defer app.Exit(context.TODO())
+
 
 	address := fmt.Sprintf("localhost:%v", settings.Environment.Backend.Port)
 	app := server.Start()
