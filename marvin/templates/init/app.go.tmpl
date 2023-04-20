@@ -1,7 +1,8 @@
 {{ $project_name    := .ProjectInfo.Name -}}
-// Package environment is responsible for setting up the
-// environment for the go app on the initialization.
-package environment
+// Package app groups all of the application's environment configuration and
+// database connection dependencies and provides a single entry point for
+// initializing the application.
+package app
 
 import (
 	"context"
@@ -60,7 +61,7 @@ func NewApp(ctx context.Context, cli_args ...cli.Args) (*App, error) {
 
 
 	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
-	db_conf := settings.Environment.Database
+	db_conf := conf.Database
 	dsn_string := database.DsnString("test.db")
 	db, err := database.NewDbConn(dsn_string)
 	if err != nil {
@@ -74,7 +75,7 @@ func NewApp(ctx context.Context, cli_args ...cli.Args) (*App, error) {
 // Exit function groups all the exit functions of the app (e.g. closing the database connection)
 // and returns an error if any of the exit functions fail.
 func (a *App) Exit(ctx context.Context) error {
-	// Close the MongoDB connection
+	// Close the database connection
 	if err := a.Db().Close(); err != nil {
 		return fmt.Errorf("failed to close db conn: %v", err)
 	}

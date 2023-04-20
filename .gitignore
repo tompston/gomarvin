@@ -7,7 +7,10 @@ test/build/*/
 test/build/gomarvin
 gomarvin
 gomarvin.gen.ts
+gomarvin.ts
 gomarvin.gen.py
+gomarvin.py
+
 gomarvin.py
 gomarvin.json
 __pycache__

@@ -14,11 +14,11 @@ var init_project_dirs = [...]string{
 	"/pkg/convert/",
 	"/pkg/settings/",
 	"/pkg/settings/database/",
-	"/pkg/environment/",
+	"/pkg/app/",
 }
 
-const typescript_fetch_template = "templates/optional/client/gomarvin.gen.ts.tmpl"
-const python_fetch_template = "templates/optional/client/gomarvin.gen.py.tmpl"
+const typescript_fetch_template = "templates/optional/client/gomarvin.ts.tmpl"
+const python_fetch_template = "templates/optional/client/gomarvin.py.tmpl"
 
 // const typescript_seed_template = "templates/optional/ts/seeder.gen.ts.tmpl"
 
@@ -35,7 +35,7 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/response.go.tmpl", output_dir: "/pkg/response/"},
 	{template_path: "templates/init/validate.go.tmpl", output_dir: "/pkg/validate/"},
 	{template_path: "templates/init/convert.go.tmpl", output_dir: "/pkg/convert/"},
-	{template_path: "templates/init/setup.go.tmpl", output_dir: "/pkg/environment/"},
+	{template_path: "templates/init/app.go.tmpl", output_dir: "/pkg/app/"},
 }
 
 func initModuleTemplates(api_prefix string) []Template {

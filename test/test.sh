@@ -46,11 +46,11 @@ for example in "${EXAMPLES[@]}"; do
   ./gomarvin -dangerous-regen=${DANGEROUS_REGEN} -gut=true -config=${CONFIG_PATH} generate
 
   # copy the ts client to test/build dir, so that it could be called from client.ts test file
-  TS_CLIENT=${PWD}/${example}/client/gomarvin.gen.ts
+  TS_CLIENT=${PWD}/${example}/client/gomarvin.ts
   cp ${TS_CLIENT} ./
 
   # copy the python client to test/build dir, so that it could be called from client.ts test file
-  PY_CLIENT=${PWD}/${example}/client/gomarvin.gen.py
+  PY_CLIENT=${PWD}/${example}/client/gomarvin.py
   cp ${PY_CLIENT} ../gomarvin.py
 
   cd ${example}   # cd into the generated dir

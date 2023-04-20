@@ -10,7 +10,7 @@ package main
 import (
 	"context"
 	"{{$project_name}}/internal/api/{{ $api_v }}/server"
-	"{{$project_name}}/pkg/environment"
+	"{{$project_name}}/pkg/app"
 	"{{$project_name}}/pkg/settings"
 	"fmt"
 	"log"
@@ -22,7 +22,7 @@ import (
 
 
 func main() {
-	app, err := environment.NewApp(context.TODO())
+	app, err := app.NewApp(context.TODO())
 	if err != nil {
 		log.Fatal(err)
 	}
