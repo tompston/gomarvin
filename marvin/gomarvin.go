@@ -25,7 +25,7 @@ func Run(flags *Flags, args []string) {
 			// If the api_prefix value in the json file is incorrect,
 			// throw an error and exit
 			api_version := ApiVersionInterger(conf.ProjectInfo.APIPrefix)
-			fmt.Printf("api_version: %v\n", api_version)
+			_ = api_version
 
 			GenerateInit(conf, *flags)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
 			GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist

@@ -13,14 +13,13 @@ if [ "$#" -ne 1 ]; then
   exit 1
 fi
 
-
 # Util function to check if running the generator again
 # wont overwrite the initially generated file
 # which should not be updated after the initial generation.
 check_file_update() {
   local file_path="$1"
   local new_line="// this is appended by the test script"
-  echo $new_line >> $file_path # append a new line to the file
+  echo $new_line >>$file_path # append a new line to the file
   local file_pre_gen=$(cat $file_path)
   local file_pre_gen_no_ws=$(echo "$file_pre_gen" | tr -d '[:space:]')
   # run the generator again
@@ -52,8 +51,8 @@ EXAMPLES=(
   # 'fiber'
   # 'echo'
   # 'chi'
-  # 'gin_with_modules'
-  # 'echo_with_modules'
+  'gin_with_modules'
+  'echo_with_modules'
   # 'chi_with_modules'
   'fiber_with_modules'
 )
@@ -68,16 +67,15 @@ GOOS=darwin GOARCH=arm64 go build -o ${BUILD_DIR}gomarvin main.go
 cd ${BUILD_DIR}
 
 for example in "${EXAMPLES[@]}"; do
-
   GOMARVIN_CONFIG_FILE="${GOMARVIN_CONFIG_BASE}${example}.json"
   CONFIG_PATH="${GOMARVIN_CONFIG_DIR}${GOMARVIN_CONFIG_FILE}"
+  ./gomarvin -gut=true -config=${CONFIG_PATH} generate # generate the project
 
-  # generate the project
-  ./gomarvin -gut=true -config=${CONFIG_PATH} generate
+  PROJECT_PATH=${PWD}/${example}
 
-  # -------
+  # --------------
   # Test block
-  # -------
+  # --------------
 
   # Search for the version string in the output
   output=$(./gomarvin)
@@ -89,14 +87,15 @@ for example in "${EXAMPLES[@]}"; do
     exit 1
   fi
 
+  # check if the generated files dont get overwritten
   check_file_update ${PWD}/${example}/pkg/app/app.go
   check_file_update ${PWD}/${example}/pkg/settings/settings.go
   check_file_update ${PWD}/${example}/cmd/api/main.go
+  check_file_update ${PWD}/${example}/internal/api/v1/server/router.go
 
   # copy the ts client to test/build dir, so that it could be called from client.ts test file
   TS_CLIENT=${PWD}/${example}/client/gomarvin.ts
   cp ${TS_CLIENT} ./
-
   # copy the python client to test/build dir, so that it could be called from client.ts test file
   PY_CLIENT=${PWD}/${example}/client/gomarvin.py
   cp ${PY_CLIENT} ../gomarvin.py
@@ -106,16 +105,17 @@ for example in "${EXAMPLES[@]}"; do
   go mod download # download dependencies at first
   code .
 
-  # run postman tests on servers that hold the testable endpoints
-  # if [[ ${example} == *"with_modules"* ]]; then
-  #     echo "--- Running postman tests for ${example}"
-  #     # nohup go run main.go &
-  #     # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
-  #     # kill -9 $(lsof -t -i:4444)
-  #     # code .                  # open in vscdoe
-  # fi
+  if [[ ${example} == *"with_modules"* ]]; then
+    if [[ ${example} != gin_with_modules ]]; then
+      echo " * Running fetch tests for ${example}"
+      cd ${PROJECT_PATH}
+
+
+      # go run main.go &
+      # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
+      # kill -9 $(lsof -t -i:4444)
+    fi
+  fi
 
   cd .. # go back to build dir to run the binary again
-
 done
-
