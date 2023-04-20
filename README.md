@@ -71,9 +71,9 @@ Flags:
 
 ```js
 // import the generated file
-import * as gomarvin from "../../../chi_with_modules/public/gomarvin.gen";
+import * as gomarvin from "../../../chi_with_modules/public/gomarvin";
 // or just import a single fetch function
-import { GetUserById } from "../../../chi_with_modules/public/gomarvin.gen";
+import { GetUserById } from "../../../chi_with_modules/public/gomarvin";
 
 // either use the default client created from
 // the settings of the config file, or create a new one
@@ -126,6 +126,33 @@ async function FetchWithAppendedUrlAndCustomOptions() {
   });
   console.log(res);
 }
+```
+
+### Generated Python fetch functions usage example
+
+```python
+import gomarvin as gomarvin
+
+# use the default localhost client
+client = gomarvin.defaultClient
+
+# fetch get users by id endpoint
+def get_users_by_id():
+  res = gomarvin.UserEndpoints(client).GetUserById(1)
+  print(res.json())
+
+# make a post request to the register user endpoint with a body
+def register_user():
+  body = gomarvin.CreateUserBody(
+        username="jim", password="very-long-password", email="jim@email.com")
+  res = gomarvin.UserEndpoints(client).CreateUser(body=body)
+  print(res.json())
+
+# append a string to the url
+def get_users_with_params():
+  data = gomarvin.UserEndpoints(client).GetUsers(append_url="?name=jim") 
+  print(res.json())
+
 ```
 
 ### Notes
