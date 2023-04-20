@@ -5,7 +5,6 @@ import (
 )
 
 func GenerateInit(conf Config, cmd Flags) {
-
 	project_name := conf.ProjectInfo.Name
 	project_path := fmt.Sprintf("./%s", project_name)
 

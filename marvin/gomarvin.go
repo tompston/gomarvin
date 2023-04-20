@@ -76,6 +76,11 @@ Flags:
 	functions that convert possible response structs to typescript interfaces
 	(default "false")`
 
+func GetValueAfterLastSlash(str string) string {
+	split := strings.Split(str, "/")
+	return split[len(split)-1]
+}
+
 // ApiVersion returns the last element of the api_version string
 //
 // Example:
@@ -83,9 +88,7 @@ Flags:
 //	ApiVersion("/api/v1") -> "v1"
 //	ApiVersion("/api/v2") -> "v2"
 func ApiVersion(api_version string) string {
-	split := strings.Split(api_version, "/")
-	api_version = split[len(split)-1]
-	return api_version
+	return GetValueAfterLastSlash(api_version)
 }
 
 func ApiVersionInterger(api_version string) int {
