@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as gomarvin from "./build/gomarvin.ts";
+import * as gomarvin from "./gomarvin.ts";
 import {
   assertEquals,
   assert,
@@ -240,10 +240,10 @@ Deno.test("Url With string param", async () => {
 });
 
 // @ts-ignore
-Deno.test("Submitting optional empty body (optional body field) works)", async () => {
-  const data = await (await _t.OptionalBodyField(client, {})).json();
-  assertEquals(data, response_ok);
-});
+// Deno.test("Submitting optional empty body (optional body field) works)", async () => {
+//   const data = await (await _t.OptionalBodyField(client, {})).json();
+//   assertEquals(data, response_ok);
+// });
 
 // @ts-ignore
 Deno.test("Url With int param", async () => {

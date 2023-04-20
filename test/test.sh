@@ -13,6 +13,7 @@ if [ "$#" -ne 1 ]; then
   exit 1
 fi
 
+
 # Util function to check if running the generator again
 # wont overwrite the initially generated file
 # which should not be updated after the initial generation.
@@ -52,8 +53,8 @@ EXAMPLES=(
   # 'echo'
   # 'chi'
   # 'gin_with_modules'
-  # 'echo_with_modules'
-  # 'chi_with_modules'
+  'echo_with_modules'
+  'chi_with_modules'
   'fiber_with_modules'
 )
 
@@ -88,14 +89,13 @@ for example in "${EXAMPLES[@]}"; do
   fi
 
   # check if the generated files dont get overwritten
-  check_file_update ${PWD}/${example}/pkg/app/app.go
   check_file_update ${PWD}/${example}/pkg/settings/settings.go
   check_file_update ${PWD}/${example}/cmd/api/main.go
   check_file_update ${PWD}/${example}/internal/api/v1/server/router.go
 
   # copy the ts client to test/build dir, so that it could be called from client.ts test file
   TS_CLIENT=${PWD}/${example}/client/gomarvin.ts
-  cp ${TS_CLIENT} ./
+  cp ${TS_CLIENT} ../gomarvin.ts
   # copy the python client to test/build dir, so that it could be called from client.ts test file
   PY_CLIENT=${PWD}/${example}/client/gomarvin.py
   cp ${PY_CLIENT} ../gomarvin.py
@@ -109,13 +109,13 @@ for example in "${EXAMPLES[@]}"; do
     if [[ ${example} != gin_with_modules ]]; then
       echo " * Running fetch tests for ${example}"
       cd ${PROJECT_PATH}
-      # go run main.go &
-      # sleep 5   # wait for the server to start
+      go run cmd/api/main.go &
+      sleep 5   # wait for the server to start
+      # ${TS_CLIENT}
+      deno test --allow-net ../../client.ts
+      python3 ../../client.py
 
-      echo ${TS_CLIENT}
-
-      # go run main.go &
-      # kill -9 $(lsof -t -i:4444)
+      kill -9 $(lsof -t -i:4444)
     fi
   fi
 

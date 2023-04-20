@@ -8,27 +8,15 @@
 package main
 
 import (
-	"context"
 	"{{$project_name}}/internal/api/{{ $api_v }}/server"
-	"{{$project_name}}/pkg/app"
 	"{{$project_name}}/pkg/settings"
 	"fmt"
-	"log"
 
-	{{- if ( eq .ProjectInfo.Framework "chi") }}
-	"net/http"
-	{{ end }}
+	{{ if ( eq .ProjectInfo.Framework "chi") }}"net/http"{{ end }}
 )
 
 
 func main() {
-	app, err := app.NewApp(context.TODO())
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer app.Exit(context.TODO())
-
-
 	address := fmt.Sprintf("localhost:%v", settings.BACKEND_PORT)
 	server := server.Start()
 
