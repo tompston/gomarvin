@@ -33,7 +33,7 @@ type Res struct {
 
 // Baseline Response + Pagination links
 type ResWithPagination struct {
-	Res
+	Res `json:",inline"`
 	Links PaginationLinks `json:"links,omitempty"`
 }
 

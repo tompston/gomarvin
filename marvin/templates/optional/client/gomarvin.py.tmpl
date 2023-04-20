@@ -124,10 +124,10 @@ class {{ $module.Name }}Endpoints:
         Fetch {{$endpoint.ControllerName}} endpoint and return the response
 
          {{- if $endpoint.Body }}
-         * @param `{{ $endpoint.ControllerName}}Body` body  - see {{$endpoint.ControllerName}}Body class for possible validation fields
+         * @param `body` {{ $endpoint.ControllerName}}Body - see {{$endpoint.ControllerName}}Body class for possible validation fields
         {{- end }}
-         * @param `Dict[str, any]` options - optional request options (useful when need to override the default headers)
-         * @param `str` append_url - optional url to append to the endpoint url
+         * @param `options` Dict[str, any] - optional request options (useful when need to override the default headers)
+         * @param `append_url` str - optional url to append to the endpoint url
         {{- if $endpoint.URLParams }}
         {{ range $url_param := $endpoint.URLParams }}
         {{- if (eq $url_param.Type  "string" ) }} * @param {{ WrapInCurlyBraces "string"}} {{$url_param.Field}} url param for the endpoint {{ end }}

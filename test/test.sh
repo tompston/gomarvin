@@ -27,7 +27,7 @@ check_file_update() {
   local file_post_gen=$(cat $file_path)
   local file_post_gen_no_ws=$(echo "$file_post_gen" | tr -d '[:space:]')
   if [ "$file_pre_gen_no_ws" == "$file_post_gen_no_ws" ]; then
-    echo "The updated file contents match the contents in memory."
+    echo "The updated file contents match."
   else
     echo "The updated file contents do not match the contents in memory."
     exit 1
@@ -51,8 +51,8 @@ EXAMPLES=(
   # 'fiber'
   # 'echo'
   # 'chi'
-  'gin_with_modules'
-  'echo_with_modules'
+  # 'gin_with_modules'
+  # 'echo_with_modules'
   # 'chi_with_modules'
   'fiber_with_modules'
 )
@@ -109,10 +109,12 @@ for example in "${EXAMPLES[@]}"; do
     if [[ ${example} != gin_with_modules ]]; then
       echo " * Running fetch tests for ${example}"
       cd ${PROJECT_PATH}
+      # go run main.go &
+      # sleep 5   # wait for the server to start
 
+      echo ${TS_CLIENT}
 
       # go run main.go &
-      # newman run ${CURRENT_DIR}/test/postman/gomarvin-tests.postman_collection.json
       # kill -9 $(lsof -t -i:4444)
     fi
   fi

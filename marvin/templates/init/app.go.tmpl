@@ -13,6 +13,8 @@ import (
 	"fmt"
 )
 
+// App is the application struct which contains the environment configuration
+// and the database connection.
 type App struct {
 	conf *settings.EnvConfig // conf is the environment configuration
 	db   *sql.DB			 // db is the database connection
@@ -31,6 +33,14 @@ func (a *App) Db() *sql.DB {
 // NewApp setups the environment for the go app on the initialization 
 // and returns the App struct which contains the read environment 
 // configuration and the database connection.
+// 
+// Example: 
+//
+// 	app, err := app.NewApp(context.Background())
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	defer app.Exit(context.Background())
 func NewApp(ctx context.Context, cli_args ...cli.Args) (*App, error) {
 	args := cli.NewArgs(cli_args...)
 
