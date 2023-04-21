@@ -48,11 +48,11 @@ GUT=true
 # Variable used in the config file name + the name of the
 # generated dir ( "project_info": "name": "gin_ecommerce" )
 EXAMPLES=(
-  # 'gin'
-  # 'fiber'
-  # 'echo'
-  # 'chi'
-  # 'gin_with_modules'
+  'gin'
+  'fiber'
+  'echo'
+  'chi'
+  'gin_with_modules'
   'echo_with_modules'
   'chi_with_modules'
   'fiber_with_modules'
