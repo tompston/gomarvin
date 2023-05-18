@@ -13,8 +13,7 @@ import (
     "github.com/tompston/gut"
 )
 
-// placeholderStruct is used as a temporary input param for the 
-// gut.ToTypescript functions
+// placeholderStruct is used as a temporary input param for the gut.Convert functions
 type placeholderStruct struct {
 	Field1 string `json:"field_1"`
 }
@@ -25,9 +24,8 @@ func TypescriptInterfaces__() string {
     interfaces := fmt.Sprintln(
         {{- range $endpoint := $endpoints }}
             // expected type from the API response for {{ $endpoint.ControllerName }} endpoint
-            gut.ToTypescript(
-                placeholderStruct{}, 
-                gut.Interface{Name : "{{ $endpoint.ControllerName }}Response"},
+            gut.Convert(placeholderStruct{}, 
+                gut.Type{Name : "{{ $endpoint.ControllerName }}Response"},
             ),
         {{- end }}
     )

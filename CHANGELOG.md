@@ -1,4 +1,6 @@
-# Gomarvin changelog
+### v0.9.1
+
+- Updating gut to v0.0.4 (names of the functions changed)
 
 ### v0.9.0
 
@@ -7,8 +9,7 @@
 - `validate.Payload` is renamed to `validate.RequestBody`. The reason behind this is that the `Payload` name indicates that it's the main thing which is being sent to the server, but in reality, it's just the body of the request. RequestBody is a more precise name, as its very hard to misinterpret what the function does.
 - Removed the -fetch-only flag.
 - refactored `database` pacakage to not use the `settings` package (avoid using the global state)
-- Removed all of the functions / variables which use global state. 
-
+- Removed all of the functions / variables which use global state.
 
 ### v0.8.1
 
@@ -19,7 +20,7 @@
 Completely refactored the structure of the generated code.
 
 - The entry point of the generated app resides in the cmd/ folder.
-  - This is done so that you could potentially have multiple entry points for different applications which share the same packages. For example, you could have a `cmd/api/main.go` entrypoint which starts the backend server and a `cmd/other-service/main.go` entrypoint which starts a different service. 
+  - This is done so that you could potentially have multiple entry points for different applications which share the same packages. For example, you could have a `cmd/api/main.go` entrypoint which starts the backend server and a `cmd/other-service/main.go` entrypoint which starts a different service.
 - `pkg` and `internal` folders are now generated in the root of the project.
   - `pkg` folder holds the generated code that is meant to be shared across multiple places.
   - `internal` folder holds the generated code that should not be accessed by other packages.
@@ -28,13 +29,12 @@ Completely refactored the structure of the generated code.
 - Created an `environment` package
   - This package groups all of the functions which setup the environment of the app when the application starts.
 
-
 ### v0.7.0
 
 - `DbConnErrorMessage()`
   - renamed to DbErrorMessage()
   - input type changed from string to error to reduce the amount of chars written
-- Removed the unused app value that was passed in the generated fiber Router__ functions
+- Removed the unused app value that was passed in the generated fiber Router\_\_ functions
 - Refactor the ValidateStruct function to return an error instead of a struct, so that validating the body could be done as a single function call in the controllers (less loc)
 - If the validate field does not include an `required` value, the generated interface for the body type will also be an optional param
 - the `body.gen.go` file will be generated only when the module has at least a single body for an endpoint
@@ -42,12 +42,11 @@ Completely refactored the structure of the generated code.
 - The generated Typescript client now has an interface that defines how the returned response should look like (see ApiResponse)
 - CREATED cli color is now green
 - Removing panics in database package
-- Refactored the way env variables are loaded 
+- Refactored the way env variables are loaded
   - Instead of calling them all as strings from the settings, save them to the settings.Environment variable (+ convert to the expected type), when the main() func is executed
 - New convert package added, so that the `settings.SetEnvironmentConfig()` could convert the loaded env variables correctly.
 - Added a new flag (gut), which optionally can generate files in the modules dir which hold go struct -> typescript interfaces converters (for possible controller endpoints)
 - `validate.ValidateStruct` renamed to `validate.Struct` to be more concise.
-
 
 ### v0.6.0
 
@@ -66,21 +65,20 @@ Completely refactored the structure of the generated code.
 - Removed the placeholder block in modules that is used for removing possible import errors.
 - Added a placeholder function that can be replaced to the function which runs the database query and returns the data + checks for error messages.
 
-
 ### v0.5.0
 
 - Updated go.mod dependencies
 - Refactored fetch client
+
   - Fetch functions now have an required argument which has the settings for the fetch request ( url and headers )
 
-    This allows an easier switch between the dev and the prod environment. As `gomarvin.gen.ts` file is regenerated and ideally should not be edited, switching the api client settings between the dev and prod env can be done only manually, if the api settings are called from the pre-existing settings object. 
-    
+    This allows an easier switch between the dev and the prod environment. As `gomarvin.gen.ts` file is regenerated and ideally should not be edited, switching the api client settings between the dev and prod env can be done only manually, if the api settings are called from the pre-existing settings object.
+
     If the settings of the client are passed as a argument to the function, that problem dissapears.
 
     - Note that this could be implemented as a class, but then the unused methods don't get purged, thus increasing the bundle size (at least in local tests)
 
   - JSDoc comments now include type annotations for the url params
-
 
 ### v0.4.1
 

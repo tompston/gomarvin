@@ -59,7 +59,7 @@ const CREATED_MSG = "\033[32m * CREATED\033[0m"
 var gomarvin_info = `Usage:
   gomarvin generate
 
-Version: 0.9.0
+Version: 0.9.1
 
 Online Editor:
   https://gomarvin.pages.dev
