@@ -44,7 +44,7 @@ func NewServer(app *app.App) *server {
 
 
 {{ if ( eq .ProjectInfo.Framework "gin") }}
-
+// Start the server on the specified host and port + with the defined routes
 func (s *server) Start() {
     backend := gin.Default() 	// create the server
     s.router(backend) 	// use endpoints
@@ -59,6 +59,7 @@ func (s *server) Start() {
 
 
 {{ if ( eq .ProjectInfo.Framework "echo") }}
+// Start Starts the server on the specified host and port + with the defined routes
 func (s *server) Start() {
     server := echo.New()				// create the server
 
@@ -82,6 +83,7 @@ func (s *server) Start() {
 
 
 {{ if ( eq .ProjectInfo.Framework "fiber") }}
+// Start Starts the server on the specified host and port + with the defined routes
 func (s *server) Start() {
     backend := fiber.New()    	// create the server
 
@@ -103,7 +105,7 @@ func (s *server) Start() {
 
 
 {{ if ( eq .ProjectInfo.Framework "chi") }}
-
+// Start Starts the server on the specified host and port + with the defined routes
 func (s *server) Start() {
     backend := chi.NewRouter()
 

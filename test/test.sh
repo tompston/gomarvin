@@ -52,9 +52,9 @@ EXAMPLES=(
   # 'echo'
   # 'chi'
   # 'gin_with_modules'
-  # 'echo_with_modules'
+  'echo_with_modules'
   # 'chi_with_modules'
-  'fiber_with_modules'
+  # 'fiber_with_modules'
 )
 
 # delete the build dir before generating the project
@@ -92,13 +92,6 @@ for example in "${EXAMPLES[@]}"; do
   check_file_update ${PWD}/${example}/cmd/api/main.go
   check_file_update ${PWD}/${example}/internal/api/v1/server/router.go
 
-  # copy the ts client to test/build dir, so that it could be called from client.ts test file
-  TS_CLIENT=${PWD}/${example}/client/ts/gomarvin.ts
-  cp ${TS_CLIENT} ../gomarvin.ts
-  # copy the python client to test/build dir, so that it could be called from client.ts test file
-  PY_CLIENT=${PWD}/${example}/client/py/gomarvin.py
-  cp ${PY_CLIENT} ../gomarvin.py
-
   cd ${example}   # cd into the generated dir
   go mod tidy     # tidy things
   go mod download # download dependencies at first
@@ -107,6 +100,17 @@ for example in "${EXAMPLES[@]}"; do
   if [[ ${example} == *"with_modules"* ]]; then
     if [[ ${example} != gin_with_modules ]]; then
       echo " * Running fetch tests for ${example}"
+
+      # copy the ts client to test/build dir, so that it could be called from client.ts test file
+      TS_CLIENT=${PWD}/client/ts/gomarvin.ts
+      cp ${TS_CLIENT} ../gomarvin.ts
+      echo " * Copied the ts client to the build dir"
+    
+      # copy the python client to test/build dir, so that it could be called from client.ts test file
+      PY_CLIENT=${PWD}/client/py/gomarvin.py
+      cp ${PY_CLIENT} ../gomarvin.py
+      echo " * Copied the python client to the build dir"
+
       cd ${PROJECT_PATH}
       go run cmd/api/main.go &
       sleep 5   # wait for the server to start
