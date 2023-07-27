@@ -28,7 +28,7 @@ func Run(flags *Flags, args []string) {
 
 			generateInitDirsAndFiles(conf, *flags) // generate init dirs and files if project dir does not exist or dangerous-regen="true"
 			generateModules(conf, *flags)          // geenerate module dirs and controller files if exist
-			generateFetchClients(conf, *flags)     // generate things that are optional
+			generateOptionalFiles(conf, *flags)    // generate things that are optional
 			runGofmtAfterCodegen()                 // run gofmt to format the project in the dir
 
 		} else {

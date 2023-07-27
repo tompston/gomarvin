@@ -61,7 +61,7 @@ func generateModules(conf Config, flag Flags) {
 func createModuleFile(templatePath, moduleDir string, data Project) {
 	template_name, outputFile := createTemplateAndOutputName(templatePath)
 	full_output_path := fmt.Sprintf("./%s%s", moduleDir, outputFile)
-	ExecuteTemplate(template_name, templatePath, full_output_path, data)
+	executeTemplate(template_name, templatePath, full_output_path, data)
 	fmt.Println(CREATED_MSG, full_output_path)
 }
 

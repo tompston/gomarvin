@@ -48,7 +48,7 @@ func renameToDotFiles(conf Config) {
 	)
 }
 
-func generateFetchClients(conf Config, flags Flags) {
+func generateOptionalFiles(conf Config, flags Flags) {
 	if conf.ProjectInfo.IncludeSQL {
 		generateSQL(conf, flags)
 	}
@@ -87,7 +87,7 @@ func generateSQL(conf Config, flags Flags) {
 		}
 
 		// if the /db/sql/ dir exists, loop over modules and pass data to the templates
-		for i := 0; i < len(modules); i++ { // for each  module in modules
+		for i := 0; i < len(modules); i++ {
 			module := modules[i]
 			data := Project{ProjectInfo: conf.ProjectInfo, Modules: module}
 
@@ -96,7 +96,7 @@ func generateSQL(conf Config, flags Flags) {
 			template_name, outputFile := createTemplateAndOutputName(templatePath)
 			fullOutputPath := fmt.Sprintf("%s%s", sqlDir, outputFile)
 			fullOutputPath = strings.Replace(fullOutputPath, "__module__", convert.ToLowercase(module.Name), -1)
-			ExecuteTemplate(template_name, templatePath, fullOutputPath, data)
+			executeTemplate(template_name, templatePath, fullOutputPath, data)
 
 			fmt.Println(CREATED_MSG, fullOutputPath)
 		}
