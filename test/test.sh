@@ -52,9 +52,9 @@ EXAMPLES=(
   # 'echo'
   # 'chi'
   # 'gin_with_modules'
-  # 'echo_with_modules'
-  # 'chi_with_modules'
-  'fiber_with_modules'
+  'echo_with_modules'
+  'chi_with_modules'
+  # 'fiber_with_modules'
 )
 
 # delete the build dir before generating the project
