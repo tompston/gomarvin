@@ -26,9 +26,11 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+    "net/http"
 	{{ end }}
 
     "{{$project_name}}/pkg/app"
+    "fmt"
 )
 
 
@@ -40,29 +42,24 @@ func NewServer(app *app.App) *server {
 	return &server{app}
 }
 
-func (s *server) Start() {
-}
-
-
 
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 
-func Start() *gin.Engine {
-
+func (s *server) Start() {
     server := gin.Default() 	// create the server
     Router(server) 	// use endpoints
-    return server
+    
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    server.Run(address)
 }
 
 {{- end }}
 
 
 
-
-
-
 {{- if ( eq .ProjectInfo.Framework "echo") }}
-func Start() *echo.Echo {
+func (s *server) Start() {
     server := echo.New()				// create the server
 
     server.Use(
@@ -72,8 +69,12 @@ func Start() *echo.Echo {
     )
 
     Router(server) 	// use endpoints
-    return server
+
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    server.Logger.Fatal(server.Start(address))
 }
+
 {{ end }}
 
 
@@ -81,7 +82,7 @@ func Start() *echo.Echo {
 
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
-func Start() *fiber.App {
+func (s *server) Start() {
     server := fiber.New()    	// create the server
 
     server.Use(
@@ -92,17 +93,18 @@ func Start() *fiber.App {
 
     Router(server) 	        // use endpoints
 
-    return server
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    server.Listen(address)
 }
+
 {{- end }}
 
 
 
-
-
 {{- if ( eq .ProjectInfo.Framework "chi") }}
-func Start() *chi.Mux {
 
+func (s *server) Start() {
     server := chi.NewRouter()
 
     server.Use(
@@ -111,17 +113,18 @@ func Start() *chi.Mux {
         middleware.AllowContentType("application/json"),
         middleware.ContentCharset("UTF-8", "Latin-1", ""),
         cors.Handler(cors.Options{
-            AllowedOrigins:   []string{"https://*", "http://*"},
             AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
             AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-            AllowCredentials: false,
             MaxAge:           300,
         }),
     )
 
     Router(server) 	// use endpoints
-    return server
+
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    http.ListenAndServe(address, server)
+
 }
 {{- end }}
-
 

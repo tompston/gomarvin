@@ -9,13 +9,9 @@ package main
 
 import (
 	"{{$project_name}}/internal/api/{{ $api_v }}/server"
-	"{{$project_name}}/pkg/settings"
 	"{{$project_name}}/pkg/app"
 	"context"
-	"fmt"
 	"log"
-
-	{{ if ( eq .ProjectInfo.Framework "chi") }}"net/http"{{ end }}
 )
 
 
@@ -28,22 +24,5 @@ func main() {
 	}
 	defer app.Exit(context.Background())
 
-	address := fmt.Sprintf("localhost:%v", settings.BACKEND_PORT)
-	server := server.Start()
-
-	{{- if ( eq .ProjectInfo.Framework "gin") }}
-	server.Run(address) // run the server
-	{{- end }}
-
-	{{- if ( eq .ProjectInfo.Framework "fiber") }}
-	server.Listen(address) // run the server
-	{{- end }}
-
-	{{- if ( eq .ProjectInfo.Framework "echo") }}
-	server.Logger.Fatal(server.Start(address)) // run the server
-	{{- end }}
-
-	{{- if ( eq .ProjectInfo.Framework "chi") }}
-	http.ListenAndServe(address, server) // run the server
-	{{- end }}
+	server.NewServer(app).Start()
 }
