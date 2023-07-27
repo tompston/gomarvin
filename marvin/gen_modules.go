@@ -2,10 +2,10 @@ package marvin
 
 import (
 	"fmt"
+	"strings"
 )
 
-func GenerateModules(conf Config, cmd Flags) {
-
+func generateModules(conf Config, flag Flags) {
 	projectName := conf.ProjectInfo.Name
 	modules := conf.Modules
 
@@ -26,8 +26,8 @@ func GenerateModules(conf Config, cmd Flags) {
 			moduleDir := ModuleDir(projectName, module.Name, apiPrefix)
 
 			// if the dir does not exist or regen is true
-			if !PathExists(moduleDir) || cmd.DangerousRegen {
-				CreateDir(moduleDir) // create the dir
+			if !pathExists(moduleDir) || flag.DangerousRegen {
+				createDir(moduleDir) // create the dir
 			}
 
 			endpoints := data.Modules.Endpoints
@@ -39,7 +39,7 @@ func GenerateModules(conf Config, cmd Flags) {
 
 				// Create the file which holds functions that convert golang structs to ts interfaces
 				// if the -gut flag was set as true
-				if cmd.Gut {
+				if flag.Gut {
 					createModuleFile("templates/module/typescript.gen.go.tmpl", moduleDir, data)
 				}
 
@@ -63,4 +63,23 @@ func createModuleFile(templatePath, moduleDir string, data Project) {
 	full_output_path := fmt.Sprintf("./%s%s", moduleDir, outputFile)
 	ExecuteTemplate(template_name, templatePath, full_output_path, data)
 	fmt.Println(CREATED_MSG, full_output_path)
+}
+
+// name of the folder in the project to which the new modules will be added
+const ModuleOutputDir = "modules"
+
+// "task" 	-> "task_module"
+func ModuleDirName(moduleName string) string {
+	return strings.ToLower(fmt.Sprintf("%s%s", moduleName, "_module"))
+}
+
+func ProjectModuleDirPath(projectName, apiVersion string) string {
+	return fmt.Sprintf("%s/internal/api/%s/%s", projectName, apiVersion, ModuleOutputDir)
+}
+
+// ("my_Project", "Task") --> my_project/modules/task_module/
+func ModuleDir(projectName, moduleName, apiVersion string) string {
+	return fmt.Sprintf("%s/%s/",
+		ProjectModuleDirPath(projectName, apiVersion),
+		ModuleDirName(moduleName))
 }

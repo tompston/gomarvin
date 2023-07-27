@@ -10,7 +10,7 @@ import (
 	"strings"
 	"text/template"
 
-	conv "github.com/tompston/gomarvin/marvin/utils/convert"
+	"github.com/tompston/gomarvin/marvin/utils/convert"
 )
 
 //go:embed templates/init/*
@@ -22,7 +22,7 @@ var templates embed.FS
 
 func ExecuteTemplate(templateName, templatePath, fullOutputPath string, data interface{}) {
 
-	tmpl, err := template.New(templateName).Funcs(template_functions).ParseFS(templates, templatePath)
+	tmpl, err := template.New(templateName).Funcs(TEMPLATE_FUNCTIONS).ParseFS(templates, templatePath)
 	if err != nil {
 		log.Fatalf("Could not parse struct template: %v\n", err)
 	}
@@ -96,18 +96,17 @@ func BodyTypeToGoStructType(bodyType string) string {
 	return bodyType
 }
 
-var template_functions = template.FuncMap{
-	// name the template function the same as the imported convert function for predictability
-	"ConvertToTitle":                      conv.ConvertToTitle,
-	"ConvertToLowercase":                  conv.ConvertToLowercase,
-	"ConvertToUppercase":                  conv.ConvertToUppercase,
-	"ConvertToLowercaseTitle":             conv.ConvertToLowercaseTitle,
-	"ConvertToCamelCase":                  conv.ConvertToCamelCase,
-	"ConvertToPlural":                     conv.ConvertToPlural,
-	"ConvertToLowercasePlural":            conv.ConvertToLowercasePlural,
-	"WrapInCurlyBraces":                   conv.WrapInCurlyBraces,
-	"WrapInCurlyBracesWithAppendedString": conv.WrapInCurlyBracesWithAppendedString,
-	"ConvertLastCharTo":                   conv.ConvertLastCharTo,
+var TEMPLATE_FUNCTIONS = template.FuncMap{
+	"ConvertToTitle":                      convert.ToTitle,
+	"ConvertToLowercase":                  convert.ToLowercase,
+	"ConvertToUppercase":                  convert.ToUppercase,
+	"ConvertToLowercaseTitle":             convert.ToLowercaseTitle,
+	"ConvertToCamelCase":                  convert.ToCamelCase,
+	"ConvertToPlural":                     convert.ToPlural,
+	"ConvertToLowercasePlural":            convert.ToLowercasePlural,
+	"WrapInCurlyBraces":                   convert.WrapInCurlyBraces,
+	"WrapInCurlyBracesWithAppendedString": convert.WrapInCurlyBracesWithAppendedString,
+	"ConvertLastCharTo":                   convert.LastCharTo,
 	// other util functions
 	"TypescriptField":        TypescriptField,
 	"PythonDataclasstField":  PythonDataclasstField,

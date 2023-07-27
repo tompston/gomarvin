@@ -5,35 +5,35 @@ import (
 	"strings"
 )
 
-func ConvertToTitle(i string) string {
+func ToTitle(i string) string {
 	return strings.Title(i)
 }
 
-func ConvertToLowercase(i string) string {
+func ToLowercase(i string) string {
 	return strings.ToLower(i)
 }
 
-func ConvertToUppercase(i string) string {
+func ToUppercase(i string) string {
 	return strings.ToUpper(i)
 }
 
-func ConvertToLowercaseTitle(i string) string {
+func ToLowercaseTitle(i string) string {
 	return strings.Title(strings.ToLower(i))
 }
 
-func ConvertToCamelCase(i string) string {
+func ToCamelCase(i string) string {
 	return ToCamel(i)
 }
 
-func ConvertToPlural(input string) string {
+func ToPlural(input string) string {
 	return NewClient().Plural(input)
 }
 
-func ConvertToLowercasePlural(i string) string {
+func ToLowercasePlural(i string) string {
 	return NewClient().Plural(strings.ToLower(i))
 }
 
-func ConvertLastCharTo(x string, last_value string) string {
+func LastCharTo(x string, last_value string) string {
 	new_str := strings.TrimRight(x, x[len(x)-1:])
 	return fmt.Sprintf("%s%s", new_str, last_value)
 }
