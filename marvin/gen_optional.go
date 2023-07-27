@@ -16,15 +16,20 @@ func GenerateOptional(conf Config, cmd Flags) {
 // if there are modules in the config, generate the python and typescript fetch clients
 // in the client dir
 func GenerateFetchFunctions(conf Config, cmd Flags) {
-	client_dir := fmt.Sprintf("./%s/client/", conf.ProjectInfo.Name)
+	pyClientDir := fmt.Sprintf("./%s/client/py/", conf.ProjectInfo.Name)
+	tsClientDir := fmt.Sprintf("./%s/client/ts/", conf.ProjectInfo.Name)
 
 	// if the public dir does not exist, create it
-	if !PathExists(client_dir) {
-		CreateDir(client_dir)
+	if !PathExists(pyClientDir) {
+		CreateDir(pyClientDir)
 	}
+	if !PathExists(tsClientDir) {
+		CreateDir(tsClientDir)
+	}
+
 	// if there are modules in the config file, create the typescript file
 	if len(conf.Modules) != 0 {
-		GenerateSingleTemplate(conf, typescript_fetch_template, "/client/")
-		GenerateSingleTemplate(conf, python_fetch_template, "/client/")
+		GenerateSingleTemplate(conf, python_fetch_template, "/client/py/")
+		GenerateSingleTemplate(conf, typescript_fetch_template, "/client/ts/")
 	}
 }

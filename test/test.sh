@@ -38,7 +38,7 @@ check_file_update() {
 expected_version="$1"
 
 CURRENT_DIR=$PWD
-GOMARVIN_V='v0.9.0'
+GOMARVIN_V='v0.10.0'
 GOMARVIN_CONFIG_BASE="gomarvin-"
 GOMARVIN_CONFIG_DIR=${CURRENT_DIR}/examples/${GOMARVIN_V}/
 BUILD_DIR=./test/build/
@@ -94,10 +94,10 @@ for example in "${EXAMPLES[@]}"; do
   check_file_update ${PWD}/${example}/internal/api/v1/server/router.go
 
   # copy the ts client to test/build dir, so that it could be called from client.ts test file
-  TS_CLIENT=${PWD}/${example}/client/gomarvin.ts
+  TS_CLIENT=${PWD}/${example}/client/ts/gomarvin.ts
   cp ${TS_CLIENT} ../gomarvin.ts
   # copy the python client to test/build dir, so that it could be called from client.ts test file
-  PY_CLIENT=${PWD}/${example}/client/gomarvin.py
+  PY_CLIENT=${PWD}/${example}/client/py/gomarvin.py
   cp ${PY_CLIENT} ../gomarvin.py
 
   cd ${example}   # cd into the generated dir
