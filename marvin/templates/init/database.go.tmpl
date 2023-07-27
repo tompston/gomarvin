@@ -35,15 +35,15 @@ func DsnString(host, user, pass, name string, port int, ssl, timezone string) st
 // NewDbConn create and returns a new database connection.
 // 
 // Example:
-// 	db, err := database.NewDbConn(dsn_string)
+// 	db, err := database.NewDbConn(dsnString)
 // 	if err != nil {
 //		fmt.Println(err) 
 //	}
 //	defer db.Close()
-func NewDbConn(dsn_string string) (*sql.DB, error) {
-	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", dsn_string) {{ end }}
-	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", dsn_string) {{ end }}
-	{{- if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", dsn_string){{ end }}
+func NewDbConn(dsnString string) (*sql.DB, error) {
+	{{- if ( eq .ProjectInfo.DbType "postgres")}}db, err := sql.Open("postgres", dsnString) {{ end }}
+	{{- if ( eq .ProjectInfo.DbType "sqlite")}}db, err := sql.Open("sqlite3", dsnString) {{ end }}
+	{{- if ( eq .ProjectInfo.DbType "mysql")}}db, err := sql.Open("mysql", dsnString){{ end }}
 	if err != nil {
 		return nil, err
 	}

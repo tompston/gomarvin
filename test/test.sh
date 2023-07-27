@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
-# newman run ./test/postman/gomarvin-tests.postman_collection.json
 
 # from the root
 # chmod u+x ./test/test.sh
@@ -38,7 +37,7 @@ check_file_update() {
 expected_version="$1"
 
 CURRENT_DIR=$PWD
-GOMARVIN_V='v0.9.0'
+GOMARVIN_V='v0.10.0'
 GOMARVIN_CONFIG_BASE="gomarvin-"
 GOMARVIN_CONFIG_DIR=${CURRENT_DIR}/examples/${GOMARVIN_V}/
 BUILD_DIR=./test/build/
@@ -89,16 +88,9 @@ for example in "${EXAMPLES[@]}"; do
   fi
 
   # check if the generated files dont get overwritten
-  check_file_update ${PWD}/${example}/pkg/settings/settings.go
+  check_file_update ${PWD}/${example}/pkg/settings/env.go
   check_file_update ${PWD}/${example}/cmd/api/main.go
   check_file_update ${PWD}/${example}/internal/api/v1/server/router.go
-
-  # copy the ts client to test/build dir, so that it could be called from client.ts test file
-  TS_CLIENT=${PWD}/${example}/client/gomarvin.ts
-  cp ${TS_CLIENT} ../gomarvin.ts
-  # copy the python client to test/build dir, so that it could be called from client.ts test file
-  PY_CLIENT=${PWD}/${example}/client/gomarvin.py
-  cp ${PY_CLIENT} ../gomarvin.py
 
   cd ${example}   # cd into the generated dir
   go mod tidy     # tidy things
@@ -108,6 +100,17 @@ for example in "${EXAMPLES[@]}"; do
   if [[ ${example} == *"with_modules"* ]]; then
     if [[ ${example} != gin_with_modules ]]; then
       echo " * Running fetch tests for ${example}"
+
+      # copy the ts client to test/build dir, so that it could be called from client.ts test file
+      TS_CLIENT=${PWD}/client/ts/gomarvin.ts
+      cp ${TS_CLIENT} ../../gomarvin.ts
+      echo " * Copied the ts client to the build dir"
+    
+      # copy the python client to test/build dir, so that it could be called from client.ts test file
+      PY_CLIENT=${PWD}/client/py/gomarvin.py
+      cp ${PY_CLIENT} ../../gomarvin.py
+      echo " * Copied the python client to the build dir"
+
       cd ${PROJECT_PATH}
       go run cmd/api/main.go &
       sleep 5   # wait for the server to start

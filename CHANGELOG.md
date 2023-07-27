@@ -1,3 +1,15 @@
+### v0.10.0
+
+- pushing cli package to settings dir
+- adding replacable logging line in controllers if db query fails
+- renamed the env config file and pushed it to a new dir called conf
+- pushed the pkg/response package to internal/api/response
+- setting the correct default env path
+- Adding new env variables in the config and removing unsued ones
+- refactored the main script to use dependency injection to showcase how to use it by default
+- refactored the Router function to be an unexportable method
+- adding examples for commands in the generated config file
+
 ### v0.9.1
 
 - Updating gut to v0.0.4 (names of the functions changed)

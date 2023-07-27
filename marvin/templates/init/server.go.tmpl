@@ -26,92 +26,107 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+    "net/http"
 	{{ end }}
+
+    "{{$project_name}}/pkg/app"
+    "fmt"
 )
 
 
+type server struct {
+	app *app.App
+}
+
+func NewServer(app *app.App) *server {
+	return &server{app}
+}
 
 
-
-
-
-{{- if ( eq .ProjectInfo.Framework "gin") }}
-
-func Start() *gin.Engine {
-
-    app := gin.Default() 	// create the server
-    Router(app) 	// use endpoints
-    return app
+{{ if ( eq .ProjectInfo.Framework "gin") }}
+// Start the server on the specified host and port + with the defined routes
+func (s *server) Start() {
+    backend := gin.Default() 	// create the server
+    s.router(backend) 	// use endpoints
+    
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    backend.Run(address)
 }
 
 {{- end }}
 
 
 
+{{ if ( eq .ProjectInfo.Framework "echo") }}
+// Start Starts the server on the specified host and port + with the defined routes
+func (s *server) Start() {
+    server := echo.New()				// create the server
 
-
-
-{{- if ( eq .ProjectInfo.Framework "echo") }}
-func Start() *echo.Echo {
-    app := echo.New()				// create the server
-
-    app.Use(
+    server.Use(
         middleware.Logger(),        // logs the requests
         middleware.Recover(),       // 
         middleware.CORS(),          // allow fetch from frontend
     )
 
-    Router(app) 	// use endpoints
-    return app
+    s.router(server) 	// use endpoints
+
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    server.Logger.Fatal(server.Start(address))
 }
+
 {{ end }}
 
 
 
 
 
-{{- if ( eq .ProjectInfo.Framework "fiber") }}
-func Start() *fiber.App {
-    app := fiber.New()    	// create the server
+{{ if ( eq .ProjectInfo.Framework "fiber") }}
+// Start Starts the server on the specified host and port + with the defined routes
+func (s *server) Start() {
+    backend := fiber.New()    	// create the server
 
-    app.Use(
+    backend.Use(
         logger.New(),       // logs the requests
         cors.New(),         // allow fetch from frontend
         helmet.New(),       // security headers
     )
 
-    Router(app) 	// use endpoints
+    s.router(backend) 	        // use endpoints
 
-    return app
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    backend.Listen(address)
 }
+
 {{- end }}
 
 
 
+{{ if ( eq .ProjectInfo.Framework "chi") }}
+// Start Starts the server on the specified host and port + with the defined routes
+func (s *server) Start() {
+    backend := chi.NewRouter()
 
-
-{{- if ( eq .ProjectInfo.Framework "chi") }}
-func Start() *chi.Mux {
-
-    app := chi.NewRouter()
-
-    app.Use(
+    backend.Use(
         middleware.Logger, 
         middleware.Recoverer,
         middleware.AllowContentType("application/json"),
         middleware.ContentCharset("UTF-8", "Latin-1", ""),
         cors.Handler(cors.Options{
-            AllowedOrigins:   []string{"https://*", "http://*"},
             AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
             AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-            AllowCredentials: false,
             MaxAge:           300,
         }),
     )
 
-    Router(app) 	// use endpoints
-    return app
+    s.router(backend) 	// use endpoints
+
+    conf := s.app.Conf()
+    address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
+    http.ListenAndServe(address, backend)
+
 }
 {{- end }}
-
 

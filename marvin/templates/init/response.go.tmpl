@@ -12,10 +12,7 @@ import (
 	{{- if ( eq .ProjectInfo.Framework "chi") }}
 	"net/http"
 	"encoding/json"
-	{{ end }}
-
-	"{{.ProjectInfo.Name}}/pkg/settings"
-	"fmt"
+	{{ end }}	
 )
 
 const (
@@ -118,13 +115,3 @@ func Response(w http.ResponseWriter, status int, data interface{}, message strin
 	return json.NewEncoder(w).Encode(&res)
 }
 {{- end }}
-
-
-// DbErrorMessage return the full error message only during debug. 
-// This function can be optionally extended to log the full error.
-func DbErrorMessage(err error) string {
-	if settings.DEBUG_MODE {
-		return fmt.Sprintln(FailedDbConnMessage, err.Error())
-	}
-	return fmt.Sprintln(FailedDbConnMessage)
-}
