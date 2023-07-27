@@ -47,7 +47,7 @@ func NewServer(app *app.App) *server {
 
 func (s *server) Start() {
     server := gin.Default() 	// create the server
-    Router(server) 	// use endpoints
+    s.router(server) 	// use endpoints
     
     conf := s.app.Conf()
     address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
@@ -68,7 +68,7 @@ func (s *server) Start() {
         middleware.CORS(),          // allow fetch from frontend
     )
 
-    Router(server) 	// use endpoints
+    s.router(server) 	// use endpoints
 
     conf := s.app.Conf()
     address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
@@ -91,7 +91,7 @@ func (s *server) Start() {
         helmet.New(),       // security headers
     )
 
-    Router(server) 	        // use endpoints
+    s.router(server) 	        // use endpoints
 
     conf := s.app.Conf()
     address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
@@ -119,7 +119,7 @@ func (s *server) Start() {
         }),
     )
 
-    Router(server) 	// use endpoints
+    s.router(server) 	// use endpoints
 
     conf := s.app.Conf()
     address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)

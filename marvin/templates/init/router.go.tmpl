@@ -6,7 +6,6 @@ package server
 
 import (
 	res "{{$project_name}}/internal/api/response"
-	"{{$project_name}}/pkg/settings"
 
 	{{ if ( eq .ProjectInfo.Framework "gin")  	}}"github.com/gin-gonic/gin"	{{ end }}
 	{{ if ( eq .ProjectInfo.Framework "fiber") 	}}"github.com/gofiber/fiber/v2"	{{ end }}
@@ -28,13 +27,14 @@ import (
 
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 
-func Router(app *gin.Engine) {
+func (s *server) router(app *gin.Engine) {
 
 	app.GET("/", func(c *gin.Context) {
 		res.Response(c, 200, nil, "Hello There!")
 	})
 
-	api := app.Group(settings.API_PATH) // prefix for routes
+	apiPath := s.app.Conf().Backend.APIPath
+	api := app.Group(apiPath) // prefix for routes
 	_ = api
 	{
 	{{ if .Modules -}} 
@@ -53,7 +53,7 @@ func Router(app *gin.Engine) {
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 
-func Router(app *fiber.App) {
+func (s *server) router(app *fiber.App) {
 
 	// home_view
 	app.Get("/", func (c *fiber.Ctx) error {
@@ -61,7 +61,8 @@ func Router(app *fiber.App) {
 	})
 
 	// add a prefix for the routes
-	api := app.Group(settings.API_PATH)
+	apiPath := s.app.Conf().Backend.APIPath
+	api := app.Group(apiPath)
 	_ = api
 
 	{{ if .Modules -}} 
@@ -80,7 +81,7 @@ func Router(app *fiber.App) {
 
 {{- if ( eq .ProjectInfo.Framework "echo") }}
 
-func Router(app *echo.Echo) {
+func (s *server) router(app *echo.Echo) {
 
 	// home_view
 	app.GET("/", func (c echo.Context) error {
@@ -88,7 +89,8 @@ func Router(app *echo.Echo) {
 	})
 
 	// add a prefix for the routes
-	api := app.Group(settings.API_PATH)
+	apiPath := s.app.Conf().Backend.APIPath
+	api := app.Group(apiPath)
 	_ = api
 
 	{{ if .Modules -}} 
@@ -104,7 +106,7 @@ func Router(app *echo.Echo) {
 
 {{- if ( eq .ProjectInfo.Framework "chi") }}
 
-func Router(app *chi.Mux) {
+func (s *server) router(app *chi.Mux) {
 
 	// home_view
 	app.Get("/", func(w http.ResponseWriter, r *http.Request) {
@@ -112,7 +114,8 @@ func Router(app *chi.Mux) {
 	})
 
 	api := chi.NewRouter()
-	app.Mount(settings.API_PATH, api)
+	apiPath := s.app.Conf().Backend.APIPath
+	app.Mount(apiPath, api)
 
 	{{ if .Modules -}} 
 		{{- range $module := .Modules }}
