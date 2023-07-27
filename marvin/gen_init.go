@@ -39,8 +39,8 @@ func RenameToDotFiles(conf Config) {
 
 	project := conf.ProjectInfo.Name
 
-	env_original_path := fmt.Sprintf("./%s/env", project)
-	env_new_path := fmt.Sprintf("./%s/.env", project)
+	env_original_path := fmt.Sprintf("./%s/conf/env.dev", project)
+	env_new_path := fmt.Sprintf("./%s/conf/.env.dev", project)
 	RenameFileIfExists(env_original_path, env_new_path)
 
 	gitignore_original_path := fmt.Sprintf("./%s/gitignore", project)

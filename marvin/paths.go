@@ -7,6 +7,7 @@ var init_project_dirs = [...]string{
 	"/",
 	"/client/",
 	"/cmd/api/",
+	"/conf/",
 	// -- pkg dirs
 	"/pkg/response/",
 	"/pkg/validate/",
@@ -26,7 +27,7 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/main.go.tmpl", output_dir: "/cmd/api/"}, // main.go
 	{template_path: "templates/init/args.go.tmpl", output_dir: "/pkg/settings/cli/"},
 	{template_path: "templates/init/README.md.tmpl", output_dir: "/"},
-	{template_path: "templates/init/env.tmpl", output_dir: "/"}, // a dot at the start breaks this
+	{template_path: "templates/init/env.dev.tmpl", output_dir: "/conf/"}, // a dot at the start breaks this
 	{template_path: "templates/init/gitignore.tmpl", output_dir: "/"},
 	{template_path: "templates/init/go.mod.tmpl", output_dir: "/"},
 	{template_path: "templates/init/settings.go.tmpl", output_dir: "/pkg/settings/"},
