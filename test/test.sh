@@ -52,9 +52,9 @@ EXAMPLES=(
   # 'echo'
   # 'chi'
   # 'gin_with_modules'
-  'echo_with_modules'
+  # 'echo_with_modules'
   # 'chi_with_modules'
-  # 'fiber_with_modules'
+  'fiber_with_modules'
 )
 
 # delete the build dir before generating the project
@@ -103,12 +103,12 @@ for example in "${EXAMPLES[@]}"; do
 
       # copy the ts client to test/build dir, so that it could be called from client.ts test file
       TS_CLIENT=${PWD}/client/ts/gomarvin.ts
-      cp ${TS_CLIENT} ../gomarvin.ts
+      cp ${TS_CLIENT} ../../gomarvin.ts
       echo " * Copied the ts client to the build dir"
     
       # copy the python client to test/build dir, so that it could be called from client.ts test file
       PY_CLIENT=${PWD}/client/py/gomarvin.py
-      cp ${PY_CLIENT} ../gomarvin.py
+      cp ${PY_CLIENT} ../../gomarvin.py
       echo " * Copied the python client to the build dir"
 
       cd ${PROJECT_PATH}

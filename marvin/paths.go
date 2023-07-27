@@ -5,7 +5,6 @@ import "fmt"
 var init_project_dirs = [...]string{
 	// -- root dirs
 	"/",
-	"/client/",
 	"/cmd/api/",
 	"/conf/",
 	// -- pkg dirs
