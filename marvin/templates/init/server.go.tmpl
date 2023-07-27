@@ -27,11 +27,21 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	{{ end }}
+
+    "{{$project_name}}/pkg/app"
 )
 
 
+type server struct {
+	app *app.App
+}
 
+func NewServer(app *app.App) *server {
+	return &server{app}
+}
 
+func (s *server) Start() {
+}
 
 
 
@@ -39,9 +49,9 @@ import (
 
 func Start() *gin.Engine {
 
-    app := gin.Default() 	// create the server
-    Router(app) 	// use endpoints
-    return app
+    server := gin.Default() 	// create the server
+    Router(server) 	// use endpoints
+    return server
 }
 
 {{- end }}
@@ -53,16 +63,16 @@ func Start() *gin.Engine {
 
 {{- if ( eq .ProjectInfo.Framework "echo") }}
 func Start() *echo.Echo {
-    app := echo.New()				// create the server
+    server := echo.New()				// create the server
 
-    app.Use(
+    server.Use(
         middleware.Logger(),        // logs the requests
         middleware.Recover(),       // 
         middleware.CORS(),          // allow fetch from frontend
     )
 
-    Router(app) 	// use endpoints
-    return app
+    Router(server) 	// use endpoints
+    return server
 }
 {{ end }}
 
@@ -72,17 +82,17 @@ func Start() *echo.Echo {
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 func Start() *fiber.App {
-    app := fiber.New()    	// create the server
+    server := fiber.New()    	// create the server
 
-    app.Use(
+    server.Use(
         logger.New(),       // logs the requests
         cors.New(),         // allow fetch from frontend
         helmet.New(),       // security headers
     )
 
-    Router(app) 	// use endpoints
+    Router(server) 	        // use endpoints
 
-    return app
+    return server
 }
 {{- end }}
 
@@ -93,9 +103,9 @@ func Start() *fiber.App {
 {{- if ( eq .ProjectInfo.Framework "chi") }}
 func Start() *chi.Mux {
 
-    app := chi.NewRouter()
+    server := chi.NewRouter()
 
-    app.Use(
+    server.Use(
         middleware.Logger, 
         middleware.Recoverer,
         middleware.AllowContentType("application/json"),
@@ -109,8 +119,8 @@ func Start() *chi.Mux {
         }),
     )
 
-    Router(app) 	// use endpoints
-    return app
+    Router(server) 	// use endpoints
+    return server
 }
 {{- end }}
 

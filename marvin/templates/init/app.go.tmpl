@@ -7,7 +7,7 @@ package app
 import (
 	"context"
 	"database/sql"
-	"{{ $project_name }}/pkg/settings/database"
+	_ "{{ $project_name }}/pkg/settings/database"
 	"{{ $project_name }}/pkg/settings/cli"
 	"{{ $project_name }}/pkg/settings"
 	"fmt"
@@ -53,35 +53,38 @@ func NewApp(ctx context.Context, cliArgs ...cli.Args) (*App, error) {
 
 
 	{{ if ( eq .ProjectInfo.DbType "postgres") }}
-	dbConf := conf.Database
-	dsnString := database.DsnString(dbConf.Host, dbConf.User, dbConf.Pass, dbConf.Name, dbConf.Port, dbConf.SSL, dbConf.Timezone)
-	db, err := database.NewDbConn(dsnString)
-	if err != nil {
-		return nil, fmt.Errorf("error creating database connection, %v", err)
-	}
+	// Uncomment the following block and pass it to app if you want to use a db connection
+	// dbConf := conf.Database
+	// dsnString := database.DsnString(dbConf.Host, dbConf.User, dbConf.Pass, dbConf.Name, dbConf.Port, dbConf.SSL, dbConf.Timezone)
+	// db, err := database.NewDbConn(dsnString)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("error creating database connection, %v", err)
+	// }
 	{{ end }}
 
 
 	{{ if ( eq .ProjectInfo.DbType "mysql") }}
-	dbConf := conf.Database
-	dsnString := database.DsnString(dbConf.User, dbConf.Pass, dbConf.Name)
-	db, err := database.NewDbConn(dsnString)
-	if err != nil {
-		return nil, fmt.Errorf("error creating database connection, %v", err)
-	}
+	// Uncomment the following block and pass it to app if you want to use a db connection
+	// dbConf := conf.Database
+	// dsnString := database.DsnString(dbConf.User, dbConf.Pass, dbConf.Name)
+	// db, err := database.NewDbConn(dsnString)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("error creating database connection, %v", err)
+	// }
 	{{ end }}
 
 
 	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
-	dbConf := conf.Database
-	dsnString := database.DsnString("test.db")
-	db, err := database.NewDbConn(dsnString)
-	if err != nil {
-		return nil, fmt.Errorf("error creating database connection, %v", err)
-	}
+	// Uncomment the following block and pass it to app if you want to use a db connection
+	// dbConf := conf.Database
+	// dsnString := database.DsnString("test.db")
+	// db, err := database.NewDbConn(dsnString)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("error creating database connection, %v", err)
+	// }
 	{{ end }}
 
-	return &App{conf, db}, nil
+	return &App{conf, nil}, nil
 }
 
 // Exit function groups all the exit functions of the app (e.g. closing the database connection)
