@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # GOOS=darwin GOARCH=arm64 go build -o gomarvin main.go
-# newman run ./test/postman/gomarvin-tests.postman_collection.json
 
 # from the root
 # chmod u+x ./test/test.sh

@@ -9,7 +9,6 @@ var init_project_dirs = [...]string{
 	"/cmd/api/",
 	"/conf/",
 	// -- pkg dirs
-	"/pkg/response/",
 	"/pkg/validate/",
 	"/pkg/convert/",
 	"/pkg/settings/",
