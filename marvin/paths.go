@@ -8,12 +8,12 @@ var init_project_dirs = [...]string{
 	"/client/",
 	"/cmd/api/",
 	// -- pkg dirs
-	"pkg/cli/",
 	"/pkg/response/",
 	"/pkg/validate/",
 	"/pkg/convert/",
 	"/pkg/settings/",
 	"/pkg/settings/database/",
+	"/pkg/settings/cli/",
 	"/pkg/app/",
 }
 
@@ -24,7 +24,7 @@ const python_fetch_template = "templates/optional/client/gomarvin.py.tmpl"
 
 var init_project_templates = []Template{
 	{template_path: "templates/init/main.go.tmpl", output_dir: "/cmd/api/"}, // main.go
-	{template_path: "templates/init/args.go.tmpl", output_dir: "/pkg/cli/"},
+	{template_path: "templates/init/args.go.tmpl", output_dir: "/pkg/settings/cli/"},
 	{template_path: "templates/init/README.md.tmpl", output_dir: "/"},
 	{template_path: "templates/init/env.tmpl", output_dir: "/"}, // a dot at the start breaks this
 	{template_path: "templates/init/gitignore.tmpl", output_dir: "/"},

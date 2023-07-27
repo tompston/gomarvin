@@ -37,7 +37,7 @@ func NewArgs(cliArgs ...Args) Args {
 	return args
 }
 
-// setEnvPath returns the path to the config file if the environment variable.
+// setEnvPath returns the path to the config file if the environment variable exits.
 // If the environment variable is not set, it will return an empty string.
 func setEnvPath() string {
 	envPath, ok := os.LookupEnv(ENV_CONF_PATH_KEY)
