@@ -1,6 +1,16 @@
 package cli
 
-import "flag"
+import (
+	"flag"
+	"os"
+)
+
+const (
+	// Key for the environment variable. If it exists, the value of it is used as the path to the config file.
+	ENV_CONF_PATH_KEY = "MY_PROJECT_CONF_PATH"
+	// Path to the config file if the environment variable is not set or the cli args are not provided.
+	DEFAULT_CONFIG_PATH = ".env"
+)
 
 // Args is a struct that holds the command line arguments
 // that might be passed to the application
@@ -8,28 +18,31 @@ type Args struct {
 	Conf string // path to config file
 }
 
-// setArgs returns the command line arguments. If no arguments are passed it
+// NewArgs returns the command line arguments. If no arguments are passed it
 // will return the default values. If arguments to the function are passed,
 // it will return those arguments and ignore the command line arguments.
-func setArgs(cli ...Args) Args {
-	if len(cli) == 1 {
-		return cli[0]
-	} else {
-		var args Args
-		flag.StringVar(&args.Conf, "conf", ".env", "path to the config file")
-		flag.Parse()
-		return args
+func NewArgs(cliArgs ...Args) Args {
+	if len(cliArgs) == 1 {
+		return cliArgs[0]
 	}
+
+	envPath := setEnvPath()
+	if envPath != "" {
+		return Args{Conf: envPath}
+	}
+
+	var args Args
+	flag.StringVar(&args.Conf, "conf", DEFAULT_CONFIG_PATH, "path to the config file")
+	flag.Parse()
+	return args
 }
 
-// NewArgs sets the arguments based on the input of the function. If no args are provided,
-// the default values are used. If args are provided, they are used.
-func NewArgs(cli_args ...Args) Args {
-	var args Args
-	if len(cli_args) == 0 {
-		args = setArgs()
-	} else {
-		args = setArgs(cli_args[0])
+// setEnvPath returns the path to the config file if the environment variable.
+// If the environment variable is not set, it will return an empty string.
+func setEnvPath() string {
+	envPath, ok := os.LookupEnv(ENV_CONF_PATH_KEY)
+	if ok && envPath != "" {
+		return envPath
 	}
-	return args
+	return ""
 }
