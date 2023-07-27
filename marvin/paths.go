@@ -16,12 +16,12 @@ var init_project_dirs = [...]string{
 	"/pkg/settings/database/",
 	"/pkg/settings/cli/",
 	"/pkg/app/",
+	// -- internal dirs
+	"/internal/api/response/",
 }
 
 const typescript_fetch_template = "templates/optional/client/gomarvin.ts.tmpl"
 const python_fetch_template = "templates/optional/client/gomarvin.py.tmpl"
-
-// const typescript_seed_template = "templates/optional/ts/seeder.gen.ts.tmpl"
 
 var init_project_templates = []Template{
 	{template_path: "templates/init/main.go.tmpl", output_dir: "/cmd/api/"}, // main.go
@@ -33,7 +33,6 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/settings.go.tmpl", output_dir: "/pkg/settings/"},
 	{template_path: "templates/init/env.go.tmpl", output_dir: "/pkg/settings/"},
 	{template_path: "templates/init/database.go.tmpl", output_dir: "/pkg/settings/database/"},
-	{template_path: "templates/init/response.go.tmpl", output_dir: "/pkg/response/"},
 	{template_path: "templates/init/validate.go.tmpl", output_dir: "/pkg/validate/"},
 	{template_path: "templates/init/convert.go.tmpl", output_dir: "/pkg/convert/"},
 	{template_path: "templates/init/app.go.tmpl", output_dir: "/pkg/app/"},
@@ -43,6 +42,7 @@ func initModuleTemplates(api_prefix string) []Template {
 	return []Template{
 		{template_path: "templates/init/router.go.tmpl", output_dir: fmt.Sprintf("/internal/api/%v/server/", api_prefix)},
 		{template_path: "templates/init/server.go.tmpl", output_dir: fmt.Sprintf("/internal/api/%v/server/", api_prefix)},
+		{template_path: "templates/init/response.go.tmpl", output_dir: "/internal/api/response/"},
 	}
 }
 

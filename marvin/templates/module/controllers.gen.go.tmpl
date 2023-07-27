@@ -8,7 +8,7 @@
 package {{ ConvertToLowercase  $module}}_module
 
 import (
-	res "{{$project.Name}}/pkg/response"
+	res "{{$project.Name}}/internal/api/response"
 	"fmt"
 
 	{{ if ( eq .ProjectInfo.Framework "gin") }}"github.com/gin-gonic/gin"{{ end }}

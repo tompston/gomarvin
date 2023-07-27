@@ -5,7 +5,7 @@ package server
 
 
 import (
-	res "{{$project_name}}/pkg/response"
+	res "{{$project_name}}/internal/api/response"
 	"{{$project_name}}/pkg/settings"
 
 	{{ if ( eq .ProjectInfo.Framework "gin")  	}}"github.com/gin-gonic/gin"	{{ end }}
