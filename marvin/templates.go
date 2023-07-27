@@ -20,34 +20,34 @@ import (
 
 var templates embed.FS
 
-func ExecuteTemplate(t_name string, t_path string, full_output_path string, data interface{}) {
+func ExecuteTemplate(templateName, templatePath, fullOutputPath string, data interface{}) {
 
-	tmpl, err := template.New(t_name).Funcs(template_functions).ParseFS(templates, t_path)
-
+	tmpl, err := template.New(templateName).Funcs(template_functions).ParseFS(templates, templatePath)
 	if err != nil {
 		log.Fatalf("Could not parse struct template: %v\n", err)
 	}
 
-	out, _ := os.Create(full_output_path)
+	out, err := os.Create(fullOutputPath)
+	if err != nil {
+		log.Fatalf("Could not create file: %v\n", err)
+	}
 	defer out.Close()
 
-	if err != nil {
-		log.Fatalf("Could not parse struct template: %v\n", err)
+	if err := tmpl.Execute(out, data); err != nil {
+		log.Fatalf("Could not execute template: %v\n", err)
 	}
-
-	tmpl.Execute(out, data)
 }
 
 // generate 2 strings from the template path, that are needed to run the ExecuteTemplate() func
 //   - temp_name = return everything that is after the last / to get the name of the template.
-func GenerateTemplateAndOutputName(template_path string) (string, string) {
-	temp_name := regexp.MustCompile(`[^/]*$`).FindString(template_path)
-	out := strings.TrimSuffix(temp_name, filepath.Ext(temp_name))
-	return temp_name, out
+func GenerateTemplateAndOutputName(templatePath string) (string, string) {
+	templateName := regexp.MustCompile(`[^/]*$`).FindString(templatePath)
+	out := strings.TrimSuffix(templateName, filepath.Ext(templateName))
+	return templateName, out
 }
 
 // pass down config and array of predefined tempates and generate them
-func GenerateTemplates(conf Config, templates []Template) {
+func generateTemplates(conf Config, templates []Template) {
 	for i := 0; i < len(templates); i++ {
 		output_dir := templates[i].output_dir
 		templ_path := templates[i].template_path
@@ -57,12 +57,12 @@ func GenerateTemplates(conf Config, templates []Template) {
 
 // pass down template data, full path to template and output dir
 //   - GenerateSingleTemplate(conf, "templates/optional/ts/gomarvin.gen.ts.tmpl", "/ts/")
-func GenerateSingleTemplate(conf Config, template_path string, output_dir string) {
-	project_name := conf.ProjectInfo.Name
-	project_output_dir := fmt.Sprintf("./%s%s", project_name, output_dir)
-	template_name, output_file := GenerateTemplateAndOutputName(template_path)
-	full_output_path := fmt.Sprintf("%s%s", project_output_dir, output_file)
-	ExecuteTemplate(template_name, template_path, full_output_path, conf)
+func GenerateSingleTemplate(conf Config, templatePath string, outputDir string) {
+	projectName := conf.ProjectInfo.Name
+	projectOutputDir := fmt.Sprintf("./%s%s", projectName, outputDir)
+	template_name, output_file := GenerateTemplateAndOutputName(templatePath)
+	full_output_path := fmt.Sprintf("%s%s", projectOutputDir, output_file)
+	ExecuteTemplate(template_name, templatePath, full_output_path, conf)
 	fmt.Println(CREATED_MSG, full_output_path)
 }
 
@@ -116,5 +116,3 @@ var template_functions = template.FuncMap{
 	"ApiVersion":             ApiVersion,
 	"BodyTypeToGoStructType": BodyTypeToGoStructType,
 }
-
-const REPLACABLE_TEMPLATE_NAME = "__module__"

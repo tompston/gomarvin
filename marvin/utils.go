@@ -9,7 +9,7 @@ import (
 )
 
 // name of the folder in the project to which the new modules will be added
-var ModuleOutputDir = "modules"
+const ModuleOutputDir = "modules"
 
 // if you pass a nested path of folders that do not exist, this function
 // will also create those folders

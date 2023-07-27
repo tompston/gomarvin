@@ -27,10 +27,10 @@ func Run(flags *Flags, args []string) {
 			api_version := ApiVersionInterger(conf.ProjectInfo.APIPrefix)
 			_ = api_version
 
-			GenerateInit(conf, *flags)     // generate init dirs and files if project dir does not exist or dangerous-regen="true"
-			GenerateModules(conf, *flags)  // geenerate module dirs and controller files if exist
-			GenerateOptional(conf, *flags) // generate things that are optional
-			FormatAfterGen()               // run gofmt to format the project in the dir
+			generateInitDirsAndFiles(conf, *flags) // generate init dirs and files if project dir does not exist or dangerous-regen="true"
+			GenerateModules(conf, *flags)          // geenerate module dirs and controller files if exist
+			generateFetchClients(conf, *flags)     // generate things that are optional
+			FormatAfterGen()                       // run gofmt to format the project in the dir
 
 		} else {
 			fmt.Println("* ERROR :: Could not find the config file!")

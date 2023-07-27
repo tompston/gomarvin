@@ -6,7 +6,7 @@ import (
 
 func GenerateModules(conf Config, cmd Flags) {
 
-	project_name := conf.ProjectInfo.Name
+	projectName := conf.ProjectInfo.Name
 	modules := conf.Modules
 
 	// if there are modules in the config file
@@ -22,12 +22,12 @@ func GenerateModules(conf Config, cmd Flags) {
 				Modules:     module,
 			}
 
-			api_prefix := ApiVersion(conf.ProjectInfo.APIPrefix)
-			module_dir := ModuleDir(project_name, module.Name, api_prefix)
+			apiPrefix := ApiVersion(conf.ProjectInfo.APIPrefix)
+			moduleDir := ModuleDir(projectName, module.Name, apiPrefix)
 
 			// if the dir does not exist or regen is true
-			if !PathExists(module_dir) || cmd.DangerousRegen {
-				CreateDir(module_dir) // create the dir
+			if !PathExists(moduleDir) || cmd.DangerousRegen {
+				CreateDir(moduleDir) // create the dir
 			}
 
 			endpoints := data.Modules.Endpoints
@@ -35,12 +35,12 @@ func GenerateModules(conf Config, cmd Flags) {
 			// if there are endpoints in the module, create files that hold them
 			if len(endpoints) != 0 {
 				// Create the file which holds controllers
-				CreateModuleFile("templates/module/controllers.gen.go.tmpl", module_dir, data)
+				createModuleFile("templates/module/controllers.gen.go.tmpl", moduleDir, data)
 
 				// Create the file which holds functions that convert golang structs to ts interfaces
 				// if the -gut flag was set as true
 				if cmd.Gut {
-					CreateModuleFile("templates/module/typescript.gen.go.tmpl", module_dir, data)
+					createModuleFile("templates/module/typescript.gen.go.tmpl", moduleDir, data)
 				}
 
 				// if there is at least a single endpoint which has a body that does not have
@@ -48,7 +48,7 @@ func GenerateModules(conf Config, cmd Flags) {
 				for q := 0; q < len(endpoints); q++ {
 					endpoint_body := endpoints[q].Body
 					if len(endpoint_body) != 0 {
-						CreateModuleFile("templates/module/body.gen.go.tmpl", module_dir, data)
+						createModuleFile("templates/module/body.gen.go.tmpl", moduleDir, data)
 						break
 					}
 				}
@@ -57,20 +57,10 @@ func GenerateModules(conf Config, cmd Flags) {
 	}
 }
 
-func CreateModuleFile(template_path string, module_dir string, data Project) {
-	template_name, output_file := GenerateTemplateAndOutputName(template_path)
-	full_output_path := fmt.Sprintf("./%s%s", module_dir, output_file)
-	ExecuteTemplate(template_name, template_path, full_output_path, data)
+// Create a file in the module directory
+func createModuleFile(templatePath, moduleDir string, data Project) {
+	template_name, output_file := GenerateTemplateAndOutputName(templatePath)
+	full_output_path := fmt.Sprintf("./%s%s", moduleDir, output_file)
+	ExecuteTemplate(template_name, templatePath, full_output_path, data)
 	fmt.Println(CREATED_MSG, full_output_path)
 }
-
-/*
-
-
-go run main.go -gut=true  \
-    -config="./examples/v0.7.0/gomarvin-fiber_with_modules.json" generate
-
-
-
-
-*/
