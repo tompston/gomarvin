@@ -29,7 +29,6 @@ var init_project_templates = []Template{
 	{template_path: "templates/init/env.dev.tmpl", output_dir: "/conf/"}, // a dot at the start breaks this
 	{template_path: "templates/init/gitignore.tmpl", output_dir: "/"},
 	{template_path: "templates/init/go.mod.tmpl", output_dir: "/"},
-	{template_path: "templates/init/settings.go.tmpl", output_dir: "/pkg/settings/"},
 	{template_path: "templates/init/env.go.tmpl", output_dir: "/pkg/settings/"},
 	{template_path: "templates/init/database.go.tmpl", output_dir: "/pkg/settings/database/"},
 	{template_path: "templates/init/validate.go.tmpl", output_dir: "/pkg/validate/"},

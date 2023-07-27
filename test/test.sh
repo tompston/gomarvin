@@ -88,7 +88,7 @@ for example in "${EXAMPLES[@]}"; do
   fi
 
   # check if the generated files dont get overwritten
-  check_file_update ${PWD}/${example}/pkg/settings/settings.go
+  check_file_update ${PWD}/${example}/pkg/settings/env.go
   check_file_update ${PWD}/${example}/cmd/api/main.go
   check_file_update ${PWD}/${example}/internal/api/v1/server/router.go
 
@@ -111,7 +111,7 @@ for example in "${EXAMPLES[@]}"; do
       go run cmd/api/main.go &
       sleep 5   # wait for the server to start
       # ${TS_CLIENT}
-      # deno test --allow-net ../../client.ts
+      deno test --allow-net ../../client.ts
       python3 ../../client.py
 
       kill -9 $(lsof -t -i:4444)

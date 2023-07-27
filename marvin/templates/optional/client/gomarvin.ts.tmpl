@@ -53,12 +53,12 @@ export const defaultClient : Client = {
  * @example
  * // Append an optional url string
  * async function FetchUserById() {
- *  const res = await F.GetUserById(client, 10, { append_url: "?name=jim" });
+ *  const res = await gomarvin.GetUserById(client, 10, { append_url: "?name=jim" });
  *  console.log(res);
  * }
  * // Use a different RequestInit object in the fetch request
  * async function FetchUserById() {
- *  const res = await F.GetUserById(client, 10, { options: { method: "POST" } });
+ *  const res = await gomarvin.GetUserById(client, 10, { options: { method: "POST" } });
  *  console.log(res);
  * }
  */

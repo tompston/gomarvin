@@ -8,6 +8,11 @@
 go mod tidy
 go mod download
 go run cmd/api/main.go
+
+# run with a custom config path using flags
+go run cmd/api/main.go --conf "path/to/config"
+# or run with a custom config path using env vars (useful when running in docker or tests with `go test ./...`)
+MY_PROJECT_CONF_PATH="path/to/config" go run cmd/api/main.go
 ```
 
 ### Init project structure

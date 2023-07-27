@@ -43,7 +43,7 @@ func NewServer(app *app.App) *server {
 }
 
 
-{{- if ( eq .ProjectInfo.Framework "gin") }}
+{{ if ( eq .ProjectInfo.Framework "gin") }}
 
 func (s *server) Start() {
     backend := gin.Default() 	// create the server
@@ -58,7 +58,7 @@ func (s *server) Start() {
 
 
 
-{{- if ( eq .ProjectInfo.Framework "echo") }}
+{{ if ( eq .ProjectInfo.Framework "echo") }}
 func (s *server) Start() {
     server := echo.New()				// create the server
 
@@ -81,7 +81,7 @@ func (s *server) Start() {
 
 
 
-{{- if ( eq .ProjectInfo.Framework "fiber") }}
+{{ if ( eq .ProjectInfo.Framework "fiber") }}
 func (s *server) Start() {
     backend := fiber.New()    	// create the server
 
@@ -102,7 +102,7 @@ func (s *server) Start() {
 
 
 
-{{- if ( eq .ProjectInfo.Framework "chi") }}
+{{ if ( eq .ProjectInfo.Framework "chi") }}
 
 func (s *server) Start() {
     backend := chi.NewRouter()
