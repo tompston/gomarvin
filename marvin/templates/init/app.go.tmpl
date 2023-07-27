@@ -44,6 +44,8 @@ func (a *App) Db() *sql.DB {
 func NewApp(ctx context.Context, cliArgs ...cli.Args) (*App, error) {
 	args := cli.NewArgs(cliArgs...)
 
+	fmt.Printf("Initializing app with the %v config file\n", args.Conf)
+
 	conf, err := settings.NewEnvConfig(args.Conf)
 	if err != nil {
 		return nil, fmt.Errorf("error loading .env file, %v", err)
@@ -51,9 +53,9 @@ func NewApp(ctx context.Context, cliArgs ...cli.Args) (*App, error) {
 
 
 	{{ if ( eq .ProjectInfo.DbType "postgres") }}
-	db_conf := conf.Database
-	dsn_string := database.DsnString(db_conf.Host, db_conf.User, db_conf.Pass, db_conf.Name, db_conf.Port, db_conf.SSL, db_conf.Timezone)
-	db, err := database.NewDbConn(dsn_string)
+	dbConf := conf.Database
+	dsnString := database.DsnString(dbConf.Host, dbConf.User, dbConf.Pass, dbConf.Name, dbConf.Port, dbConf.SSL, dbConf.Timezone)
+	db, err := database.NewDbConn(dsnString)
 	if err != nil {
 		return nil, fmt.Errorf("error creating database connection, %v", err)
 	}
@@ -61,9 +63,9 @@ func NewApp(ctx context.Context, cliArgs ...cli.Args) (*App, error) {
 
 
 	{{ if ( eq .ProjectInfo.DbType "mysql") }}
-	db_conf := conf.Database
-	dsn_string := database.DsnString(db_conf.User, db_conf.Pass, db_conf.Name)
-	db, err := database.NewDbConn(dsn_string)
+	dbConf := conf.Database
+	dsnString := database.DsnString(dbConf.User, dbConf.Pass, dbConf.Name)
+	db, err := database.NewDbConn(dsnString)
 	if err != nil {
 		return nil, fmt.Errorf("error creating database connection, %v", err)
 	}
@@ -71,9 +73,9 @@ func NewApp(ctx context.Context, cliArgs ...cli.Args) (*App, error) {
 
 
 	{{ if ( eq .ProjectInfo.DbType "sqlite") }}
-	db_conf := conf.Database
-	dsn_string := database.DsnString("test.db")
-	db, err := database.NewDbConn(dsn_string)
+	dbConf := conf.Database
+	dsnString := database.DsnString("test.db")
+	db, err := database.NewDbConn(dsnString)
 	if err != nil {
 		return nil, fmt.Errorf("error creating database connection, %v", err)
 	}
