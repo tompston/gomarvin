@@ -18,7 +18,7 @@ def test_get_users():
     # check if url includes the append_url in the string 
     assert "?name=jim" in data.url
     
-    print("PASS")
+    print("PYTHON CLIENT WORKS")
 
 
 test_get_users()
@@ -27,7 +27,7 @@ test_get_users()
 def test_get_user():
     data = gomarvin.UserEndpoints(client).GetUserById(1)
     assert data.status_code == 200 and data.json() == response_ok
-    print("PASS")
+    print("PYTHON CLIENT WORKS")
 
 
 test_get_user()
@@ -38,7 +38,7 @@ def test_create_user_passing_validation():
         username="jim", password="very-long-password", email="jim@email.com")
     data = gomarvin.UserEndpoints(client).CreateUser(body=body)
     assert data.status_code == 200 and data.json() == response_ok
-    print("PASS")
+    print("PYTHON CLIENT WORKS")
 
 
 test_create_user_passing_validation()
@@ -49,7 +49,7 @@ def test_create_user_failing_validation():
         username="jim", password="short", email="jim@email.com")
     data = gomarvin.UserEndpoints(client).CreateUser(body=body)
     assert data.status_code != 200
-    print("PASS")
+    print("PYTHON CLIENT WORKS")
 
 
 test_create_user_failing_validation()

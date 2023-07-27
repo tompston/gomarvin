@@ -46,12 +46,12 @@ func NewServer(app *app.App) *server {
 {{- if ( eq .ProjectInfo.Framework "gin") }}
 
 func (s *server) Start() {
-    server := gin.Default() 	// create the server
-    s.router(server) 	// use endpoints
+    backend := gin.Default() 	// create the server
+    s.router(backend) 	// use endpoints
     
     conf := s.app.Conf()
     address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
-    server.Run(address)
+    backend.Run(address)
 }
 
 {{- end }}
@@ -83,19 +83,19 @@ func (s *server) Start() {
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
 func (s *server) Start() {
-    server := fiber.New()    	// create the server
+    backend := fiber.New()    	// create the server
 
-    server.Use(
+    backend.Use(
         logger.New(),       // logs the requests
         cors.New(),         // allow fetch from frontend
         helmet.New(),       // security headers
     )
 
-    s.router(server) 	        // use endpoints
+    s.router(backend) 	        // use endpoints
 
     conf := s.app.Conf()
     address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
-    server.Listen(address)
+    backend.Listen(address)
 }
 
 {{- end }}
@@ -105,9 +105,9 @@ func (s *server) Start() {
 {{- if ( eq .ProjectInfo.Framework "chi") }}
 
 func (s *server) Start() {
-    server := chi.NewRouter()
+    backend := chi.NewRouter()
 
-    server.Use(
+    backend.Use(
         middleware.Logger, 
         middleware.Recoverer,
         middleware.AllowContentType("application/json"),
@@ -119,11 +119,11 @@ func (s *server) Start() {
         }),
     )
 
-    s.router(server) 	// use endpoints
+    s.router(backend) 	// use endpoints
 
     conf := s.app.Conf()
     address := fmt.Sprintf("%v:%v", conf.Backend.Host, conf.Backend.Port)
-    http.ListenAndServe(address, server)
+    http.ListenAndServe(address, backend)
 
 }
 {{- end }}
