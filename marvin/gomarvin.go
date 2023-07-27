@@ -24,7 +24,7 @@ func Run(flags *Flags, args []string) {
 
 			// If the api_prefix value in the json file is incorrect,
 			// throw an error and exit
-			api_version := ApiVersionInterger(conf.ProjectInfo.APIPrefix)
+			api_version := getApiVersionInt(conf.ProjectInfo.APIPrefix)
 			_ = api_version
 
 			generateInitDirsAndFiles(conf, *flags) // generate init dirs and files if project dir does not exist or dangerous-regen="true"
@@ -33,7 +33,7 @@ func Run(flags *Flags, args []string) {
 			FormatAfterGen()                       // run gofmt to format the project in the dir
 
 		} else {
-			fmt.Println("* ERROR :: Could not find the config file!")
+			fmt.Println("ERROR: Could not find the config file!")
 		}
 	}
 }
@@ -53,29 +53,6 @@ func stringExistsInSlice(str string, list []string) bool {
 	return false
 }
 
-// const CREATED_MSG = "* CREATED"
-const CREATED_MSG = "\033[32m * CREATED\033[0m"
-
-var gomarvin_info = `Usage:
-  gomarvin generate
-
-Version: 0.10.0
-
-Online Editor:
-  https://gomarvin.pages.dev
-
-Flags:
-  -config		
-	Specify path to the gomarvin config file 
-	(default "gomarvin.json")
-  -dangerous-regen	
-  	Regenerate everything. If set to true, all previous changes will be lost 
-	(default "false")
-  -gut
-	generate additional file in the modules dir which concats all of the 
-	functions that convert possible response structs to typescript interfaces
-	(default "false")`
-
 func GetValueAfterLastSlash(str string) string {
 	split := strings.Split(str, "/")
 	return split[len(split)-1]
@@ -87,12 +64,12 @@ func GetValueAfterLastSlash(str string) string {
 //
 //	ApiVersion("/api/v1") -> "v1"
 //	ApiVersion("/api/v2") -> "v2"
-func ApiVersion(api_version string) string {
-	return GetValueAfterLastSlash(api_version)
+func ApiVersion(apiVersion string) string {
+	return GetValueAfterLastSlash(apiVersion)
 }
 
-func ApiVersionInterger(api_version string) int {
-	api_v := ApiVersion(api_version)
+func getApiVersionInt(apiVersion string) int {
+	api_v := ApiVersion(apiVersion)
 	v := api_v[1:]
 	i, err := strconv.Atoi(v)
 	if err != nil {

@@ -59,8 +59,8 @@ func GenerateModules(conf Config, cmd Flags) {
 
 // Create a file in the module directory
 func createModuleFile(templatePath, moduleDir string, data Project) {
-	template_name, output_file := GenerateTemplateAndOutputName(templatePath)
-	full_output_path := fmt.Sprintf("./%s%s", moduleDir, output_file)
+	template_name, outputFile := createTemplateAndOutputName(templatePath)
+	full_output_path := fmt.Sprintf("./%s%s", moduleDir, outputFile)
 	ExecuteTemplate(template_name, templatePath, full_output_path, data)
 	fmt.Println(CREATED_MSG, full_output_path)
 }

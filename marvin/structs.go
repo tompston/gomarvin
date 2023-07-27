@@ -2,9 +2,6 @@ package marvin
 
 // credits -> https://mholt.github.io/json-to-go/
 
-// predefined name of config file that will be looked up if no other config path is specified
-var ConfigName = "gomarvin.json"
-
 type Config struct {
 	// Config File
 	ProjectInfo ProjectInfo `json:"project_info"`
@@ -62,6 +59,6 @@ type Body struct {
 
 // self defined
 type Template struct {
-	template_path string
-	output_dir    string // output dir into which the template will be created
+	templatePath string
+	outputDir    string // output dir into which the template will be created
 }

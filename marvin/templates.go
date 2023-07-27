@@ -40,7 +40,7 @@ func ExecuteTemplate(templateName, templatePath, fullOutputPath string, data int
 
 // generate 2 strings from the template path, that are needed to run the ExecuteTemplate() func
 //   - temp_name = return everything that is after the last / to get the name of the template.
-func GenerateTemplateAndOutputName(templatePath string) (string, string) {
+func createTemplateAndOutputName(templatePath string) (string, string) {
 	templateName := regexp.MustCompile(`[^/]*$`).FindString(templatePath)
 	out := strings.TrimSuffix(templateName, filepath.Ext(templateName))
 	return templateName, out
@@ -49,20 +49,20 @@ func GenerateTemplateAndOutputName(templatePath string) (string, string) {
 // pass down config and array of predefined tempates and generate them
 func generateTemplates(conf Config, templates []Template) {
 	for i := 0; i < len(templates); i++ {
-		output_dir := templates[i].output_dir
-		templ_path := templates[i].template_path
-		GenerateSingleTemplate(conf, templ_path, output_dir)
+		outputDir := templates[i].outputDir
+		templatePath := templates[i].templatePath
+		generateSingleTemplate(conf, templatePath, outputDir)
 	}
 }
 
 // pass down template data, full path to template and output dir
-//   - GenerateSingleTemplate(conf, "templates/optional/ts/gomarvin.gen.ts.tmpl", "/ts/")
-func GenerateSingleTemplate(conf Config, templatePath string, outputDir string) {
+//   - generateSingleTemplate(conf, "templates/optional/ts/gomarvin.gen.ts.tmpl", "/ts/")
+func generateSingleTemplate(conf Config, templatePath, outputDir string) {
 	projectName := conf.ProjectInfo.Name
 	projectOutputDir := fmt.Sprintf("./%s%s", projectName, outputDir)
-	template_name, output_file := GenerateTemplateAndOutputName(templatePath)
-	full_output_path := fmt.Sprintf("%s%s", projectOutputDir, output_file)
-	ExecuteTemplate(template_name, templatePath, full_output_path, conf)
+	templateName, outputFile := createTemplateAndOutputName(templatePath)
+	full_output_path := fmt.Sprintf("%s%s", projectOutputDir, outputFile)
+	ExecuteTemplate(templateName, templatePath, full_output_path, conf)
 	fmt.Println(CREATED_MSG, full_output_path)
 }
 
@@ -73,29 +73,27 @@ func includesRequired(x string) bool {
 
 // if the validate string includes a validate property, return the default field.
 // Else return the field as an optional param.
-func TypescriptField(field_name, validate_field string) string {
-	if includesRequired(validate_field) {
-		return field_name
+func TypescriptField(fieldName, validateField string) string {
+	if includesRequired(validateField) {
+		return fieldName
 	}
-	return fmt.Sprintf("%v?", field_name)
+	return fmt.Sprintf("%v?", fieldName)
 }
 
 // if the validate string includes a validate property, return the default field.
 // Else return the field as an optional param.
-func PythonDataclasstField(field_name, validate_field string) string {
-	if includesRequired(validate_field) {
-		return field_name
+func PythonDataclasstField(fieldName, validateField string) string {
+	if includesRequired(validateField) {
+		return fieldName
 	}
-	return fmt.Sprintf("%v", field_name)
+	return fieldName
 }
 
-func BodyTypeToGoStructType(body_type string) string {
-	switch body_type {
-	case "any":
+func BodyTypeToGoStructType(bodyType string) string {
+	if bodyType == "any" {
 		return "interface{}"
-	default:
-		return body_type
 	}
+	return bodyType
 }
 
 var template_functions = template.FuncMap{

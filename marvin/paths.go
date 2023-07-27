@@ -2,48 +2,47 @@ package marvin
 
 import "fmt"
 
-var init_project_dirs = [...]string{
-	// -- root dirs
+var INIT_PROJECT_DIRS = [...]string{
 	"/",
 	"/cmd/api/",
 	"/conf/",
-	// -- pkg dirs
 	"/pkg/validate/",
 	"/pkg/convert/",
 	"/pkg/settings/",
 	"/pkg/settings/database/",
 	"/pkg/settings/cli/",
 	"/pkg/app/",
-	// -- internal dirs
 	"/internal/api/response/",
 }
 
-const typescript_fetch_template = "templates/optional/client/gomarvin.ts.tmpl"
-const python_fetch_template = "templates/optional/client/gomarvin.py.tmpl"
+const (
+	TYPESCRIPT_FETCH_TEMPLATE = "templates/optional/client/gomarvin.ts.tmpl"
+	PYTHON_FETCH_TEMPLATE     = "templates/optional/client/gomarvin.py.tmpl"
+)
 
-var init_project_templates = []Template{
-	{template_path: "templates/init/main.go.tmpl", output_dir: "/cmd/api/"}, // main.go
-	{template_path: "templates/init/args.go.tmpl", output_dir: "/pkg/settings/cli/"},
-	{template_path: "templates/init/README.md.tmpl", output_dir: "/"},
-	{template_path: "templates/init/env.dev.tmpl", output_dir: "/conf/"}, // a dot at the start breaks this
-	{template_path: "templates/init/gitignore.tmpl", output_dir: "/"},
-	{template_path: "templates/init/go.mod.tmpl", output_dir: "/"},
-	{template_path: "templates/init/env.go.tmpl", output_dir: "/pkg/settings/"},
-	{template_path: "templates/init/database.go.tmpl", output_dir: "/pkg/settings/database/"},
-	{template_path: "templates/init/validate.go.tmpl", output_dir: "/pkg/validate/"},
-	{template_path: "templates/init/convert.go.tmpl", output_dir: "/pkg/convert/"},
-	{template_path: "templates/init/app.go.tmpl", output_dir: "/pkg/app/"},
+var INIT_PROJECT_TEMPLATES = []Template{
+	{templatePath: "templates/init/main.go.tmpl", outputDir: "/cmd/api/"}, // main.go
+	{templatePath: "templates/init/args.go.tmpl", outputDir: "/pkg/settings/cli/"},
+	{templatePath: "templates/init/README.md.tmpl", outputDir: "/"},
+	{templatePath: "templates/init/env.dev.tmpl", outputDir: "/conf/"}, // a dot at the start breaks this
+	{templatePath: "templates/init/gitignore.tmpl", outputDir: "/"},
+	{templatePath: "templates/init/go.mod.tmpl", outputDir: "/"},
+	{templatePath: "templates/init/env.go.tmpl", outputDir: "/pkg/settings/"},
+	{templatePath: "templates/init/database.go.tmpl", outputDir: "/pkg/settings/database/"},
+	{templatePath: "templates/init/validate.go.tmpl", outputDir: "/pkg/validate/"},
+	{templatePath: "templates/init/convert.go.tmpl", outputDir: "/pkg/convert/"},
+	{templatePath: "templates/init/app.go.tmpl", outputDir: "/pkg/app/"},
 }
 
-func initModuleTemplates(api_prefix string) []Template {
+func initModuleTemplates(apiPrefix string) []Template {
 	return []Template{
-		{template_path: "templates/init/router.go.tmpl", output_dir: fmt.Sprintf("/internal/api/%v/server/", api_prefix)},
-		{template_path: "templates/init/server.go.tmpl", output_dir: fmt.Sprintf("/internal/api/%v/server/", api_prefix)},
-		{template_path: "templates/init/response.go.tmpl", output_dir: "/internal/api/response/"},
+		{templatePath: "templates/init/router.go.tmpl", outputDir: fmt.Sprintf("/internal/api/%v/server/", apiPrefix)},
+		{templatePath: "templates/init/server.go.tmpl", outputDir: fmt.Sprintf("/internal/api/%v/server/", apiPrefix)},
+		{templatePath: "templates/init/response.go.tmpl", outputDir: "/internal/api/response/"},
 	}
 }
 
-var optional_sql_templates = []Template{
-	{template_path: "templates/optional/sql/functions.sql.tmpl", output_dir: "/db/sql/"},
-	{template_path: "templates/optional/sql/sqlc.yaml.tmpl", output_dir: "/db/"},
+var OPTIONAL_SQL_TEMPLATES = []Template{
+	{templatePath: "templates/optional/sql/functions.sql.tmpl", outputDir: "/db/sql/"},
+	{templatePath: "templates/optional/sql/sqlc.yaml.tmpl", outputDir: "/db/"},
 }
