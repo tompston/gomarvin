@@ -7,20 +7,9 @@
 package {{ ConvertToLowercase  $module}}_module
 
 {{/* If there is an endpoint with a body that has a time.Time field, import the time package */ -}}
-{{- range $endpoint := $endpoints -}}
-	{{ if $endpoint.Body -}}
-			{{ range $endpoint_body_field := $endpoint.Body}}
-				{{ if ( eq $endpoint_body_field.Type "time.Time") }}
-import (
-	"time"
-)
-					{{ break }}
-				{{ end }}
-			{{ end }}
-		{{ break }}
-	{{ end }}	
+{{- if EndpointHasFieldWithTime $endpoints -}}
+import "time"
 {{ end -}}
-
 
 {{range $endpoint := $endpoints }}
 

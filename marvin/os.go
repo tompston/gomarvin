@@ -14,23 +14,6 @@ const (
 
 	// predefined name of config file that will be looked up if no other config path is specified
 	ConfigName = "gomarvin.json"
-
-	// output text if no args are provided
-	GOMARVIN_INFO = `Usage:
-	  gomarvin generate
-	
-	Version: 0.10.0
-	
-	Online Editor:
-	  https://gomarvin.pages.dev
-	
-	Flags:
-	  -config		
-		Specify path to the gomarvin config file  (default "gomarvin.json")
-	  -dangerous-regen
-		  Regenerate everything. If set to true, all previous changes will be lost  (default "false")
-	  -gut
-		generate functions which convert possible api response structs to typescript interfaces (default "false")`
 )
 
 // https://golangdocs.com/command-line-arguments-in-golang
@@ -82,3 +65,24 @@ func renameFileIfExists(originalPath, newPath string) {
 		}
 	}
 }
+
+// output text if no args are provided
+const GOMARVIN_INFO = `Usage:
+	gomarvin generate
+
+Version: 0.10.1
+
+Online Editor:
+	https://gomarvin.pages.dev
+
+Flags:
+  -config		
+	Specify path to the gomarvin config file  (default "gomarvin.json")
+
+  -dangerous-regen
+	Regenerate everything. If set to true, all previous changes will 
+	be lost  (default "false")
+
+  -gut
+	generate functions which convert possible api response structs to 
+	typescript interfaces (default "false")`

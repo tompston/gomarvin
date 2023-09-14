@@ -96,6 +96,17 @@ func BodyTypeToGoStructType(bodyType string) string {
 	return bodyType
 }
 
+func EndpointHasFieldWithTime(endpoints []Endpoints) bool {
+	for _, endpoint := range endpoints {
+		for _, bodyField := range endpoint.Body {
+			if bodyField.Type == "time.Time" {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 var TEMPLATE_FUNCTIONS = template.FuncMap{
 	"ConvertToTitle":                      convert.ToTitle,
 	"ConvertToLowercase":                  convert.ToLowercase,
@@ -108,10 +119,11 @@ var TEMPLATE_FUNCTIONS = template.FuncMap{
 	"WrapInCurlyBracesWithAppendedString": convert.WrapInCurlyBracesWithAppendedString,
 	"ConvertLastCharTo":                   convert.LastCharTo,
 	// other util functions
-	"TypescriptField":        TypescriptField,
-	"PythonDataclasstField":  PythonDataclasstField,
-	"ApiVersion":             ApiVersion,
-	"BodyTypeToGoStructType": BodyTypeToGoStructType,
+	"TypescriptField":          TypescriptField,
+	"PythonDataclasstField":    PythonDataclasstField,
+	"ApiVersion":               ApiVersion,
+	"BodyTypeToGoStructType":   BodyTypeToGoStructType,
+	"EndpointHasFieldWithTime": EndpointHasFieldWithTime,
 }
 
 var INIT_PROJECT_DIRS = []string{

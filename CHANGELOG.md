@@ -1,3 +1,7 @@
+### v0.10.1
+
+- Fixed `body.gen.go` time import bug
+
 ### v0.10.0
 
 - pushing cli package to settings dir
