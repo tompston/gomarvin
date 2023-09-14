@@ -194,7 +194,7 @@ git tag v0.10.0
 git push origin v0.10.0
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomarvin@v0.10.0
 
-// qwqwe 
+// qwqwe  qwe
 
 # create a new branch
 git branch BRANCH_NAME
